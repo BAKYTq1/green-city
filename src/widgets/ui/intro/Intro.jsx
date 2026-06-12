@@ -27,7 +27,7 @@ export default function Intro({ onDone }) {
       .to(subtitleRef.current, { opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.4')
       .to(hintRef.current, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '+=0.3')
 
-    const timer = setTimeout(() => goToSite(), 5000)
+    const timer = setTimeout(() => goToSite(), 3200)
     return () => clearTimeout(timer)
   }, [goToSite])
 

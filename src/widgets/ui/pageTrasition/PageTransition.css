@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+J:ital,wght@0,100..400;1,100..400&display=swap');
+
 .gc-transition {
   position: fixed;
   inset: 0;
@@ -14,6 +16,7 @@
 }
 
 .gc-transition-text {
+  font-family: "Playwrite GB J", cursive;
   position: absolute;
   top: 50%;
   left: 50%;
