@@ -5,6 +5,9 @@ import Objects from '../../widgets/objects/Objects'
 import Stats from '../../widgets/stats/Stats'
 import Panarama360 from '../../widgets/panorama360/Panorama360'
 import Reviews from '../../widgets/reviews/Reviews'
+import Obratnyi from '../../widgets/ui/ibratka/Obratnyi'
+// import News from '../news/News'
+// import Apartments from '../Apartments/Apartments'
 
 function Home() {
   return (
@@ -15,6 +18,9 @@ function Home() {
       <Stats/>
       <Panarama360 />
       <Reviews />
+      <Obratnyi />
+      {/* <Apartments /> */}
+      {/* <News /> */}
     </>
   )
 }

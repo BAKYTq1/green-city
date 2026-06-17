@@ -1,0 +1,402 @@
+// Apartments.module.scss
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap");
+
+$color-bg-page: #ffffff;
+$color-text-dark: #111e16;
+$color-text-hero: #14331f;
+$color-green-primary: #1e5128;
+$color-green-hover: #14331f;
+$color-green-light: #e4efe7;
+$color-green-active: #d8ebd9;
+$color-border: #b7c9bc;
+$color-border-open: #9cbda3;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.apPage {
+  min-height: 100vh;
+  background: $color-bg-page;
+  font-family: "Inter", sans-serif;
+  color: $color-text-dark;
+}
+
+/* ── HERO ── */
+.apHero {
+  text-align: center;
+  padding: 56px 24px 32px;
+
+  &__title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: $color-text-hero;
+    margin-bottom: 28px;
+  }
+}
+
+.apToggle {
+  display: inline-flex;
+  background: $color-green-primary;
+  border-radius: 99px;
+  padding: 5px;
+  gap: 4px;
+  margin-bottom: 28px;
+
+  &__btn {
+    padding: 10px 28px;
+    border-radius: 99px;
+    border: none;
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-weight: 400;
+
+    &--active {
+      background: $color-bg-page;
+      color: $color-green-primary;
+      font-weight: 500;
+    }
+
+    &--inactive {
+      background: transparent;
+      color: #e4efe7;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+  }
+}
+
+/* ── FILTERS ── */
+.apFilters {
+  max-width: 1300px; /* Растягиваем блок фильтров до 1300px */
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+.apFilterRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.apPill,
+.apTypePill {
+  padding: 8px 20px;
+  border-radius: 99px;
+  border: 1px solid $color-border;
+  background: $color-bg-page;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Inter", sans-serif;
+  color: #2e4436;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $color-green-primary;
+    color: $color-green-primary;
+    background: $color-green-light;
+  }
+
+  &--active {
+    background: $color-green-active;
+    border-color: $color-border-open;
+    color: $color-text-dark;
+    font-weight: 500;
+  }
+}
+
+.apTypePill {
+  padding: 8px 18px;
+}
+
+.apDropdownWrap {
+  position: relative;
+}
+
+.apDropdownBtn {
+  padding: 9px 20px;
+  border-radius: 99px;
+  border: 1px solid $color-border;
+  background: $color-bg-page;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  color: #2e4436;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 180px;
+  justify-content: space-between;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: $color-green-primary;
+    background: $color-green-light;
+  }
+
+  &--open {
+    border-color: $color-green-primary;
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+  }
+}
+
+.apDropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid $color-border-open;
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  min-width: 260px;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(25, 45, 30, 0.08);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.apDropdownItem {
+  padding: 11px 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  color: $color-text-dark;
+  border-bottom: 1px solid #eaf2eb;
+  font-family: "Inter", sans-serif;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    background: #eaf2eb;
+  }
+
+  &--active {
+    background: $color-green-active;
+    color: $color-green-primary;
+    font-weight: 500;
+  }
+}
+
+.apRangeWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 4px;
+  min-width: 160px;
+}
+
+.apRangeLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #637a6b;
+  font-family: "Inter", sans-serif;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #c3d4c7; // Линия ползунка
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  margin: 8px 0;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: $color-green-primary;
+    border-radius: 50%;
+    transition:
+      transform 0.1s,
+      background-color 0.1s;
+
+    &:hover {
+      transform: scale(1.2);
+      background: $color-green-hover;
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: none;
+    background: $color-green-primary;
+    border-radius: 50%;
+    transition:
+      transform 0.1s,
+      background-color 0.1s;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.2);
+      background: $color-green-hover;
+    }
+  }
+}
+
+/* ── CARDS SECTION ── */
+.apSection {
+  max-width: 1300px; /* Расширяем контейнер секции до 1300px */
+  margin: 0 auto;
+  padding: 0 24px 64px;
+}
+
+.apCardGrid {
+  display: grid;
+  // Вернул 2 колонки на десктопе, чтобы карточки расширились и были крупными
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 32px;
+}
+
+.apCard {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+  cursor: pointer;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &__header {
+    margin-bottom: 10px;
+  }
+
+  &__name {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: $color-text-hero;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__status {
+    padding: 4px 14px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 400;
+
+    &--building {
+      background: #fde9c4;
+      color: #a06000;
+    }
+    &--done {
+      background: #d4edda;
+      color: $color-green-primary;
+    }
+    &--soon {
+      background: #e2d4f0;
+      color: #5c2a8a;
+    }
+  }
+
+  &__metaItem {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: #536b5c;
+  }
+
+  &__imgWrap {
+    width: 100%;
+    aspect-ratio: 16/10; // Сохраняем пропорции картинок, они масштабируются в ширину
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: #23382b;
+    transition: transform 0.4s ease;
+  }
+
+  &:hover &__imgWrap {
+    transform: scale(1.01);
+  }
+}
+
+/* ── PAGINATION ── */
+.apPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.apPageBtn {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 99px;
+  border: 1px solid $color-border;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Inter", sans-serif;
+  color: #2e4436;
+
+  &:hover:not(:disabled) {
+    border-color: $color-green-primary;
+    color: $color-green-primary;
+    background: $color-green-light;
+  }
+
+  &--active {
+    background: $color-green-primary;
+    border-color: $color-green-primary;
+    color: #fff;
+
+    &:hover {
+      background: $color-green-primary;
+      color: #fff;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 640px) {
+  .apCardGrid {
+    grid-template-columns: 1fr;
+  }
+  .apFilterRow {
+    gap: 8px;
+  }
+}
