@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Button from '../ui/buttton/Button'
-import './AboutCompany.css'
+import styles from './AboutCompany.module.scss'
+
 gsap.registerPlugin(ScrollTrigger)
 
 const AboutCompany = () => {
@@ -15,6 +16,7 @@ const AboutCompany = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
 
+      // Анимация заголовка
       gsap.fromTo(headlineRef.current,
         { y: 100, opacity: 0 },
         { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2,
@@ -22,13 +24,19 @@ const AboutCompany = () => {
         }
       )
 
-      gsap.fromTo(Array.from(leftColRef.current.children),
+      // Анимация блоков в левой колонке (исключая кнопку)
+      const textBlocks = Array.from(leftColRef.current.children).filter(
+        (child) => child !== buttonRef.current
+      )
+
+      gsap.fromTo(textBlocks,
         { x: -50, opacity: 0 },
         { x: 0, opacity: 1, duration: 1, ease: 'power4.out', stagger: 0.2,
           scrollTrigger: { trigger: leftColRef.current, start: 'top 80%' }
         }
       )
 
+      // Анимация большого изображения справа
       gsap.fromTo(rightImgRef.current,
         { scale: 1.2, opacity: 0 },
         { scale: 1, opacity: 1, duration: 1.5, ease: 'power4.out', delay: 0.6,
@@ -36,6 +44,7 @@ const AboutCompany = () => {
         }
       )
 
+      // Анимация кнопки (back эффект)
       gsap.fromTo(buttonRef.current,
         { scale: 0, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.5)', delay: 1,
@@ -49,64 +58,57 @@ const AboutCompany = () => {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-12 md:py-24 bg-white overflow-hidden">
-      <div className="max-w-[1300px] mx-auto px-6">
+    <section ref={sectionRef} className={styles.section}>
+      <div className={styles.container}>
         
-        <div className="flex justify-end mb-12 md:mb-20">
-          <h2 
-            ref={headlineRef}
-            className="w-full lg:w-[75%] text-2xl md:text-[42px] leading-[1.1] font-light text-[#1A1A1A] uppercase opacity-0"
-          >
-            <span className="text-[#0D6D63] font-medium">Биз үчүн курулуш — бул</span><br />
+        <div className={styles.headlineWrapper}>
+          <h2 ref={headlineRef} className={styles.headline}>
+            <span className={styles.headlineAccent}>Биз үчүн курулуш — бул</span><br />
             ишенимдүү, функционалдык жана жардамчы мейкиндиктерди жаратуу искусствосу
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className={styles.grid}>
           
-          <div ref={leftColRef} className="lg:col-span-5 flex flex-col space-y-10">
+          <div ref={leftColRef} className={styles.leftCol}>
             
-            <div className="opacity-0">
-              <span className="text-xs uppercase tracking-[0.2em] text-gray-400 block mb-6">
-                О компании
-              </span>
-              <div className="relative w-64 h-80 grayscale overflow-hidden">
+            <div className={styles.infoBlock}>
+              <span className={styles.subtitle}>О компании</span>
+              <div className={styles.thumbWrap}>
                 <img
                   src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
                   alt="Building BW"
-                  className="w-full h-full object-cover"
+                  className={styles.image}
                 />
               </div>
             </div>
 
-            <div className="relative pt-4 max-w-[420px] opacity-0">
-              <div className="relative text-[15px] md:text-base text-gray-600 leading-relaxed">
-                <span className="grenText absolute -top-18 -left-2 font-serif text-[90px] text-gray-400 italic select-none -z-10">
-                  G
-                </span>
-                <p className="mb-4">
-                  <span className="font-bold text-black ml-15">reen City</span> — строительная компания, которая сдаёт объекты в эксплуатацию в обещанные сроки.
+            <div className={styles.descrBlock}>
+              <div className={styles.descrContent}>
+                <span className={styles.dropcap}>G</span>
+                <p className={styles.paragraph}>
+                  <span className={styles.brandName}>reen City</span> — строительная компания, которая сдаёт объекты в эксплуатацию в обещанные сроки.
                 </p>
-                <p>
+                <p className={styles.paragraph}>
                   Наши объекты строятся в 5-минутной ходьбе от парково-прогулочных зон и основных объектов соцбыта.
                 </p>
               </div>
             </div>
 
-            <div ref={buttonRef} className="opacity-0  h-32">
-             <Button text="Читать все" />
+            <div ref={buttonRef} className={styles.btnWrap}>
+              <Button text="Читать все" />
             </div>
           </div>
 
-          <div className="lg:col-span-7 relative h-[500px] md:h-[750px] w-full overflow-hidden">
-            <div ref={rightImgRef} className="w-full h-full opacity-0 relative">
+          <div className={styles.rightCol}>
+            <div ref={rightImgRef} className={styles.mainImgWrap}>
               <img
                 src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1935&auto=format&fit=crop"
                 alt="Modern Towers"
-                className="w-full h-full object-cover"
+                className={styles.image}
               />
-              <div className="absolute top-8 left-8 w-10 h-10 border border-white/50 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-serif italic">G</span>
+              <div className={styles.badge}>
+                <span className={styles.badgeLetter}>G</span>
               </div>
             </div>
           </div>

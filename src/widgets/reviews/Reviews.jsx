@@ -114,7 +114,7 @@ export default function Reviews() {
           ))}
         </div>
 
-        <div className='flex justify-center mt-10'>
+        <div className={styles.buttonWrapper}>
            <Button text='Посмотреть все' link='/reviews'/>
         </div>
 
