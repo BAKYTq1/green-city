@@ -1,0 +1,616 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ── TOKENS ── */
+:root {
+  --gc-green:        #2d7a3a;
+  --gc-green-light:  #4a9e5c;
+  --gc-green-pale:   #f0fdf4;
+  --gc-green-border: #bbf7d0;
+  --gc-dark:         #1a3a1f;
+  --gc-text:         #1f2937;
+  --gc-text-sub:     #6b7280;
+  --gc-bg:           #ffffff;
+  --gc-bg-soft:      #f9fafb;
+  --gc-border:       rgba(0,0,0,0.08);
+  --gc-radius:       10px;
+  --gc-shadow:       0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* ── ROOT ── */
+.fp-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--gc-text);
+  background: var(--gc-bg);
+  overflow: hidden;
+}
+
+/* ── HEADER ── */
+.fp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 60px;
+  background: #fff;
+  border-bottom: 0.5px solid var(--gc-border);
+  flex-shrink: 0;
+  gap: 16px;
+}
+
+.fp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fp-logo {
+  width: 32px;
+  height: 32px;
+  color: var(--gc-green);
+  flex-shrink: 0;
+}
+.fp-logo svg { width: 100%; height: 100%; }
+
+.fp-header-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gc-dark);
+}
+.fp-header-title span {
+  color: var(--gc-green);
+  font-weight: 400;
+}
+.fp-header-sub {
+  font-size: 11px;
+  color: var(--gc-text-sub);
+  margin-top: 1px;
+}
+
+.fp-header-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.fp-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gc-text-sub);
+  background: var(--gc-bg-soft);
+  border: 0.5px solid var(--gc-border);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.fp-btn:hover { background: #f3f4f6; color: var(--gc-text); }
+.fp-btn--active {
+  background: var(--gc-green-pale);
+  border-color: var(--gc-green-border);
+  color: var(--gc-green);
+}
+
+/* ── BODY ── */
+.fp-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR ── */
+.fp-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  border-right: 0.5px solid var(--gc-border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.fp-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--gc-text-sub);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fp-count {
+  background: var(--gc-green-pale);
+  color: var(--gc-green);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 10px;
+}
+
+/* Фильтры */
+.fp-filters {
+  padding: 16px;
+  border-bottom: 0.5px solid var(--gc-border);
+}
+
+.fp-filter-group { margin-bottom: 14px; }
+
+.fp-filter-label {
+  font-size: 11px;
+  color: var(--gc-text-sub);
+  margin-bottom: 6px;
+}
+
+.fp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fp-chip {
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--gc-border);
+  background: var(--gc-bg-soft);
+  color: var(--gc-text-sub);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.fp-chip:hover { border-color: var(--gc-green-border); color: var(--gc-green); }
+.fp-chip--active {
+  background: var(--gc-green-pale);
+  border-color: var(--gc-green);
+  color: var(--gc-green);
+  font-weight: 500;
+}
+.fp-chip--sm {
+  padding: 3px 0;
+  width: 36px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.fp-floor-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-height: 96px;
+  overflow-y: auto;
+}
+
+.fp-range-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fp-range-row input[type=range] {
+  width: 100%;
+  accent-color: var(--gc-green);
+}
+
+.fp-reset {
+  width: 100%;
+  padding: 7px;
+  font-size: 12px;
+  color: var(--gc-text-sub);
+  background: none;
+  border: 0.5px solid var(--gc-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: 4px;
+}
+.fp-reset:hover { background: var(--gc-bg-soft); color: var(--gc-text); }
+
+/* Список квартир */
+.fp-apt-list {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.fp-apt-card {
+  padding: 12px;
+  border-radius: var(--gc-radius);
+  border: 0.5px solid var(--gc-border);
+  cursor: pointer;
+  transition: all 0.18s;
+  background: #fff;
+}
+.fp-apt-card:hover {
+  border-color: var(--gc-green-border);
+  box-shadow: var(--gc-shadow);
+}
+.fp-apt-card--active {
+  border-color: var(--gc-green);
+  background: var(--gc-green-pale);
+}
+
+.fp-apt-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.fp-apt-type {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gc-dark);
+}
+.fp-apt-status {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.fp-apt-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gc-green);
+  margin-bottom: 6px;
+}
+.fp-apt-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--gc-text-sub);
+}
+
+.fp-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--gc-text-sub);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fp-empty button {
+  color: var(--gc-green);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* ── VIEWPORT ── */
+.fp-viewport {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gc-bg-soft);
+  overflow: hidden;
+  cursor: grab;
+}
+.fp-viewport--dragging { cursor: grabbing; }
+.fp-viewport--measuring { cursor: crosshair; }
+
+.fp-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--gc-text-sub);
+}
+.fp-placeholder p { font-size: 14px; font-weight: 500; margin: 0; }
+.fp-placeholder span { font-size: 12px; }
+
+/* ── 3D СЦЕНА ── */
+/* FIX: perspective на обёртке, preserve-3d на inner */
+.fp-scene {
+  perspective: 900px;
+  perspective-origin: 50% 40%;
+}
+
+.fp-scene-inner {
+  transform-style: preserve-3d;
+  position: relative;
+  width: 360px;
+  height: 310px;
+}
+
+/* Пол */
+.fp-floor-base {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  transform-style: preserve-3d;
+}
+
+/* Комнаты */
+.fp-room {
+  position: absolute;
+  border: 1px solid;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  transform-style: preserve-3d;
+  z-index: 2;
+}
+.fp-room-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+  pointer-events: none;
+}
+.fp-room-area {
+  font-size: 8px;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+/* FIX: стены — отдельные div с 3D transform */
+.fp-wall {
+  position: absolute;
+  border: 1px solid;
+  box-sizing: border-box;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+/* Мебель */
+.fp-furniture {
+  position: absolute;
+  background: rgba(45,122,58,0.12);
+  border: 0.5px solid rgba(45,122,58,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: var(--gc-green);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Окна */
+.fp-window {
+  position: absolute;
+  height: 4px;
+  background: rgba(14,165,233,0.7);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Линейка */
+.fp-measure-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--gc-green);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+}
+.fp-measure-label {
+  position: absolute;
+  background: var(--gc-green);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Подпись под планом */
+.fp-base-label {
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 9px;
+  color: var(--gc-text-sub);
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+
+/* Подсказка */
+.fp-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--gc-text-sub);
+  background: rgba(255,255,255,0.9);
+  border: 0.5px solid var(--gc-border);
+  padding: 4px 14px;
+  border-radius: 20px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.fp-hint--measure {
+  color: var(--gc-green);
+  border-color: var(--gc-green-border);
+  background: var(--gc-green-pale);
+}
+
+/* Пресеты */
+.fp-presets {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 6px;
+}
+.fp-preset-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  background: rgba(255,255,255,0.92);
+  border: 0.5px solid var(--gc-border);
+  border-radius: 6px;
+  color: var(--gc-text-sub);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.fp-preset-btn:hover {
+  border-color: var(--gc-green-border);
+  color: var(--gc-green);
+}
+
+/* Слои */
+.fp-layers {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,0.92);
+  border: 0.5px solid var(--gc-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  gap: 12px;
+}
+.fp-layer-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--gc-text-sub);
+  cursor: pointer;
+}
+.fp-layer-toggle input { accent-color: var(--gc-green); }
+
+/* ── ПРАВАЯ ПАНЕЛЬ ── */
+.fp-details {
+  width: 220px;
+  flex-shrink: 0;
+  border-left: 0.5px solid var(--gc-border);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.fp-price-card {
+  background: var(--gc-green-pale);
+  border: 0.5px solid var(--gc-green-border);
+  border-radius: var(--gc-radius);
+  padding: 14px;
+  text-align: center;
+}
+.fp-detail-label {
+  font-size: 10px;
+  color: var(--gc-text-sub);
+  margin-bottom: 4px;
+}
+.fp-price {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--gc-green);
+  margin-bottom: 6px;
+}
+.fp-status-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+.fp-char-block {
+  border: 0.5px solid var(--gc-border);
+  border-radius: var(--gc-radius);
+  overflow: hidden;
+}
+.fp-char-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 12px;
+  font-size: 11px;
+  border-bottom: 0.5px solid var(--gc-border);
+}
+.fp-char-row:last-child { border-bottom: none; }
+.fp-char-row span:first-child { color: var(--gc-text-sub); }
+.fp-char-row span:last-child  { font-weight: 500; color: var(--gc-dark); }
+
+.fp-room-detail {
+  background: var(--gc-bg-soft);
+  border-radius: var(--gc-radius);
+  padding: 12px;
+  border: 0.5px solid var(--gc-green-border);
+}
+.fp-room-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gc-dark);
+  margin-bottom: 4px;
+}
+.fp-room-area-detail {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gc-green);
+}
+
+.fp-total-card {
+  border: 0.5px solid var(--gc-border);
+  border-radius: var(--gc-radius);
+  padding: 12px;
+  text-align: center;
+}
+.fp-total-area {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gc-dark);
+}
+.fp-total-area span {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gc-text-sub);
+}
+
+.fp-cta {
+  width: 100%;
+  padding: 11px;
+  background: var(--gc-green);
+  color: #fff;
+  border: none;
+  border-radius: var(--gc-radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: auto;
+}
+.fp-cta:hover { background: var(--gc-green-light); }
+
+/* ── SCROLLBAR ── */
+.fp-sidebar::-webkit-scrollbar,
+.fp-details::-webkit-scrollbar { width: 4px; }
+.fp-sidebar::-webkit-scrollbar-track,
+.fp-details::-webkit-scrollbar-track { background: transparent; }
+.fp-sidebar::-webkit-scrollbar-thumb,
+.fp-details::-webkit-scrollbar-thumb { background: var(--gc-border); border-radius: 2px; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .fp-body { flex-direction: column; }
+  .fp-sidebar { width: 100%; height: 220px; flex-direction: row; overflow-x: auto; overflow-y: hidden; border-right: none; border-bottom: 0.5px solid var(--gc-border); }
+  .fp-filters { display: none; }
+  .fp-apt-list { flex-direction: row; padding: 12px; }
+  .fp-apt-card { min-width: 200px; }
+  .fp-details { display: none; }
+}   
