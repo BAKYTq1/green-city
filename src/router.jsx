@@ -5,6 +5,7 @@ import Home from "./pages/home/Home";
 import Contact from "./pages/contact/Contact";
 import News from "./pages/news/News";
 import Apartments from "./pages/Apartments/Apartments";
+import ObjectDetail from "./pages/Apartments/ObjectDetail/ObjectDetail";
 
 export const myrouter = createBrowserRouter([
   {
@@ -28,8 +29,12 @@ export const myrouter = createBrowserRouter([
         element: <News />,
       },
       {
-        path: "objects",
+        path: "/objects",
         element: <Apartments />,
+      },
+      {
+        path: "/objects/:slug",
+        element: <ObjectDetail />,
       },
     ],
   },

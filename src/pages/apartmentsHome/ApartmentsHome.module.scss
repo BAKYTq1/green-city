@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap");
 
-// Поскольку стили используются локально в модуле,
-// рекомендуется установить переменные или использовать глобальные
+// Локальные переменные для модуля
 :global {
   :root {
     --green: #1e5128;
@@ -444,19 +443,19 @@
   padding: 80px 0;
   color: var(--muted);
 
-  &__icon {
+  __icon {
     font-size: 48px;
     margin-bottom: 16px;
     opacity: 0.4;
   }
-  &__title {
+  __title {
     font-family: "Cormorant Garamond", serif;
     font-size: 28px;
     font-weight: 400;
     color: var(--green-dark);
     margin-bottom: 8px;
   }
-  &__text {
+  __text {
     font-size: 14px;
   }
 }

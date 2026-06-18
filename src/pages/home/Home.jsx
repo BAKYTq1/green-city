@@ -6,14 +6,14 @@ import Panarama360 from '../../widgets/panorama360/Panorama360'
 import Reviews from '../../widgets/reviews/Reviews'
 import Obratnyi from '../../widgets/ui/ibratka/Obratnyi'
 import News from '../news/News'
-import Apartments from '../Apartments/Apartments'
+import ApartmentsHome from '../apartmentsHome/ApartmentsHome'
 
 function Home() {
   return (
     <>
       <AboutCompany />
       {/* <FloorPlan3D/> */}
-      <Apartments />
+      <ApartmentsHome />
       <Stats/>
       <Reviews />
       <Panarama360 />
