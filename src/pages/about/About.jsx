@@ -21,7 +21,7 @@ const parallaxImages = [
   },
   {
     src: "https://i.pinimg.com/1200x/7a/50/a1/7a50a1c4ad6a073f71fe1f42c61fb354.jpg",
-    alt: "Green City — интерьер",
+    alt: "Green City — interior",
   },
   {
     src: "https://i.pinimg.com/736x/f4/14/4a/f4144af3bfe3c47b36aeef238fd66b35.jpg",
@@ -83,10 +83,15 @@ const bannerImages = [
 ];
 
 const partners = [
-  { name: "BekemBlock", logo: "/images/partners/bekemblock.svg" },
-  { name: "Laminam", logo: "/images/partners/laminam.svg" },
-  { name: "LG", logo: "/images/partners/lg.svg" },
-  { name: "Schüco", logo: "/images/partners/schuco.svg" },
+  { name: "BekemBlock" },
+  { name: "Laminam" },
+  { name: "LG" },
+  { name: "Schüco" },
+  { name: "Knauf" },
+  { name: "Bosch" },
+  { name: "Grohe" },
+  { name: "REHAU" },
+  { name: "Schneider Electric" },
 ];
 
 const directorSlides = [
@@ -151,6 +156,30 @@ function RevealImage({
         className={`${imgClassName} ${grayscale ? "grayscale" : ""}`}
       />
     </div>
+  );
+}
+
+// ─── ХЕЛПЕР: лого партнёра с fallback на текст ───
+// Если logo не передан ИЛИ картинка не загрузилась (404, битая ссылка) —
+// вместо пустого места / сломанной иконки показываем стилизованное название.
+function PartnerLogo({ name, logo }) {
+  const [failed, setFailed] = useState(false);
+
+  if (!logo || failed) {
+    return (
+      <span className="text-base md:text-lg font-semibold uppercase tracking-wider text-gray-400 group-hover:text-[#1a1a1a] transition-colors duration-300 text-center px-2 select-none">
+        {name}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={logo}
+      alt={name}
+      onError={() => setFailed(true)}
+      className="h-12 md:h-16 w-full object-contain grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-300"
+    />
   );
 }
 
@@ -404,8 +433,8 @@ function RoyalIsSection() {
               },
             ].map((item, i) => (
               <FadeUp key={item.n} delay={i * 0.1}>
-                <p className="text-xs text-[#b0a898] mb-1">({item.n})</p>
-                <p className="text-[#c8a96e] text-sm leading-relaxed font-medium">
+                <p className="text-xs text-[#000000] mb-1">({item.n})</p>
+                <p className="text-[#40a406d3] text-sm leading-relaxed font-medium">
                   {item.text}
                 </p>
               </FadeUp>
@@ -459,7 +488,7 @@ function ValuesSlider() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-xs font-semibold uppercase tracking-widest text-amber-400 mb-4"
+          className="text-xs font-semibold uppercase tracking-widest text-[#60f709d3] mb-4"
         >
           Ценности компании Green City
         </motion.p>
@@ -541,8 +570,8 @@ function DirectorSection() {
         >
           <div className="aspect-[3/4] overflow-hidden grayscale">
             <motion.img
-              src="/images/Green City/director.jpg"
-              alt="Акжигитов Мирлан Толонович"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdX-sI_mtA4U1fgyaV5SHpxpN4AFKlH6HOr4HtyS4w6Q&s=10"
+              alt="Алибек Шералиев — генеральный директор строительной компании Green City"
               whileHover={{ scale: 1.06 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="w-full h-full object-cover object-top"
@@ -558,11 +587,11 @@ function DirectorSection() {
           transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
           <h2 className="text-3xl md:text-4xl font-bold uppercase mb-2 tracking-wide">
-            Акжигитов Мирлан
+            Алибек Шералиев
             <br />
-            Толонович
+            ......
           </h2>
-          <p className="text-amber-400 text-sm font-medium mb-8 uppercase tracking-widest">
+          <p className="text-[#40a406d3] text-sm font-medium mb-8 uppercase tracking-widest">
             Генеральный директор строительной компании GREEN CITY
           </p>
 
@@ -629,19 +658,15 @@ function PartnersSection() {
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gray-200 border border-gray-200">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-gray-200 border border-gray-200 overflow-hidden rounded-sm">
           {partners.map((p, i) => (
-            <FadeIn key={p.name} delay={i * 0.1}>
+            <FadeIn key={p.name} delay={i * 0.05} className="bg-white">
               <motion.div
-                whileHover={{ scale: 1.08 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-center justify-center py-12 px-8 h-full"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="group flex items-center justify-center p-8 h-40"
               >
-                <img
-                  src={p.logo}
-                  alt={p.name}
-                  className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
-                />
+                <PartnerLogo name={p.name} logo={p.logo} />
               </motion.div>
             </FadeIn>
           ))}
@@ -679,7 +704,13 @@ export default function AboutCompany() {
       <ZoomParallax
         images={parallaxImages}
         title={
-          <p style={{ color: "white", textShadow: "0 2px 16px rgba(48, 232, 73, 0.648)" }} className="text-3xl md:text-[2.8rem] font-bold uppercase leading-tight max-w-3xl">
+          <p
+            style={{
+              color: "white",
+              textShadow: "0 2px 16px rgba(48, 232, 73, 0.648)",
+            }}
+            className="text-3xl md:text-[2.8rem] font-bold uppercase leading-tight max-w-3xl"
+          >
             Строительная компания Green City <br />
             это символ надёжности, стиля
             <br />и стремления к совершенству.
