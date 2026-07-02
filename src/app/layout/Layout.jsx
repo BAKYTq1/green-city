@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../../widgets/footer/Footer";
@@ -9,19 +8,23 @@ import HeaderDefault from "../../widgets/header/HeaderDefault";
 import ScrollToTop from "./ScrollToTop";
 import { TransitionProvider } from "../transition/TransitionContext";
 
+// Пути, на которых нужен "домашний" (прозрачный) хедер
+const HOME_HEADER_ROUTES = ["/", "/about"];
+
 export default function Layout() {
   useLenis();
   const { pathname } = useLocation();
-  const isHome = pathname === "/";
+  const isHomeHeader = HOME_HEADER_ROUTES.includes(pathname);
 
   return (
    <TransitionProvider>
       <ScrollToTop />
       <PageTransition />
-      {isHome ? <HeaderHome /> : <HeaderDefault />}
-      <main><Outlet /></main>
+      {isHomeHeader ? <HeaderHome /> : <HeaderDefault />}
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </TransitionProvider>
   );
 }
-

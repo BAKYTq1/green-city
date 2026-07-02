@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay, EffectCreative } from 'swiper/modules'
 import gsap from 'gsap'
@@ -12,6 +12,15 @@ import { translations, langs, langLabels } from '../../locales/i18n'
 import { useLang } from '../../locales/LangContext'
 import TransitionLink from '../../app/transition/TransitionLink'
 
+// ─── Слайды для страницы "О нас" (без title/subtitle — над ними будет статичный заголовок) ───
+const aboutSlides = [
+  { id: 'a1', bg: 'https://i.pinimg.com/736x/c5/69/6f/c5696f825f78dd4be31349d1ef6d209b.jpg' },
+  { id: 'a2', bg: 'https://i.pinimg.com/1200x/6d/1f/e4/6d1fe4be349834baffa4064c89c5f24d.jpg' },
+  { id: 'a3', bg: 'https://i.pinimg.com/736x/35/0b/24/350b2426dcce60ca73887ae2a48df34b.jpg' },
+  { id: 'a4', bg: 'https://i.pinimg.com/1200x/f8/69/51/f86951719b406d8c9495664156497693.jpg' },
+  { id: 'a5', bg: 'https://i.pinimg.com/1200x/7a/50/a1/7a50a1c4ad6a073f71fe1f42c61fb354.jpg' },
+]
+
 export default function HeaderHome() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [dark, setDark] = useState(false)
@@ -23,7 +32,11 @@ export default function HeaderHome() {
   const { lang, changeLang } = useLang()
   const t = translations[lang]
 
-  const slides = [
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
+  const isAbout = pathname === '/about'
+
+  const homeSlides = [
     {
       id: 1,
       title: t.headerHome.slide1_title,
@@ -37,6 +50,10 @@ export default function HeaderHome() {
       bg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80',
     },
   ]
+
+  // какой набор слайдов показывать для текущего маршрута
+  const currentSlides = isAbout ? aboutSlides : homeSlides
+  const showHero = isHome || isAbout
 
   useEffect(() => {
     gsap.fromTo(logoRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.3 })
@@ -125,40 +142,58 @@ export default function HeaderHome() {
         </div>
       </nav>
 
-      <header className={`gc-header ${dark ? 'dark' : ''}`}>
-        <Swiper
-          modules={[Navigation, Pagination, Autoplay, EffectCreative]}
-          navigation={{ nextEl: '.gc-next', prevEl: '.gc-prev' }}
-          pagination={{ el: '.gc-pagination', type: 'fraction' }}
-          autoplay={{ delay: 4000 }}
-          speed={1200}
-          effect="creative"
-          creativeEffect={{
-            prev: { translate: ['-100%', 0, 0], scale: 1.08 },
-            next: { translate: ['100%', 0, 0], scale: 1.08 },
-          }}
-          className="gc-swiper"
-        >
-          {slides.map((slide) => (
-            <SwiperSlide key={slide.id}>
-              <div className="gc-slide" style={{ backgroundImage: `url(${slide.bg})` }}>
-                <div className="gc-slide-overlay"></div>
-                <div className="gc-slide-content">
-                  <h2 className="gc-slide-title">{slide.title}</h2>
-                  <p className="gc-slide-desc">{slide.subtitle}</p>
+      {showHero && (
+        <header className={`gc-header ${dark ? 'dark' : ''}`}>
+          <Swiper
+            key={pathname /* пересоздаём Swiper при смене маршрута, чтобы не путались слайды/автоплей */}
+            modules={[Navigation, Pagination, Autoplay, EffectCreative]}
+            navigation={{ nextEl: '.gc-next', prevEl: '.gc-prev' }}
+            pagination={{ el: '.gc-pagination', type: 'fraction' }}
+            autoplay={{ delay: isAbout ? 7000 : 4000 }}
+            speed={1200}
+            effect="creative"
+            creativeEffect={{
+              prev: { translate: ['-100%', 0, 0], scale: 1.08 },
+              next: { translate: ['100%', 0, 0], scale: 1.08 },
+            }}
+            className="gc-swiper"
+          >
+            {currentSlides.map((slide) => (
+              <SwiperSlide
+                key={slide.id}
+                data-swiper-autoplay={isAbout ? Math.round(5000 + Math.random() * 5000) : undefined}
+              >
+                <div className="gc-slide" style={{ backgroundImage: `url(${slide.bg})` }}>
+                  <div className="gc-slide-overlay"></div>
+                  {slide.title && (
+                    <div className="gc-slide-content">
+                      <h2 className="gc-slide-title">{slide.title}</h2>
+                      <p className="gc-slide-desc">{slide.subtitle}</p>
+                    </div>
+                  )}
                 </div>
+              </SwiperSlide>
+            ))}
+            <div className="gc-controls">
+              <div className="gc-pagination"></div>
+              <div className={`gc-nav-btns ${isAbout ? 'gc-nav-btns--ghost' : ''}`}>
+                <button className="gc-prev">←</button>
+                <button className="gc-next">→</button>
               </div>
-            </SwiperSlide>
-          ))}
-          <div className="gc-controls">
-            <div className="gc-pagination"></div>
-            <div className="gc-nav-btns">
-              <button className="gc-prev">←</button>
-              <button className="gc-next">→</button>
             </div>
-          </div>
-        </Swiper>
-      </header>
+          </Swiper>
+
+          {/* Статичный заголовок поверх слайдов — только на "О нас" */}
+          {isAbout && (
+            <div className="gc-header-about-overlay">
+              <h2 className="gc-header-about-title">
+                За 13 лет упорной работы мы зарекомендовали себя как один из лидеров
+                строительного рынка Кыргызстана
+              </h2>
+            </div>
+          )}
+        </header>
+      )}
 
       <div className={`gc-menu ${menuOpen ? 'open' : ''}`}>
         <button
