@@ -1,11 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./app/Layout/Layout";
-import About from "./pages/about/About";
+// import About from "./pages/about/About";
 import Home from "./pages/home/Home";
 import Contact from "./pages/contact/Contact";
 import News from "./pages/news/News";
 import Apartments from "./pages/Apartments/Apartments";
 import ObjectDetail from "./pages/Apartments/ObjectDetail/ObjectDetail";
+import AboutCompany from "./pages/about/About";
+import Reviews from "./pages/reviews/Reviews";
+import ReviewDetail from "./pages/reviewsdetail/ReviewsDetail";
+import NewsDetail from "./widgets/newsdetail/NewsDetail";
 
 export const myrouter = createBrowserRouter([
   {
@@ -22,11 +26,23 @@ export const myrouter = createBrowserRouter([
       },
       {
         path: "about",
-        element: <About />,
+        element: <AboutCompany/>,
       },
       {
         path: "news",
         element: <News />,
+      },
+      {
+        path: "news/:id",
+        element: <NewsDetail/>,
+      },
+      {
+        path: "reviews",
+        element: <Reviews />,
+      },
+      {
+        path: "reviews/:id",
+        element: <ReviewDetail />,
       },
       {
         path: "/objects",
@@ -40,6 +56,6 @@ export const myrouter = createBrowserRouter([
   },
   {
     path: "*",
-    element: <div>404</div>,
+    element: <div style={{minHeight:'100vh'}}>404</div>,
   },
 ]);

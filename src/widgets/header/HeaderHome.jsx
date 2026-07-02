@@ -8,71 +8,31 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-creative'
 import './Header.css'
-
-const translations = {
-  ky: {
-    objects: 'Квартиралар жана объектилер',
-    home: 'Башкы бет',
-    about: 'Компания жөнүндө',
-    news: 'Жаңылыктар',
-    reviews: 'Пикирлер',
-    contacts: 'Байланыштар',
-    slide1_title: 'Жашоо үчүн идеалдуу мейкиндик',
-    slide1_sub: 'Заманбап архитектура жана жашыл чөйрө — Green City менен бирге курулуп жатат.',
-    slide2_title: 'Сиздин ийгилигиңизди баса белгилеген кеңселер',
-    slide2_sub: 'Амбициялуу компаниялар үчүн ийкемдүү чечимдер: 45тен 500 м² чейин.',
-  },
-  ru: {
-    objects: 'Квартиры и объекты',
-    home: 'Главная',
-    about: 'О компании',
-    news: 'Новости',
-    reviews: 'Отзывы',
-    contacts: 'Контакты',
-    slide1_title: 'Идеальное пространство для жизни',
-    slide1_sub: 'Современная архитектура и зелёная среда — строим вместе с Green City.',
-    slide2_title: 'Офисы, подчёркивающие ваш успех',
-    slide2_sub: 'Гибкие решения для амбициозных компаний: от 45 до 500 м².',
-  },
-  en: {
-    objects: 'Apartments & Objects',
-    home: 'Home',
-    about: 'About',
-    news: 'News',
-    reviews: 'Reviews',
-    contacts: 'Contacts',
-    slide1_title: 'The ideal space for living',
-    slide1_sub: 'Modern architecture and green environment — building together with Green City.',
-    slide2_title: 'Offices that highlight your success',
-    slide2_sub: 'Flexible solutions for ambitious companies: from 45 to 500 m².',
-  },
-}
-
-const langs = ['ky', 'ru', 'en']
-const langLabels = { ky: 'KY', ru: 'RU', en: 'EN' }
+import { translations, langs, langLabels } from '../../locales/i18n'
+import { useLang } from '../../locales/LangContext'
 
 export default function HeaderHome() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [dark, setDark] = useState(false)
-  const [lang, setLang] = useState('ky')
   const [langOpen, setLangOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const logoRef = useRef()
   const navRef = useRef()
 
+  const { lang, changeLang } = useLang()
   const t = translations[lang]
 
   const slides = [
     {
       id: 1,
-      title: t.slide1_title,
-      subtitle: t.slide1_sub,
+      title: t.headerHome.slide1_title,
+      subtitle: t.headerHome.slide1_sub,
       bg: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80',
     },
     {
       id: 2,
-      title: t.slide2_title,
-      subtitle: t.slide2_sub,
+      title: t.headerHome.slide2_title,
+      subtitle: t.headerHome.slide2_sub,
       bg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80',
     },
   ]
@@ -86,7 +46,6 @@ export default function HeaderHome() {
     document.body.classList.toggle('dark-theme', dark)
   }, [dark])
 
-  // Скролл — хедер становится белым после 80px
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
     window.addEventListener('scroll', onScroll)
@@ -95,7 +54,6 @@ export default function HeaderHome() {
 
   return (
     <>
-      {/* FIXED NAV — поверх всего контента страницы */}
       <nav className={`gc-nav gc-nav--fixed ${scrolled ? 'scrolled' : ''} ${dark ? 'dark' : ''}`} ref={navRef}>
         <div className="gc-nav-left">
           <button className="gc-theme-btn" onClick={() => setDark(!dark)} aria-label="Тема">
@@ -117,7 +75,7 @@ export default function HeaderHome() {
               </svg>
             )}
           </button>
-          <Link to="/objects" className="gc-objects-link">{t.objects}</Link>
+          <Link to="/objects" className="gc-objects-link">{t.headerHome.objects}</Link>
         </div>
 
         <Link to="/" className="gc-logo" ref={logoRef}>
@@ -133,7 +91,7 @@ export default function HeaderHome() {
         </Link>
 
         <div className="gc-nav-right">
-          <a href="tel:+996556111444" className="gc-phone">+996 556 111 444</a>
+          <a href="tel:+996556111444" className="gc-phone">{t.headerHome.phone}</a>
 
           <div className="gc-lang" onClick={() => setLangOpen(!langOpen)}>
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
@@ -151,7 +109,7 @@ export default function HeaderHome() {
                   <div
                     key={l}
                     className={`gc-lang-item ${lang === l ? 'active' : ''}`}
-                    onClick={(e) => { e.stopPropagation(); setLang(l); setLangOpen(false) }}
+                    onClick={(e) => { e.stopPropagation(); changeLang(l); setLangOpen(false) }}
                   >
                     {langLabels[l]}
                   </div>
@@ -166,7 +124,6 @@ export default function HeaderHome() {
         </div>
       </nav>
 
-      {/* HERO BANNER — полная высота экрана */}
       <header className={`gc-header ${dark ? 'dark' : ''}`}>
         <Swiper
           modules={[Navigation, Pagination, Autoplay, EffectCreative]}
@@ -202,7 +159,6 @@ export default function HeaderHome() {
         </Swiper>
       </header>
 
-      {/* FULLSCREEN MENU */}
       <div className={`gc-menu ${menuOpen ? 'open' : ''}`}>
         <button
           className={`gc-burger gc-menu-burger ${menuOpen ? 'open' : ''}`}
@@ -213,12 +169,12 @@ export default function HeaderHome() {
         </button>
         <nav className="gc-menu-links">
           {[
-            { to: '/', label: t.home },
-            { to: '/about', label: t.about },
-            { to: '/objects', label: t.objects },
-            { to: '/news', label: t.news },
-            { to: '/reviews', label: t.reviews },
-            { to: '/contacts', label: t.contacts },
+            { to: '/', label: t.headerHome.home },
+            { to: '/about', label: t.headerHome.about },
+            { to: '/objects', label: t.headerHome.objects },
+            { to: '/news', label: t.headerHome.news },
+            { to: '/reviews', label: t.headerHome.reviews },
+            { to: '/contacts', label: t.headerHome.contacts },
           ].map((link) => (
             <Link key={link.to} to={link.to} className="gc-menu-link" onClick={() => setMenuOpen(false)}>
               {link.label}

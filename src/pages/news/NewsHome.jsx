@@ -5,7 +5,6 @@ import { translations } from "../../locales/i18n";
 import { useLang } from "../../locales/LangContext";
 import { useNewsStore } from "../../store";
 import { parseError } from "../../utils/parseError";
-import Obratnyi from "../../widgets/ui/ibratka/Obratnyi";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -76,7 +75,7 @@ function NewsCard({ item, big, delay, onClick }) {
   );
 }
 
-export default function News() {
+export default function NewsHome() {
   const { lang } = useLang();
   const t = translations[lang].news;
   const navigate = useNavigate();
@@ -210,7 +209,6 @@ export default function News() {
           </>
         )}
       </div>
-      <Obratnyi/>
     </div>
   );
 }

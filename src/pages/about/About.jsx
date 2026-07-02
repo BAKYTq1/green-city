@@ -1,331 +1,517 @@
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import './About.scss';
+'use client'
+import { useEffect, useRef, useState } from 'react'
+import { useScroll, useTransform, motion, AnimatePresence, useInView } from 'framer-motion'
+import { ZoomParallax } from './Zoomparallax/ZoomParallax'
 
-// СҮРӨТТӨРДҮ ИМПОРТ КЫЛУУ (Жолдорун өзүңө карап түзөп ал)
-import heroImg1 from '../../assets/company_center_2.png';
-import heroImg2 from '../../assets/company_center_1.png';
-import featureImg1 from '../../assets/company_about_1.png';
-import featureImg2 from '../../assets/company_about_2.png';
-import leaderBgFixed from '../../assets/company_gallery_1.png';
-import teamPhoto1 from '../../assets/company_team_1.png';
-import teamPhoto2 from '../../assets/company_team_2.jpg';
+// ─── ДАННЫЕ ───
+const parallaxImages = [
+  { src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80', alt: 'Royal — жилой комплекс' },
+  { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80', alt: 'Royal — фасад' },
+  { src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=800&fit=crop&crop=entropy&auto=format&q=80', alt: 'Royal — интерьер' },
+  { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80', alt: 'Royal — двор' },
+  { src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=800&fit=crop&crop=entropy&auto=format&q=80', alt: 'Royal — пентхаус' },
+  { src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80', alt: 'Royal — бизнес-центр' },
+  { src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80', alt: 'Royal — Иссык-Куль' },
+]
 
-gsap.registerPlugin(ScrollTrigger);
-
-// 3-СЕКЦИЯ: БАННЕРДИН МААЛЫМАТТАРЫ
-const BANNER_SLIDES = [
+const values = [
   {
-    id: 1,
-    subtitle: "Качество и надёжность",
-    desc: "Мы используем современные технологии, инженерные решения и сертифицированные материалы, чтобы строить объекты, которые сохраняют прочность и эстетику на протяжении десятилетий.",
-    bg: featureImg1 // Импорттолгон өзгөрмө
+    title: 'Качество и надёжность',
+    text: 'Мы используем современные технологии, инженерные решения и сертифицированные материалы, чтобы строить объекты, которые сохраняют прочность и эстетику на протяжении десятилетий.',
+    image: '/images/royal/value-1.jpg',
   },
   {
-    id: 2,
-    subtitle: "Экологичность и комфорт",
-    desc: "Создаем продуманную зеленую инфраструктуру для комфортной жизни вашей семьи в гармонии с природой.",
-    bg: featureImg2 // Импорттолгон өзгөрмө
-  }
-];
-
-// 5-СЕКЦИЯ: ЖЕТЕКЧИЛЕРДИН МААЛЫМАТТАРЫ
-const LEADERS_DATA = [
-  {
-    id: 1,
-    name: "АКЖИГИТОВ МИРЛАН ТОЛОНОВИЧ",
-    position: "Генеральный директор строительной компании ROYAL",
-    bio1: "Мирлан Акжигитов — один из самых успешных молодых предпринимателей Кыргызстана. По образованию он менеджер по управлению бизнесом. Образование он получил в городе Брэдфорд, Великобритания. Именно там он приобрёл ценные навыки: упорство, системность, трудолюбие, умение ставить цели и добиваться их.",
-    bio2: "Вернувшись на родину, Мирлан решил начать своё дело в строительной сфере, чтобы создавать не просто качественные, но и эстетически выразительные, уникальные здания. Чтобы развиваться в этих условиях, нужно было быть гибким, быстро принимать решения и оставаться конкурентоспособным.",
-    photo: teamPhoto1 // Импорттолгон өзгөрмө
+    title: 'Стиль и эстетика',
+    text: 'Каждый проект — это синтез архитектурного видения и функциональности. Мы создаём пространства, в которых хочется жить и работать.',
+    image: '/images/royal/value-2.jpg',
   },
   {
-    id: 2,
-    name: "ДРУГОЙ РУКОВОДИТЕЛЬ КОМПАНИИ",
-    position: "Исполнительный директор строительной компании GREEN CITY",
-    bio1: "Опыт работы в строительной индустрии более 10 лет. Специализируется на управлении масштабными проектами и внедрении инновационных экологических стандартов строительства.",
-    bio2: "Под его руководством были успешно реализованы ключевые жилые комплексы и бизнес-центры, ставшие визитной карточкой современной архитектуры.",
-    photo: teamPhoto2 // Импорттолгон өзгөрмө
-  }
-];
+    title: 'Доверие и прозрачность',
+    text: 'Юридическая чистота каждой сделки, полная прозрачность на всех этапах строительства и своевременная сдача объектов — наши ключевые обязательства.',
+    image: '/images/royal/value-3.jpg',
+  },
+]
 
-// 6-СЕКЦИЯ: ПАРТНЕРЛЕРДИН ЛОГОТИПТЕРИ
-const PARTNERS_DATA = [
-  { id: 1, name: "BEKEMBLOCK" },
-  { id: 2, name: "LAMINAM" },
-  { id: 3, name: "LG" },
-  { id: 4, name: "SCHÜCO" }
-];
+const partners = [
+  { name: 'BekemBlock', logo: '/images/partners/bekemblock.svg' },
+  { name: 'Laminam',    logo: '/images/partners/laminam.svg' },
+  { name: 'LG',         logo: '/images/partners/lg.svg' },
+  { name: 'Schüco',     logo: '/images/partners/schuco.svg' },
+]
 
-export default function About() {
-  const containerRef = useRef(null);
-  const parallaxRef = useRef(null);
-  
-  const [bannerIdx, setBannerIdx] = useState(0);
-  const [leaderIdx, setLeaderIdx] = useState(0);
-  const [formData, setFormData] = useState({ name: '', phone: '' });
+const directorSlides = [
+  'Мирлан Акжигитов — один из самых успешных молодых предпринимателей Кыргызстана. По образованию он менеджер по управлению бизнесом. Образование он получил в городе Брадфорд, Великобритания. Именно там он приобрёл ценные навыки: упорство, системность, трудолюбие, умение ставить цели и добиваться их. Там же зародилась его любовь к архитектуре и искусству, к красивым зданиям, подобно которым он мечтал построить в Кыргызстане.',
+  'Вернувшись на родину, Мирлан решил начать своё дело в строительной сфере, чтобы создавать не просто качественные, но и эстетически выразительные, уникальные здания. Не имея опыта, пришлось столкнуться с множеством трудностей: от сложностей с поставками до резких изменений в экономической или законодательной среде. Чтобы развиваться в этих условиях, нужно было быть гибким, быстро принимать решения, сохранять качество и оставаться конкурентоспособными.',
+]
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log("Жөнөтүлгөн маалыматтар:", formData);
-    alert("Спасибо! Ваша заявка успешно отправлена.");
-    setFormData({ name: '', phone: '' });
-  };
+// ─── ХЕЛПЕР: анимация при появлении ───
+function FadeUp({ children, delay = 0, className = '' }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      
-      // Маска анимациясы
-      gsap.utils.toArray('.gc-mask-trigger').forEach((box) => {
-        const img = box.querySelector('img');
-        gsap.fromTo(box,
-          { clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)', opacity: 0 },
-          {
-            clipPath: 'polygon(0 0%, 100% 0%, 100% 100%, 0 100%)',
-            opacity: 1,
-            duration: 1.5,
-            ease: 'power4.inOut',
-            scrollTrigger: { trigger: box, start: 'top 85%' }
-          }
-        );
-        if (img) {
-          gsap.fromTo(img, { scale: 1.3 }, { scale: 1, duration: 1.8, ease: 'power3.out', scrollTrigger: { trigger: box, start: 'top 85%' } });
-        }
-      });
+function FadeIn({ children, delay = 0, className = '' }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.8, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
-      // Тексттердин калкып чыгышы
-      gsap.utils.toArray('.gc-fade-up').forEach((el) => {
-        gsap.fromTo(el,
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' } }
-        );
-      });
+// ─── СЕКЦИЯ: О компании — левая фото едет вниз, правая вверх ───
+function AboutSection() {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
 
-      // Карталардын stagger анимациясы
-      gsap.fromTo('.gc-info-card',
-        { opacity: 0, x: 30 },
-        { opacity: 1, x: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '.gc-inner-layout', start: 'top 75%' } }
-      );
-
-      // Параллакс анимациясы
-      if (parallaxRef.current) {
-        gsap.fromTo('.gc-para-left', { y: '-60px' }, { y: '60px', scrollTrigger: { trigger: parallaxRef.current, start: 'top bottom', end: 'bottom top', scrub: true } });
-        gsap.fromTo('.gc-para-right', { y: '60px' }, { y: '-60px', scrollTrigger: { trigger: parallaxRef.current, start: 'top bottom', end: 'bottom top', scrub: true } });
-      }
-
-      // Партнерлордун анимациясы
-      gsap.fromTo('.gc-partner-item',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out', scrollTrigger: { trigger: '.gc-partners-grid', start: 'top 90%' } }
-      );
-
-      // Форманын анимациясы
-      gsap.fromTo('.gc-cta-form-card',
-        { opacity: 0, y: 50, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '.gc-cta-section', start: 'top 75%' } }
-      );
-
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
+  // Левая фото едет вниз (+80px), правая едет вверх (-80px)
+  const leftY  = useTransform(scrollYProgress, [0, 1], [-60, 80])
+  const rightY = useTransform(scrollYProgress, [0, 1], [60, -80])
 
   return (
-    <div className="green-city-page" ref={containerRef}>
-      
-      {/* 1-СЕКЦИЯ: ИНТРО */}
-      <section className="gc-hero-section">
-        <div className="gc-container">
-          <h1 className="gc-hero-title gc-fade-up">
-            ЗА 13 ЛЕТ УПОРНОЙ РАБОТЫ МЫ ЗАРЕКОМЕНДОВАЛИ СЕБЯ КАК ОДИН ИЗ ЛИДЕРОВ СТРОИТЕЛЬНОГО РЫНКА КЫРГЫЗSTANА
-          </h1>
-          <div className="gc-hero-grid">
-            <div className="gc-hero-left-img gc-mask-trigger">
-              <img src={heroImg1} alt="Green City Project" />
-            </div>
-            <div className="gc-hero-desc gc-fade-up">
-              <p>
-                Реализовав более 30 масштабных проектов, охватывающих жилые комплексы, Бизнес-центры, клубные дома и объекты для отдыха. Наш подход – это синтез инноваций, безупречного качества и высокого профессионама на каждом этапе реализации.
-              </p>
-            </div>
-            <div className="gc-hero-right-img gc-mask-trigger">
-              <img src={heroImg2} alt="Green City Architecture" />
-            </div>
-          </div>
-        </div>
-      </section>
+    <section ref={ref} className="bg-[#f7f5f0] py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <FadeUp>
+          <h2 className="text-3xl md:text-[2.6rem] font-bold text-[#1a1a1a] uppercase leading-tight max-w-3xl mb-16">
+            За 13 лет упорной работы мы зарекомендовали себя как один из лидеров
+            строительного рынка Кыргызстана
+          </h2>
+        </FadeUp>
 
-      {/* 2-СЕКЦИЯ: ТЕХНИКАЛЫК АСИММЕТРИЯЛЫК МАКЕТ */}
-      <section className="gc-features-section">
-        <div className="gc-container">
-          <div className="gc-asymmetric-grid">
-            <div className="gc-left-giant-media gc-mask-trigger">
-              <img src={featureImg1} alt="Green City Tower" />
-            </div>
-            <div className="gc-content-side">
-              <h2 className="gc-main-title gc-fade-up">
-                <span>G</span>reen City это-
-              </h2>
-              <div className="gc-inner-layout">
-                <div className="gc-card-col-right-top">
-                  <div className="gc-info-card">
-                    <span className="gc-num">(01)</span>
-                    <p>Более 6000 <strong>Довольных Клиентов</strong>, доверивших нам мечту о собственном жилье</p>
-                  </div>
-                  <div className="gc-info-card">
-                    <span className="gc-num">(02)</span>
-                    <p><strong>Гарантия Безопасности</strong> — все объекты сопровождаются полным пакетом разрешительной документации</p>
-                  </div>
-                </div>
-                <div className="gc-card-col-left-bottom">
-                  <div className="gc-info-card">
-                    <span className="gc-num">(03)</span>
-                    <p><strong>Точные сроки</strong> сдачи объектов</p>
-                  </div>
-                  <div className="gc-info-card">
-                    <span className="gc-num">(02)</span>
-                    <p><strong>Юридическая чистота</strong> каждой сделки и полная прозрачность</p>
-                  </div>
-                </div>
-                <div className="gc-right-sub-media gc-mask-trigger">
-                  <img src={featureImg2} alt="Green City Building" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center min-h-[60vh]">
 
-      {/* 3-СЕКЦИЯ: "ЦЕННОСТИ" БАННЕР СЛАЙДЕРИ */}
-      <section className="gc-values-banner-section">
-        <div className="gc-banner-bg-wrapper">
-          <img src={BANNER_SLIDES[bannerIdx].bg} alt="Background" key={bannerIdx} className="gc-banner-fade-img" />
-          <div className="gc-banner-overlay"></div>
-        </div>
-        <div className="gc-banner-container">
-          <div className="gc-banner-content">
-            <h2 className="gc-banner-main-title">Ценности компании <span>Green City</span></h2>
-            <div className="gc-banner-info-block" key={`banner-text-${bannerIdx}`}>
-              <h3 className="gc-banner-subtitle">{BANNER_SLIDES[bannerIdx].subtitle}</h3>
-              <p className="gc-banner-desc">{BANNER_SLIDES[bannerIdx].desc}</p>
+          {/* Левая фото — едет ВНИЗ при скролле */}
+          <motion.div style={{ y: leftY }} className="md:col-span-3">
+            <div className="aspect-[3/4] overflow-hidden">
+              <img
+                src="/images/royal/about-1.jpg"
+                alt="Royal — проект"
+                className="w-full h-full object-cover"
+              />
             </div>
-          </div>
-          <div className="gc-banner-controls">
-            <button className="gc-banner-arrow-btn" onClick={() => setBannerIdx((prev) => (prev - 1 + BANNER_SLIDES.length) % BANNER_SLIDES.length)}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <button className="gc-banner-arrow-btn" onClick={() => setBannerIdx((prev) => (prev + 1) % BANNER_SLIDES.length)}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          </div>
-        </div>
-      </section>
+          </motion.div>
 
-      {/* 4-СЕКЦИЯ: ПАРАЛЛАКС БЛОК */}
-      <section className="gc-parallax-section" ref={parallaxRef}>
-        <div className="gc-container">
-          <div className="gc-parallax-grid">
-            <div className="gc-para-img-wrapper gc-para-left">
-              <img src={heroImg1} alt="Green City Bishkek" />
-            </div>
-            <div className="gc-para-text-block gc-fade-up">
-              <h2>МЫ РАЗВИВАЕМ ЖИЛЫЕ КОМПЛЕКСЫ В БИШКЕКЕ И ЦЕНТРЫ ОТДЫХА НА ИССЫК-КУЛЕ, ЗАДАВАЯ ТРЕНДЫ И ПОВЫШАЯ КАЧЕСТВО ЖИЗНИ В КЫРГЫЗСТАНЕ.</h2>
-            </div>
-            <div className="gc-para-img-wrapper gc-para-right">
-              <img src={heroImg2} alt="Green City Issyk-Kul" />
-            </div>
-          </div>
-        </div>
-      </section>
+          {/* Текст по центру — стоит на месте */}
+          <FadeUp delay={0.15} className="md:col-span-5 flex flex-col justify-center">
+            <p className="text-[#5a5a5a] text-sm md:text-base leading-relaxed">
+              Реализовав более 30 масштабных проектов, охватывающих жилые
+              комплексы, Бизнес-центры, клубные дома и объекты для отдыха.
+              Наш подход — это синтез инноваций, безупречного качества и
+              высокого профессионализма на каждом этапе реализации.
+            </p>
+          </FadeUp>
 
-      {/* 5-СЕКЦИЯ: РУКОВОДСТВО СЛАЙДЕР */}
-      <section className="gc-leader-slider-section">
-        <div className="gc-leader-bg-fixed">
-          <img src={leaderBgFixed} alt="Background" />
-          <div className="gc-leader-overlay"></div>
-        </div>
-        <div className="gc-leader-container">
-          <div className="gc-leader-grid">
-            <div className="gc-leader-photo-side">
-              <div className="gc-leader-img-frame" key={`photo-${leaderIdx}`}>
-                <img src={LEADERS_DATA[leaderIdx].photo} alt={LEADERS_DATA[leaderIdx].name} />
-              </div>
-              <div className="gc-leader-controls">
-                <button className="gc-leader-btn" onClick={() => setLeaderIdx((prev) => (prev - 1 + LEADERS_DATA.length) % LEADERS_DATA.length)}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-                </button>
-                <button className="gc-leader-btn" onClick={() => setLeaderIdx((prev) => (prev + 1) % LEADERS_DATA.length)}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
-              </div>
+          {/* Правая фото — едет ВВЕРХ при скролле */}
+          <motion.div style={{ y: rightY }} className="md:col-span-4">
+            <div className="aspect-[3/4] overflow-hidden">
+              <img
+                src="/images/royal/about-2.jpg"
+                alt="Royal — здание"
+                className="w-full h-full object-cover grayscale"
+              />
             </div>
-            <div className="gc-leader-info-side" key={`text-${leaderIdx}`}>
-              <h2 className="gc-leader-name">{LEADERS_DATA[leaderIdx].name}</h2>
-              <h4 className="gc-leader-position">{LEADERS_DATA[leaderIdx].position}</h4>
-              <div className="gc-leader-bio">
-                <p>{LEADERS_DATA[leaderIdx].bio1}</p>
-                <p>{LEADERS_DATA[leaderIdx].bio2}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          </motion.div>
 
-      {/* 6-СЕКЦИЯ: ПАРТНЕРЛЕР БЛОГУ */}
-      <section className="gc-partners-section">
-        <div className="gc-container">
-          <div className="gc-partners-header">
-            <h2 className="gc-partners-title gc-fade-up">НАДЁЖНЫЕ ПАРТНЁРЫ, С КОТОРЫМИ МЫ СТРОИМ БУДУЩЕЕ КЫРГЫЗСТАНА</h2>
-            <span className="gc-partners-tag gc-fade-up">Партнеры</span>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── СЕКЦИЯ: Мы развиваем — большой текст по центру, 2 фото по краям ───
+function WeGrowSection() {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+
+  const leftY  = useTransform(scrollYProgress, [0, 1], [-80, 80])
+  const rightY = useTransform(scrollYProgress, [0, 1], [80, -80])
+
+  return (
+    <section ref={ref} className="bg-[#f7f5f0] py-0 overflow-hidden min-h-screen relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
+
+        {/* Левая фото — едет вниз */}
+        <motion.div
+          style={{ y: leftY }}
+          className="absolute left-0 top-0 w-[18vw] max-w-[230px]"
+        >
+          <div className="aspect-[3/5] overflow-hidden">
+            <img
+              src="/images/royal/grow-left.jpg"
+              alt="Royal — комплекс"
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div className="gc-partners-grid">
-            {PARTNERS_DATA.map((partner) => (
-              <div className="gc-partner-item" key={partner.id}>
-                <div className="gc-partner-logo-mock">{partner.name}</div>
+        </motion.div>
+
+        {/* Правая фото — едет вверх */}
+        <motion.div
+          style={{ y: rightY }}
+          className="absolute right-0 top-0 w-[18vw] max-w-[230px]"
+        >
+          <div className="aspect-[3/5] overflow-hidden">
+            <img
+              src="/images/royal/grow-right.jpg"
+              alt="Royal — фасад"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </motion.div>
+
+        {/* Текст по центру */}
+        <div className="flex items-center justify-center min-h-screen py-24">
+          <FadeUp className="text-center max-w-2xl mx-auto px-8">
+            <p className="text-2xl md:text-4xl font-bold uppercase text-[#1a1a1a] leading-snug tracking-wide">
+              Мы развиваем жилые комплексы в Бишкеке и центры отдыха на Иссык-Куле,
+              задавая тренды и повышая качество жизни в Кыргызстане.
+            </p>
+          </FadeUp>
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
+// ─── СЕКЦИЯ: Royal это — ───
+function RoyalIsSection() {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const leftY  = useTransform(scrollYProgress, [0, 1], [-40, 60])
+  const rightY = useTransform(scrollYProgress, [0, 1], [40, -60])
+
+  return (
+    <section ref={ref} className="bg-white py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+
+          {/* Большое фото слева — едет вниз */}
+          <motion.div style={{ y: leftY }} className="md:col-span-5">
+            <div className="aspect-[3/4] overflow-hidden">
+              <img
+                src="/images/royal/royal-is-1.jpg"
+                alt="Royal — башня"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Центр: лого + пункты */}
+          <div className="md:col-span-4 flex flex-col gap-10 pt-8">
+            <FadeUp>
+              <div className="text-[2.5rem] font-serif text-[#1a1a1a] leading-none mb-6">
+                <span className="font-bold italic text-[3rem]">R</span>oyal это—
               </div>
+            </FadeUp>
+
+            {[
+              { n: '01', text: 'Более 6000 довольных клиентов, доверивших нам мечту о собственном жилье' },
+              { n: '02', text: 'Гарантия безопасности — все объекты сопровождаются полным пакетом разрешительной документации' },
+              { n: '03', text: 'Точные сроки сдачи объектов' },
+              { n: '04', text: 'Юридическая чистота каждой сделки и полная прозрачность' },
+            ].map((item, i) => (
+              <FadeUp key={item.n} delay={i * 0.1}>
+                <p className="text-xs text-[#b0a898] mb-1">({item.n})</p>
+                <p className="text-[#c8a96e] text-sm leading-relaxed font-medium">
+                  {item.text}
+                </p>
+              </FadeUp>
+            ))}
+          </div>
+
+          {/* Фото справа — едет вверх */}
+          <motion.div style={{ y: rightY }} className="md:col-span-3 pt-32">
+            <div className="aspect-[3/4] overflow-hidden">
+              <img
+                src="/images/royal/royal-is-2.jpg"
+                alt="Royal — объект"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── СЕКЦИЯ: Ценности ───
+function ValuesSlider() {
+  const [active, setActive] = useState(0)
+
+  return (
+    <section className="relative h-screen overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.7 }}
+          className="absolute inset-0"
+        >
+          <img
+            src={values[active].image}
+            alt={values[active].title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/55" />
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="relative z-10 h-full flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-12">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-xs font-semibold uppercase tracking-widest text-amber-400 mb-4"
+        >
+          Ценности компании Royal
+        </motion.p>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-lg"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-snug">
+              {values[active].title}
+            </h2>
+            <p className="text-white/70 text-sm md:text-base leading-relaxed">
+              {values[active].text}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="flex items-center gap-4 mt-10">
+          <button
+            onClick={() => setActive((p) => (p - 1 + values.length) % values.length)}
+            className="w-10 h-10 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
+          >
+            ←
+          </button>
+          <button
+            onClick={() => setActive((p) => (p + 1) % values.length)}
+            className="w-10 h-10 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
+          >
+            →
+          </button>
+          <div className="flex gap-2 ml-2">
+            {values.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={`w-6 h-px transition-all duration-300 ${i === active ? 'bg-white' : 'bg-white/30'}`}
+              />
             ))}
           </div>
         </div>
-      </section>
-
-      {/* 7-СЕКЦИЯ: АКЫРКЫ БАЙЛАНЫШ ФОРМАСЫ */}
-      <section className="gc-cta-section">
-        <div className="gc-container">
-          <h2 className="gc-cta-title gc-fade-up">
-            Доверьте нам <br /> мы приведём вас к вашему будущему дому.
-          </h2>
-          <div className="gc-cta-form-wrapper">
-            <form onSubmit={handleFormSubmit} className="gc-cta-form-card">
-              <div className="gc-input-group">
-                <input 
-                  type="text" 
-                  required 
-                  placeholder="Ваше имя *" 
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                />
-              </div>
-              <div className="gc-input-group">
-                <input 
-                  type="tel" 
-                  required 
-                  placeholder="Ваш номер телефона *" 
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                />
-              </div>
-              <button type="submit" className="gc-submit-btn">ОТПРАВИТЬ</button>
-              <div className="gc-form-footer">
-                <a href="#privacy" className="gc-report-link" onClick={(e) => e.preventDefault()}>
-                  Сообщить о нарушении <span className="gc-help-icon">?</span>
-                </a>
-                <span className="gc-powered-by">Заряжено <strong>Битрикс 24</strong></span>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  );
+      </div>
+    </section>
+  )
 }
+
+// ─── СЕКЦИЯ: Директор ───
+function DirectorSection() {
+  const [slide, setSlide] = useState(0)
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-100px' })
+
+  return (
+    <section
+      ref={ref}
+      style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 60%, #0a0a0a 100%)' }}
+      className="py-24 overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+
+        {/* Фото — появляется слева */}
+        <motion.div
+          className="md:col-span-4"
+          initial={{ opacity: 0, x: -60 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="aspect-[3/4] overflow-hidden grayscale">
+            <img
+              src="/images/royal/director.jpg"
+              alt="Акжигитов Мирлан Толонович"
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+        </motion.div>
+
+        {/* Текст — появляется справа */}
+        <motion.div
+          className="md:col-span-8 text-white"
+          initial={{ opacity: 0, x: 60 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold uppercase mb-2 tracking-wide">
+            Акжигитов Мирлан<br />Толонович
+          </h2>
+          <p className="text-amber-400 text-sm font-medium mb-8 uppercase tracking-widest">
+            Генеральный директор строительной компании ROYAL
+          </p>
+
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={slide}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.45 }}
+              className="text-white/70 text-sm md:text-base leading-relaxed max-w-2xl"
+            >
+              {directorSlides[slide]}
+            </motion.p>
+          </AnimatePresence>
+
+          <div className="flex items-center gap-4 mt-10">
+            <button
+              onClick={() => setSlide((p) => (p - 1 + directorSlides.length) % directorSlides.length)}
+              className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
+            >
+              ←
+            </button>
+            <button
+              onClick={() => setSlide((p) => (p + 1) % directorSlides.length)}
+              className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
+            >
+              →
+            </button>
+            <span className="text-white/30 text-sm ml-2">
+              {slide + 1} / {directorSlides.length}
+            </span>
+          </div>
+        </motion.div>
+
+      </div>
+    </section>
+  )
+}
+
+// ─── СЕКЦИЯ: Партнёры ───
+function PartnersSection() {
+  return (
+    <section className="bg-white py-24 border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <FadeUp className="max-w-lg">
+            <h2 className="text-3xl md:text-4xl font-bold uppercase text-[#1a1a1a] leading-tight">
+              Надёжные партнёры, с которыми мы строим будущее Кыргызстана
+            </h2>
+          </FadeUp>
+          <FadeIn delay={0.2}>
+            <p className="text-xs text-[#b0a898] uppercase tracking-widest">
+              Партнёры
+            </p>
+          </FadeIn>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gray-200 border border-gray-200">
+          {partners.map((p, i) => (
+            <FadeIn key={p.name} delay={i * 0.1}>
+              <div className="flex items-center justify-center py-12 px-8 h-full">
+                <img
+                  src={p.logo}
+                  alt={p.name}
+                  className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── ГЛАВНЫЙ КОМПОНЕНТ ───
+export default function AboutCompany() {
+  useEffect(() => {
+    let lenis
+    let rafId
+    ;(async () => {
+      const { default: Lenis } = await import('@studio-freight/lenis')
+      lenis = new Lenis()
+      const raf = (time) => {
+        lenis.raf(time)
+        rafId = requestAnimationFrame(raf)
+      }
+      rafId = requestAnimationFrame(raf)
+    })()
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      lenis?.destroy?.()
+    }
+  }, [])
+
+  return (
+    <main className="w-full">
+      {/* 1. Зум-параллакс */}
+
+      {/* 2. О компании: фото едут в разные стороны */}
+      <AboutSection />
+
+      {/* 3. "Мы развиваем..." — текст + 2 фото по краям */}
+      <WeGrowSection />
+
+      {/* 4. Royal это — */}
+      <RoyalIsSection />
+
+      <ZoomParallax
+        images={parallaxImages}
+        title={
+          <p style={{color:'white'}}>
+            Строительная компания Royal —<br />
+            это символ надёжности, стиля<br />
+            и стремления к совершенству.
+          </p>
+        }
+      />
+      {/* 5. Ценности */}
+      <ValuesSlider />
+
+      {/* 6. Директор */}
+      <DirectorSection />
+
+      {/* 7. Партнёры */}
+      <PartnersSection />
+    </main>
+  )
+}
+ 

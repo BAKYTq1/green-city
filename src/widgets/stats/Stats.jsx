@@ -1,16 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Stats.module.scss'
+import { translations } from '../../locales/i18n'
+import { useLang } from '../../locales/LangContext'
+import { useState } from 'react'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const stats = [
-  { value: 3000, suffix: '+', label: 'иш орундар түзүлдү' },
-  { value: 29, suffix: '', label: 'объектилер' },
-  { value: 13, suffix: '', label: 'жыл Кыргызстан базарында' },
-  { value: 5000, suffix: '+', label: 'канааттанган кардарлар' },
-]
 
 function Counter({ value, suffix }) {
   const [count, setCount] = useState(0)
@@ -49,14 +45,22 @@ function Counter({ value, suffix }) {
 }
 
 export default function Stats() {
+  const { lang } = useLang()
+  const t = translations[lang].stats
+
+  const stats = [
+    { value: 3000, suffix: '+', label: t.jobs },
+    { value: 29,   suffix: '',  label: t.objects },
+    { value: 13,   suffix: '',  label: t.years },
+    { value: 5000, suffix: '+', label: t.clients },
+  ]
+
   const sectionRef = useRef()
   const textRef = useRef()
   const numbersRef = useRef()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
-      // Текст слева
       gsap.fromTo(textRef.current,
         { opacity: 0, x: -60 },
         {
@@ -64,8 +68,6 @@ export default function Stats() {
           scrollTrigger: { trigger: textRef.current, start: 'top 80%' }
         }
       )
-
-      // Цифры снизу по очереди
       gsap.fromTo(
         numbersRef.current.querySelectorAll(`.${styles.statItem}`),
         { opacity: 0, y: 60 },
@@ -75,7 +77,6 @@ export default function Stats() {
           scrollTrigger: { trigger: numbersRef.current, start: 'top 85%' }
         }
       )
-
     }, sectionRef)
 
     return () => ctx.revert()
@@ -101,7 +102,7 @@ export default function Stats() {
             </svg>
           </div>
           <p>
-            <span className={styles.brand}>Green City</span> — курулуш компаниясы, ага ишенишет. Сүйөнүүгө мүмкүн болгон сапат менен курабыз
+            <span className={styles.brand}>Green City</span> {t.description}
           </p>
         </div>
 

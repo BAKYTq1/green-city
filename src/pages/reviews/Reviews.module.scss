@@ -253,3 +253,37 @@
   object-fit: cover;
   transition: transform 0.4s ease;
 }
+.errorBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 2rem 0;
+}
+
+.errorText {
+  color: #a32d2d;
+  font-size: 15px;
+  text-align: center;
+}
+
+.retryBtn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1px solid currentColor;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.statusText {
+  text-align: center;
+  color: #888;
+  padding: 2rem 0;
+  font-size: 15px;
+}

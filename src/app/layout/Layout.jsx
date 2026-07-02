@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../../widgets/footer/Footer";
@@ -27,3 +28,4 @@ export default function Layout() {
     </>
   );
 }
+

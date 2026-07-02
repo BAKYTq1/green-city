@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Reviews.module.scss'
-import Button from '../ui/buttton/Button'
 import { translations } from '../../locales/i18n'
 import { useLang } from '../../locales/LangContext'
 import { useReviewsStore } from '../../store'
+import Button from '../../widgets/ui/buttton/Button'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -32,7 +32,7 @@ export default function Reviews() {
     id: item.id,
     title: item.name,
     meta: item.descriptions,
-    img: getYoutubeThumbnail(item.url),
+    img: item.image || getYoutubeThumbnail(item.url),
     align: i % 2 === 0 ? 'left' : 'right',
   }))
 

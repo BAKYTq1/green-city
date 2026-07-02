@@ -332,6 +332,7 @@
   background: #0d2210;
   z-index: 200;
   display: flex;
+  z-index: 1212;
   flex-direction: column;
   justify-content: center;
   padding: 80px 60px;

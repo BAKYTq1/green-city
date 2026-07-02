@@ -275,3 +275,340 @@ $gc-border: #e8e8e6;
 @keyframes leaderTextSlide { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes bannerImgFade { from { opacity: 0.6; transform: scale(1.02); } to { opacity: 1; transform: scale(1); } }
 @keyframes bannerTextUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══════════════════════════════════════════════════
+   GREEN CITY — ABOUT PAGE SCSS
+   Мазмунун өз About.scss файлыңдын аягына кош
+   ═══════════════════════════════════════════════════ */
+
+/* ── WIREFRAME HERO ─────────────────────────────── */
+.gc-wireframe-hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #0a1a0e;
+}
+
+.gc-wireframe-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  canvas { width: 100% !important; height: 100% !important; }
+}
+
+/* Тёмный оверлей поверх wireframe — текст читается */
+.gc-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 26, 14, 0.55) 0%,
+    rgba(10, 26, 14, 0.3) 50%,
+    rgba(10, 26, 14, 0.7) 100%
+  );
+}
+
+.gc-hero-inner {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: #fff;
+}
+
+.gc-hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #8fc97a;
+  margin-bottom: 20px;
+}
+
+/* 3D слова */
+.gc-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.gc-word {
+  display: inline-block;
+  will-change: transform, opacity;
+  perspective: 600px;
+}
+
+.gc-hero-title {
+  font-size: clamp(22px, 4vw, 52px);
+  color: #fff;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.gc-hero-sub {
+  margin-top: 24px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Scroll hint */
+.gc-scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: gcScrollBounce 2s ease-in-out infinite;
+  span { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+}
+.gc-scroll-line {
+  display: block !important;
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, rgba(143,201,122,0.8), transparent);
+}
+@keyframes gcScrollBounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ── STATS ──────────────────────────────────────── */
+.gc-stats-section {
+  background: #0d1f11;
+  padding: 64px 0;
+}
+.gc-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid rgba(255,255,255,0.06);
+  @media (max-width: 768px) { grid-template-columns: repeat(2, 1fr); }
+}
+.gc-stat-card {
+  background: #0d1f11;
+  padding: 40px 32px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.4s ease, transform 0.3s ease;
+  &:last-child { border-right: none; }
+  &:hover { background: #162a1a; transform: translateY(-4px); }
+}
+.gc-stat-value {
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 700;
+  color: #8fc97a;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.gc-stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ── WIREFRAME BANNER CANVAS ────────────────────── */
+.gc-wireframe-banner-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.5;
+  pointer-events: none;
+  canvas { width: 100% !important; height: 100% !important; }
+}
+
+/* ── BANNER DOTS + EYEBROW ──────────────────────── */
+.gc-banner-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 14px;
+  display: block;
+}
+.gc-banner-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.gc-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &.active { background: #8fc97a; transform: scale(1.4); }
+}
+.gc-banner-fade-img {
+  animation: gcBannerFade 0.7s ease forwards;
+}
+@keyframes gcBannerFade {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── SPLIT SECTION ──────────────────────────────── */
+.gc-split-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #0a1a0e;
+}
+.gc-split-left,
+.gc-split-right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  will-change: transform;
+  overflow: hidden;
+  img { width: 100%; height: 100%; object-fit: cover; display: block; }
+}
+.gc-split-left  { left: 0; }
+.gc-split-right { right: 0; }
+
+.gc-split-text {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  padding: 28px 36px;
+  background: rgba(8, 20, 10, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(143, 201, 122, 0.2);
+  border-radius: 2px;
+  max-width: 540px;
+  opacity: 0;
+  will-change: transform, opacity;
+  h2 {
+    font-size: clamp(16px, 2.2vw, 26px);
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+}
+
+/* ── HORIZONTAL PIN SCROLL ───────────────────────── */
+.gc-pin-section {
+  position: relative;
+  height: 100vh;
+  background: #0d1f11;
+  overflow: hidden;
+}
+.gc-pin-label {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  z-index: 5;
+  padding: 0 8vw;
+}
+.gc-pin-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #8fc97a;
+  margin-bottom: 10px;
+}
+.gc-pin-title {
+  color: #fff;
+  font-size: clamp(16px, 2.2vw, 26px);
+  max-width: 420px;
+  font-weight: 500;
+}
+.gc-pin-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
+}
+.gc-pin-track {
+  display: flex;
+  gap: 28px;
+  padding-left: 8vw;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+.gc-pcard {
+  flex: 0 0 280px;
+  height: 340px;
+  border-radius: 4px;
+  background: #132619;
+  border: 1px solid rgba(143,201,122,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  color: #fff;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    border-color: rgba(143,201,122,0.35);
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6);
+  }
+  .gc-pcard-num {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #8fc97a;
+    font-family: monospace;
+    margin-bottom: auto;
+  }
+  h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  p  { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+}
+
+/* ── STATEMENT ───────────────────────────────────── */
+.gc-statement-section {
+  padding: 140px 0;
+  background: #f5f3ea;
+}
+.gc-statement-title {
+  font-size: clamp(26px, 4.5vw, 54px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0a1a0e;
+}
+.gc-line {
+  display: block;
+  overflow: hidden;
+  span { display: inline-block; will-change: transform; }
+}
+
+/* ── INFO CARDS 3D ───────────────────────────────── */
+.gc-info-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.3s ease;
+  &:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+}
+
+/* ── MAGNETIC BUTTONS ────────────────────────────── */
+.gc-leader-btn,
+.gc-submit-btn,
+.gc-banner-arrow-btn { will-change: transform; }
+
+/* ── LEADER IMG ──────────────────────────────────── */
+.gc-leader-img-frame { will-change: transform, opacity; }
+
+/* ── PARTNER ITEMS ───────────────────────────────── */
+.gc-partner-item {
+  will-change: transform, opacity;
+  transition: transform 0.3s ease;
+  &:hover { transform: translateY(-6px) scale(1.04); }
+}

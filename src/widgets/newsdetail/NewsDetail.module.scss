@@ -1,0 +1,136 @@
+$green: #1e5128;
+$green-dark: #112e17;
+$green-light: #e8f0ea;
+$green-active: #d2e3d5;
+$border: #cbdad0;
+$text: #121c15;
+$muted: #5b7062;
+$white: #ffffff;
+
+.page {
+  padding: 0 0 80px;
+  background: #fff;
+  min-height: 60vh;
+  position: relative;
+}
+
+.backBtn {
+   position: fixed;
+  top: 80px;
+  left: 10px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba($white, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba($border, 0.6);
+  border-radius: 99px;
+  font-size: 13px;
+  color: $green-dark;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba($green-dark, 0.04);
+ 
+  &:hover {
+    background: $white;
+    border-color: $green;
+    color: $green;
+    transform: translateX(-2px);
+  }
+
+  
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+  margin-bottom: 30px;
+}
+
+.state {
+  text-align: center;
+  padding: 120px 0;
+  font-size: 16px;
+  color: #888;
+}
+
+.imgWrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin-bottom: 40px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tag {
+    font-size: clamp(24px, 3vw, 36px);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #2d7a3a;
+  @media (max-width: 768px) {
+    font-size: clamp(16px, 2vw, 25px);
+  }
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.4;
+   @media (max-width: 768px) {
+      font-size: 12px;
+  }
+}
+
+.date {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.watchBtn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: #2d7a3a;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 100px;
+  transition: background 0.2s;
+
+  &:hover { background: #1a3a1f; }
+   @media (max-width: 768px) {
+   padding: 8px 16px;
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 13px; }
+  .backBtn { left: 5px;   top: 70px;  font-size: 9px;   padding: 6px 12px; }
+}

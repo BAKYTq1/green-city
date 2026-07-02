@@ -8,6 +8,9 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 20px;
+    @media (max-width:768px) {
+        padding: 0 13px;
+    }
   }
 
   // Шапка жана негизги маалыматтар (Мурунку калыбында)
@@ -36,14 +39,27 @@
     text-align: center;
   }
 
-  .royal-bitrix-title {
+   .royal-bitrix-title {
     font-size: 44px;
     font-weight: 400;
     color: #212529;
     margin: 0 0 10px 0;
     letter-spacing: -0.5px;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    @media (max-width:768px) {
+        font-size: 34px;
+    }
   }
+.news-header__script {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: clamp(36px, 5.5vw, 54px);
+  font-weight: 300;
+  color: #1a1a1a;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  display: inline-block;
+}
 
   .royal-bitrix-subtitle {
     font-size: 34px;
@@ -51,6 +67,9 @@
     color: #212529;
     margin: 0 0 40px 0;
     letter-spacing: -0.5px;
+     @media (max-width:768px) {
+        font-size: 24px;
+    }
   }
 
   // Сүрөттөгү көлөкөлүү ак карточка

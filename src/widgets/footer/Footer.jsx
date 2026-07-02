@@ -1,70 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import gsap from 'gsap'
 import './Footer.css'
-
-const translations = {
-  ky: {
-    about: 'Компания жөнүндө',
-    objects: 'Квартиралар',
-    news: 'Жаңылыктар',
-    reviews: 'Пикирлер',
-    contacts: 'Байланыштар',
-    phone: '+996 556 111 444',
-    email: 'info@greencity.kg',
-    address: 'Бишкек, Ала-Too 45',
-    rights: '© 2024 Green City. Бардык укуктар корголгон.',
-    followUs: 'Бизди карагыла',
-  },
-  ru: {
-    about: 'О компании',
-    objects: 'Квартиры',
-    news: 'Новости',
-    reviews: 'Отзывы',
-    contacts: 'Контакты',
-    phone: '+996 556 111 444',
-    email: 'info@greencity.kg',
-    address: 'Бишкек, Ала-Too 45',
-    rights: '© 2024 Green City. Все права защищены.',
-    followUs: 'Следите за нами',
-  },
-  en: {
-    about: 'About',
-    objects: 'Apartments',
-    news: 'News',
-    reviews: 'Reviews',
-    contacts: 'Contacts',
-    phone: '+996 556 111 444',
-    email: 'info@greencity.kg',
-    address: 'Bishkek, Ala-Too 45',
-    rights: '© 2024 Green City. All rights reserved.',
-    followUs: 'Follow us',
-  },
-}
+import { translations } from '../../locales/i18n'
+import { useLang } from '../../locales/LangContext'
 
 function Footer() {
-  const [lang, setLang] = useState('ky')
   const footerRef = useRef()
+  const { lang } = useLang()
   const t = translations[lang]
-
-  useEffect(() => {
-    // Получаем язык из localStorage (если установлен в Header)
-    const savedLang = localStorage.getItem('lang') || 'ky'
-    setLang(savedLang)
-  }, [])
-
-  useEffect(() => {
-    gsap.fromTo(footerRef.current, 
-      { opacity: 0 }, 
-      { opacity: 1, duration: 0.8, ease: 'power2.out' }
-    )
-  }, [lang])
 
   return (
     <footer className="gc-footer" ref={footerRef}>
       <div className="gc-footer-container">
         <div className="gc-footer-grid">
-          {/* Logo & Info */}
+
           <div className="gc-footer-col">
             <Link to="/" className="gc-footer-logo">
               <div className="gc-logo-icon-footer">
@@ -77,33 +26,30 @@ function Footer() {
               </div>
               <span>Green City</span>
             </Link>
-            <p className="gc-footer-desc">Идеальное пространство для жизни и работы</p>
+            <p className="gc-footer-desc">{t.footer.desc}</p>
           </div>
 
-          {/* Links */}
           <div className="gc-footer-col">
-            <h4>{t.about}</h4>
+            <h4>{t.footer.about}</h4>
             <ul>
-              <li><Link to="/home">{t.about}</Link></li>
-              <li><Link to="/home/about">{t.objects}</Link></li>
-              <li><a href="#news">{t.news}</a></li>
-              <li><a href="#reviews">{t.reviews}</a></li>
+              <li><Link to="/about">{t.footer.about}</Link></li>
+              <li><Link to="/objects">{t.footer.objects}</Link></li>
+              <li><Link to="/news">{t.footer.news}</Link></li>
+              <li><Link to="/reviews">{t.footer.reviews}</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
           <div className="gc-footer-col">
-            <h4>{t.contacts}</h4>
+            <h4>{t.footer.contacts}</h4>
             <ul>
-              <li><a href="tel:+996556111444">{t.phone}</a></li>
-              <li><a href="mailto:info@greencity.kg">{t.email}</a></li>
-              <li>{t.address}</li>
+              <li><a href="tel:+996556111444">{t.footer.phone}</a></li>
+              <li><a href="mailto:info@greencity.kg">{t.footer.email}</a></li>
+              <li>{t.footer.address}</li>
             </ul>
           </div>
 
-          {/* Social */}
           <div className="gc-footer-col">
-            <h4>{t.followUs}</h4>
+            <h4>{t.footer.followUs}</h4>
             <div className="gc-social-links">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="gc-social-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -125,7 +71,7 @@ function Footer() {
         </div>
 
         <div className="gc-footer-bottom">
-          <p>{t.rights}</p>
+          <p>{t.footer.rights}</p>
         </div>
       </div>
     </footer>

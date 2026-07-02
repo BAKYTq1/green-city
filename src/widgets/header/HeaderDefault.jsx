@@ -2,45 +2,16 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import './Header.css'
-
-const translations = {
-  ky: {
-    objects: 'Квартиралар жана объектилер',
-    home: 'Башкы бет',
-    about: 'Компания жөнүндө',
-    news: 'Жаңылыктар',
-    reviews: 'Пикирлер',
-    contacts: 'Байланыштар',
-  },
-  ru: {
-    objects: 'Квартиры и объекты',
-    home: 'Главная',
-    about: 'О компании',
-    news: 'Новости',
-    reviews: 'Отзывы',
-    contacts: 'Контакты',
-  },
-  en: {
-    objects: 'Apartments & Objects',
-    home: 'Home',
-    about: 'About',
-    news: 'News',
-    reviews: 'Reviews',
-    contacts: 'Contacts',
-  },
-}
-
-const langs = ['ky', 'ru', 'en']
-const langLabels = { ky: 'KY', ru: 'RU', en: 'EN' }
+import { translations, langs, langLabels } from '../../locales/i18n'
+import { useLang } from '../../locales/LangContext'
 
 export default function HeaderDefault() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [dark, setDark] = useState(false)
-  const [lang, setLang] = useState('ky')
   const [langOpen, setLangOpen] = useState(false)
   const logoRef = useRef()
   const navRef = useRef()
-
+  const { lang, changeLang } = useLang()
   const t = translations[lang]
 
   useEffect(() => {
@@ -54,7 +25,6 @@ export default function HeaderDefault() {
 
   return (
     <>
-      {/* NAV — всегда белый, фиксированный */}
       <nav className={`gc-nav gc-nav--fixed gc-nav--white ${dark ? 'dark' : ''}`} ref={navRef}>
         <div className="gc-nav-left">
           <button className="gc-theme-btn" onClick={() => setDark(!dark)} aria-label="Тема">
@@ -76,7 +46,7 @@ export default function HeaderDefault() {
               </svg>
             )}
           </button>
-          <Link to="/objects" className="gc-objects-link">{t.objects}</Link>
+          <Link to="/objects" className="gc-objects-link">{t.header.objects}</Link>
         </div>
 
         <Link to="/" className="gc-logo" ref={logoRef}>
@@ -92,7 +62,7 @@ export default function HeaderDefault() {
         </Link>
 
         <div className="gc-nav-right">
-          <a href="tel:+996556111444" className="gc-phone">+996 556 111 444</a>
+          <a href="tel:+996556111444" className="gc-phone">{t.header.phone}</a>
 
           <div className="gc-lang" onClick={() => setLangOpen(!langOpen)}>
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
@@ -110,7 +80,7 @@ export default function HeaderDefault() {
                   <div
                     key={l}
                     className={`gc-lang-item ${lang === l ? 'active' : ''}`}
-                    onClick={(e) => { e.stopPropagation(); setLang(l); setLangOpen(false) }}
+                   onClick={(e) => { e.stopPropagation(); changeLang(l); setLangOpen(false) }}
                   >
                     {langLabels[l]}
                   </div>
@@ -125,10 +95,8 @@ export default function HeaderDefault() {
         </div>
       </nav>
 
-      {/* Отступ под фиксированный хедер */}
       <div className="gc-nav-spacer"></div>
 
-      {/* FULLSCREEN MENU */}
       <div className={`gc-menu ${menuOpen ? 'open' : ''}`}>
         <button
           className={`gc-burger gc-menu-burger ${menuOpen ? 'open' : ''}`}
@@ -139,12 +107,12 @@ export default function HeaderDefault() {
         </button>
         <nav className="gc-menu-links">
           {[
-            { to: '/', label: t.home },
-            { to: '/about', label: t.about },
-            { to: '/objects', label: t.objects },
-            { to: '/news', label: t.news },
-            { to: '/reviews', label: t.reviews },
-            { to: '/contacts', label: t.contacts },
+            { to: '/', label: t.header.home },
+            { to: '/about', label: t.header.about },
+            { to: '/objects', label: t.header.objects },
+            { to: '/news', label: t.header.news },
+            { to: '/reviews', label: t.header.reviews },
+            { to: '/contacts', label: t.header.contacts },
           ].map((link) => (
             <Link key={link.to} to={link.to} className="gc-menu-link" onClick={() => setMenuOpen(false)}>
               {link.label}

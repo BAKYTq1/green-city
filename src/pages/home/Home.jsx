@@ -5,8 +5,8 @@ import Stats from '../../widgets/stats/Stats'
 import Panarama360 from '../../widgets/panorama360/Panorama360'
 import Reviews from '../../widgets/reviews/Reviews'
 import Obratnyi from '../../widgets/ui/ibratka/Obratnyi'
-import News from '../news/News'
 import ApartmentsHome from '../apartmentsHome/ApartmentsHome'
+import NewsHome from '../news/NewsHome'
 
 function Home() {
   return (
@@ -17,7 +17,7 @@ function Home() {
       <Stats/>
       <Reviews />
       <Panarama360 />
-      <News />
+      <NewsHome />
       <Obratnyi />
     </>
   )
