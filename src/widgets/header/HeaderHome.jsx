@@ -10,6 +10,7 @@ import 'swiper/css/effect-creative'
 import './Header.css'
 import { translations, langs, langLabels } from '../../locales/i18n'
 import { useLang } from '../../locales/LangContext'
+import TransitionLink from '../../app/transition/TransitionLink'
 
 export default function HeaderHome() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -78,7 +79,7 @@ export default function HeaderHome() {
           <Link to="/objects" className="gc-objects-link">{t.headerHome.objects}</Link>
         </div>
 
-        <Link to="/" className="gc-logo" ref={logoRef}>
+        <TransitionLink  to="/" className="gc-logo" ref={logoRef}>
           <div className="gc-logo-icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1.5"/>
@@ -88,7 +89,7 @@ export default function HeaderHome() {
             </svg>
           </div>
           <span className="gc-logo-text">Green City</span>
-        </Link>
+        </TransitionLink>
 
         <div className="gc-nav-right">
           <a href="tel:+996556111444" className="gc-phone">{t.headerHome.phone}</a>
@@ -176,9 +177,9 @@ export default function HeaderHome() {
             { to: '/reviews', label: t.headerHome.reviews },
             { to: '/contacts', label: t.headerHome.contacts },
           ].map((link) => (
-            <Link key={link.to} to={link.to} className="gc-menu-link" onClick={() => setMenuOpen(false)}>
+            <TransitionLink key={link.to} to={link.to} className="gc-menu-link" onClick={() => setMenuOpen(false)}>
               {link.label}
-            </Link>
+            </TransitionLink>
           ))}
         </nav>
         <div className="gc-menu-bg-text">Green City</div>
