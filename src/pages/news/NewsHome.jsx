@@ -5,6 +5,7 @@ import { translations } from "../../locales/i18n";
 import { useLang } from "../../locales/LangContext";
 import { useNewsStore } from "../../store";
 import { parseError } from "../../utils/parseError";
+import Button from "../../widgets/ui/buttton/Button";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -209,6 +210,9 @@ export default function NewsHome() {
           </>
         )}
       </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '100px'  }}>
+      <Button text={t.see_all} link="/news" />
+        </div>
     </div>
   );
 }

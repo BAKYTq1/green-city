@@ -68,7 +68,7 @@ export default function Contact() {
         {/* Башкы заголовок жана Логотип */}
         <div className="royal-header-section">
           <h1 className="royal-main-title">
-            {t.title_prefix} <span className="news-header__script">Green City</span>
+            {t.title_prefix} <span className="royal-brand-logo"><i>R</i><span>oyal</span></span>
           </h1>
           <p className="royal-sub-title">{t.subtitle}</p>
         </div>
@@ -107,13 +107,13 @@ export default function Contact() {
           <div className="royal-grid-col royal-col-contacts">
             <h2 className="royal-col-label">{t.contacts_label}</h2>
             <div className="royal-col-content">
-              <p><a href="tel:+996999007336" className="royal-link">+996 999 007 336</a></p>
+              <p><a href="tel:+996555111444" className="royal-link">+996 555 111 444</a></p>
             </div>
 
             <div className="royal-social-links">
-              <a href="https://www.instagram.com/greencity.center/" target="_blank" rel="noreferrer">Instagram ↗</a>
-              <a href="https://api.whatsapp.com/send/?phone=996999007336&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" rel="noreferrer">whatsapp ↗</a>
-              <a href="https://www.facebook.com/profile.php?id=61583611771089#" target="_blank" rel="noreferrer">facebook ↗</a>
+              <a href="#" target="_blank" rel="noreferrer">Instagram ↗</a>
+              <a href="#" target="_blank" rel="noreferrer">whatsapp ↗</a>
+              <a href="#" target="_blank" rel="noreferrer">facebook ↗</a>
             </div>
           </div>
         </div>
@@ -122,22 +122,14 @@ export default function Contact() {
         <div className="royal-map-section">
           <div className="royal-map-wrapper">
             <iframe
-              src="https://2gis.kg/balykchy/geo/70030076137248028/76.195788%2C42.462242?m=76.195765%2C42.462228%2F17.43"
+              src="https://yandex.ru/map-widget/v1/?ll=76.1958%2C42.4622&mode=search&text=%D0%91%D0%B0%D0%BB%D1%8B%D0%BA%D1%87%D1%8B%2C%20%D1%83%D0%BB.%20%D0%A2%D0%B0%D1%88%D0%BC%D0%B0%D1%82%D0%BE%D0%B2%2C%2078&z=16"
               width="100%"
               height="420"
               frameBorder="0"
               allowFullScreen={true}
               className="royal-map-iframe"
-              title="Royal Map Location"
+              title="Green-city Map Location"
             ></iframe>
-
-            {/* <a href="https://2gis.kg/bishkek/geo/70000001038318991" target="_blank" rel="noreferrer" className="royal-circle-map-button">
-              <div className="royal-circle-outer">
-                <div className="royal-circle-inner">
-                  <span>{t.view_on_map}</span>
-                </div>
-              </div>
-            </a> */}
           </div>
         </div>
 
@@ -196,6 +188,10 @@ export default function Contact() {
                 </p>
               )}
 
+              <div className="royal-bitrix-footer">
+                <span className="royal-report">{tf.report} <i className="royal-help-icon">?</i></span>
+                <span className="royal-powered">{tf.powered_by} <span>Битрикс</span>24</span>
+              </div>
 
             </form>
           </div>

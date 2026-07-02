@@ -132,6 +132,14 @@ export function Apartments() {
   const [page, setPage] = useState(1);
   const [animKey, setAnimKey] = useState(0);
 
+  // Сбрасываем фильтры при смене языка
+  useEffect(() => {
+    setTypeFilter(t.filter_all);
+    setTimeFilter(t.filter_all);
+    setComplex(t.all_objects);
+    setPage(1);
+  }, [lang]); // eslint-disable-line
+
   const COMPLEXES = [t.all_objects, ...OBJECTS.map((o) => o.name)];
 
   const filtered = OBJECTS.filter((o) => {

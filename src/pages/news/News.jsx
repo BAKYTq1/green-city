@@ -115,7 +115,7 @@ export default function News() {
         ref={headerRef}
         className={`${styles["news-header"]} ${headerVisible ? styles.visible : ""}`}
       >
-        <div className={styles["news-container"]} style={{ padding: "0 24px" }}>
+        <div className={styles["news-containe"]}>
           <div className={styles["news-header__top"]}>
             <h1 className={styles["news-header__label"]}>{t.header_label}</h1>
             <div className={styles["news-header__brand-wrap"]}>

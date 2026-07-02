@@ -96,6 +96,13 @@ export function ApartmentsHome() {
   const [floorMax, setFloorMax] = useState(27);
   const [animKey, setAnimKey] = useState(0);
 
+  // Сбрасываем фильтры при смене языка
+  useEffect(() => {
+    setTypeFilter(t.filter_all);
+    setTimeFilter(t.filter_all);
+    setComplex(t.all_objects);
+  }, [lang]); // eslint-disable-line
+
   const COMPLEXES = [t.all_objects, ...OBJECTS.map((o) => o.name)];
 
   const filtered = OBJECTS.filter((o) => {
@@ -138,7 +145,7 @@ export function ApartmentsHome() {
             className={`${styles["ap-toggle__btn"]} ${tab === "houses" ? styles["ap-toggle__btn--active"] : styles["ap-toggle__btn--inactive"]}`}
             onClick={() => setTab("houses")}
           >
-            19 {t.houses_count}
+            {OBJECTS.reduce((sum, o) => sum + (o.apartments?.length || 0), 0)} {t.houses_count}
           </button>
         </div>
       </div>
@@ -233,13 +240,11 @@ export function ApartmentsHome() {
                 ))}
               </div>
             )}
-            {filtered.length > MAX_HOME_ITEMS && (
-              <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-                <div onClick={handleSeeAll} style={{ cursor: "pointer" }}>
-                  <Button text={t.see_all} />
-                </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+              <div onClick={handleSeeAll} style={{ cursor: "pointer" }}>
+                <Button text={t.see_all} />
               </div>
-            )}
+            </div>
           </>
         )}
       </div>
