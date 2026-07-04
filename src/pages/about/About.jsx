@@ -10,6 +10,40 @@ import {
 import { ZoomParallax } from "./Zoomparallax/ZoomParallax";
 import "./About.scss";
 
+function ChevronLeftIcon() {
+  return (
+    <svg
+      className="w-5 h-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg
+      className="w-5 h-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  );
+}
+
 // ─── ДАННЫЕ ───
 const parallaxImages = [
   {
@@ -168,7 +202,7 @@ function PartnerLogo({ name, logo }) {
 
   if (!logo || failed) {
     return (
-      <span className="text-base md:text-lg font-semibold uppercase tracking-wider text-gray-400 group-hover:text-[#1a1a1a] transition-colors duration-300 text-center px-2 select-none">
+      <span className="text-base md:text-lg font-semibold uppercase tracking-wider text-[var(--text-muted)] group-hover:text-[var(--text)] transition-colors duration-300 text-center px-2 select-none">
         {name}
       </span>
     );
@@ -243,7 +277,7 @@ function HeroBanner() {
         aria-label="Предыдущее изображение"
         className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white text-2xl bg-transparent border-none opacity-80 hover:opacity-100 transition-opacity z-10 [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]"
       >
-        ←
+        <ChevronLeftIcon />
       </motion.button>
       <motion.button
         onClick={() => goTo(index + 1, 1)}
@@ -252,7 +286,7 @@ function HeroBanner() {
         aria-label="Следующее изображение"
         className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white text-2xl bg-transparent border-none opacity-80 hover:opacity-100 transition-opacity z-10 [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]"
       >
-        →
+        <ChevronRightIcon />
       </motion.button>
 
       <div className="absolute bottom-8 right-6 md:right-12 flex gap-2 z-10">
@@ -283,7 +317,7 @@ function AboutSection() {
   const rightY = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   return (
-    <section ref={ref} className="bg-[#f7f5f0] overflow-hidden">
+    <section ref={ref} className="bg-[var(--surface-soft)] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           {/* Левая фото */}
@@ -303,7 +337,7 @@ function AboutSection() {
             delay={0.15}
             className="col-span-1 md:col-span-5 flex flex-col justify-center order-2 text-center md:text-left my-6 md:my-0"
           >
-            <p className="text-[#5a5a5a] text-base md:text-lg leading-relaxed">
+            <p className="text-[var(--text-muted)] text-base md:text-lg leading-relaxed">
               Реализовав более 30 масштабных проектов, охватывающих жилые
               комплексы, Бизнес-центры, клубные дома и объекты для отдыха. Наш
               подход — это синтез инноваций, безупречного качества и высокого
@@ -344,7 +378,7 @@ function WeGrowSection() {
   return (
     <section
       ref={ref}
-      className="bg-[#f7f5f0] py-12 md:py-0 overflow-hidden md:min-h-screen relative flex items-center"
+      className="bg-[var(--surface-soft)] py-12 md:py-0 overflow-hidden md:min-h-screen relative flex items-center"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0">
         {/* Левая фото */}
@@ -362,7 +396,7 @@ function WeGrowSection() {
         {/* Текст по центру */}
         <div className="w-full md:max-w-2xl mx-auto px-4 md:px-8 order-1 md:order-2 text-center py-6 md:py-24 z-10">
           <FadeUp>
-            <p className="text-xl md:text-4xl font-bold uppercase text-[#1a1a1a] leading-snug tracking-wide">
+            <p className="text-xl md:text-4xl font-bold uppercase text-[var(--text)] leading-snug tracking-wide">
               Мы развиваем жилые комплексы в Бишкеке и центры отдыха на
               Иссык-Куле, задавая тренды и повышая качество жизни в Кыргызстане.
             </p>
@@ -397,7 +431,7 @@ function RoyalIsSection() {
   const rightY = useTransform(scrollYProgress, [0, 1], [40, -60]);
 
   return (
-    <section ref={ref} className="bg-white py-24 overflow-hidden">
+    <section ref={ref} className="bg-[var(--surface)] py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
           {/* Большое фото слева */}
@@ -412,7 +446,7 @@ function RoyalIsSection() {
           {/* Центр: лого + пункты */}
           <div className="md:col-span-4 flex flex-col gap-10 pt-8">
             <FadeUp>
-              <div className="text-[2.5rem] font-serif text-[#1a1a1a] leading-none mb-6">
+              <div className="text-[2.5rem] font-serif text-[var(--text)] leading-none mb-6">
                 <span className="font-bold italic text-[3rem]">G</span>reen City
                 это—
               </div>
@@ -434,8 +468,8 @@ function RoyalIsSection() {
               },
             ].map((item, i) => (
               <FadeUp key={item.n} delay={i * 0.1}>
-                <p className="text-xs text-[#000000] mb-1">({item.n})</p>
-                <p className="text-[#40a406d3] text-sm leading-relaxed font-medium">
+                <p className="text-xs text-[var(--text)] mb-1">({item.n})</p>
+                <p className="text-[var(--accent)] text-sm leading-relaxed font-medium">
                   {item.text}
                 </p>
               </FadeUp>
@@ -521,7 +555,7 @@ function ValuesSlider() {
             }
             className="w-10 h-10 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
           >
-            ←
+            <ChevronLeftIcon />
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -529,7 +563,7 @@ function ValuesSlider() {
             onClick={() => setActive((p) => (p + 1) % values.length)}
             className="w-10 h-10 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
           >
-            →
+            <ChevronRightIcon />
           </motion.button>
           <div className="flex gap-2 ml-2">
             {values.map((_, i) => (
@@ -592,7 +626,7 @@ function DirectorSection() {
             <br />
             ......
           </h2>
-          <p className="text-[#40a406d3] text-sm font-medium mb-8 uppercase tracking-widest">
+          <p className="text-[var(--accent-strong)] text-sm font-medium mb-8 uppercase tracking-widest">
             Генеральный директор строительной компании GREEN CITY
           </p>
 
@@ -621,7 +655,7 @@ function DirectorSection() {
               }
               className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
             >
-              ←
+              <ChevronLeftIcon />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -629,7 +663,7 @@ function DirectorSection() {
               onClick={() => setSlide((p) => (p + 1) % directorSlides.length)}
               className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
             >
-              →
+              <ChevronRightIcon />
             </motion.button>
             <span className="text-white/30 text-sm ml-2">
               {slide + 1} / {directorSlides.length}
@@ -644,24 +678,24 @@ function DirectorSection() {
 // ─── СЕКЦИЯ: Партнёры ───
 function PartnersSection() {
   return (
-    <section className="bg-white py-24 border-t border-gray-100">
+    <section className="bg-[var(--surface)] py-24 border-t border-[var(--border)]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <FadeUp className="max-w-lg">
-            <h2 className="text-3xl md:text-4xl font-bold uppercase text-[#1a1a1a] leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold uppercase text-[var(--text)] leading-tight">
               Надёжные партнёры, с которыми мы строим будущее Кыргызстана
             </h2>
           </FadeUp>
           <FadeIn delay={0.2}>
-            <p className="text-xs text-[#b0a898] uppercase tracking-widest">
+            <p className="text-xs text-[var(--text-muted)] uppercase tracking-widest">
               Партнёры
             </p>
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-gray-200 border border-gray-200 overflow-hidden rounded-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-[var(--border)] border border-[var(--border)] overflow-hidden rounded-sm">
           {partners.map((p, i) => (
-            <FadeIn key={p.name} delay={i * 0.05} className="bg-white">
+            <FadeIn key={p.name} delay={i * 0.05} className="bg-[var(--surface)]">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -712,9 +746,7 @@ export default function AboutCompany() {
             }}
             className="text-3xl md:text-[2.8rem] font-bold uppercase leading-tight max-w-3xl"
           >
-            Строительная компания Green City <br />
-            это символ надёжности, стиля
-            <br />и стремления к совершенству.
+            
           </p>
         }
       />

@@ -38,7 +38,7 @@
 }
 
 .gc-nav--fixed.scrolled {
-  background: var(--header-bg);
+  background: #ffffff0c;
   backdrop-filter: blur(8px);
   border-bottom: 0.5px solid var(--border);
 }
