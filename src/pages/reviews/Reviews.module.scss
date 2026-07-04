@@ -1,6 +1,6 @@
 .reviews {
   padding: 80px 0;
-  background: #fff;
+  background: var(--surface);
   overflow: hidden;
 }
 
@@ -21,7 +21,7 @@
 .title {
   font-size: clamp(28px, 4vw, 52px);
   font-weight: 400;
-  color: #1a1a1a;
+  color: var(--text);
   max-width: 400px;
   line-height: 1.2;
   opacity: 0;
@@ -83,13 +83,13 @@
 .itemTitle {
   font-size: clamp(16px, 2vw, 22px);
   font-weight: 400;
-  color: #1a1a1a;
+  color: var(--text);
   line-height: 1.4;
   margin: 0;
   max-width: 500px;
   transition: color 0.2s;
 
-  .item:hover & { color: #2d7a3a; }
+  .item:hover & { color: var(--green); }
 }
 
 .itemMeta {

@@ -8,6 +8,7 @@ import {
   useInView,
 } from "framer-motion";
 import { ZoomParallax } from "./Zoomparallax/ZoomParallax";
+import "./About.scss";
 
 // ─── ДАННЫЕ ───
 const parallaxImages = [

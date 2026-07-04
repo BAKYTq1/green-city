@@ -1,12 +1,35 @@
 // ─── ПЕРЕМЕННЫЕ (Палитра Green City) ─────────────────────────────────────────
-$green: #1e5128;
-$green-dark: #112e17;
-$green-light: #e8f0ea;
-$green-active: #d2e3d5;
-$border: #cbdad0;
-$text: #121c15;
-$muted: #5b7062;
-$white: #ffffff;
+:global {
+  :root {
+    --green: var(--accent);
+    --green-rgb: var(--accent-rgb);
+    --green-dark: var(--accent-strong);
+    --green-dark-rgb: var(--accent-strong-rgb);
+    --green-light: var(--accent-soft);
+    --green-light-rgb: var(--accent-soft-rgb);
+    --green-active: rgba(var(--accent-rgb), 0.12);
+    --border: var(--border);
+    --border-rgb: var(--border-rgb);
+    --text: var(--text);
+    --muted: var(--text-muted);
+    --white: var(--surface);
+    --white-rgb: var(--surface-rgb);
+  }
+}
+
+$green: var(--green);
+$green-rgb: var(--green-rgb);
+$green-dark: var(--green-dark);
+$green-dark-rgb: var(--green-dark-rgb);
+$green-light: var(--green-light);
+$green-light-rgb: var(--green-light-rgb);
+$green-active: var(--green-active);
+$border: var(--border);
+$border-rgb: var(--border-rgb);
+$text: var(--text);
+$muted: var(--muted);
+$white: var(--white);
+$white-rgb: var(--white-rgb);
 
 $font-inter: "Inter", sans-serif;
 $font-cormorant: "Cormorant Garamond", serif;
@@ -20,7 +43,7 @@ $font-cormorant: "Cormorant Garamond", serif;
 
 // ─── СТРАНИЦА ─────────────────────────────────────────────────────────────────
 .odPage {
-  background: $white;
+  background: var(--surface);
   font-family: $font-inter;
   color: $text;
   min-height: 100vh;
@@ -38,9 +61,9 @@ $font-cormorant: "Cormorant Garamond", serif;
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: rgba($white, 0.85);
+  background: rgba($white-rgb, 0.85);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba($border, 0.6);
+  border: 1px solid rgba($border-rgb, 0.6);
   border-radius: 99px;
   font-size: 13px;
   color: $green-dark;
@@ -50,7 +73,7 @@ $font-cormorant: "Cormorant Garamond", serif;
   box-shadow: 0 4px 12px rgba($green-dark, 0.04);
 
   &:hover {
-    background: $white;
+    background: var(--surface);
     border-color: $green;
     color: $green;
     transform: translateX(-2px);
@@ -63,7 +86,10 @@ $font-cormorant: "Cormorant Garamond", serif;
     padding: 6px 12px;
   }
 }
-
+.odAboutAddress{
+  display: flex;
+  gap: 8px;
+}
 // ─── HERO ─────────────────────────────────────────────────────────────────────
 .odHero {
   position: relative;
@@ -87,9 +113,9 @@ $font-cormorant: "Cormorant Garamond", serif;
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba($green-dark, 0.55) 0%,
-      rgba($green-dark, 0.1) 40%,
-      rgba($green-dark, 0.9) 100%
+      rgba($green-dark-rgb, 0.55) 0%,
+      rgba($green-dark-rgb, 0.1) 40%,
+      rgba($green-dark-rgb, 0.9) 100%
     );
   }
 
@@ -125,7 +151,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     color: $white;
     line-height: 1.05;
     letter-spacing: 0.02em;
-    text-shadow: 0 2px 16px rgba($green-dark, 0.5);
+    text-shadow: 0 2px 16px rgba($green-dark-rgb, 0.5);
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 1s 0.2s ease, transform 1s 0.2s ease;
@@ -134,10 +160,10 @@ $font-cormorant: "Cormorant Garamond", serif;
 
   &Desc {
     font-size: 15px;
-    color: rgba($white, 0.9);
+    color: rgba($white-rgb, 0.9);
     max-width: 440px;
     line-height: 1.6;
-    text-shadow: 0 1px 8px rgba($green-dark, 0.4);
+    text-shadow: 0 1px 8px rgba($green-dark-rgb, 0.4);
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 1s 0.35s ease, transform 1s 0.35s ease;
@@ -155,9 +181,9 @@ $font-cormorant: "Cormorant Garamond", serif;
 
     // Универсальный бейдж статуса (текст из админки)
     span {
-      background: rgba($white, 0.15);
+      background: rgba($white-rgb, 0.15);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba($white, 0.3);
+      border: 1px solid rgba($white-rgb, 0.3);
       color: $white;
       padding: 6px 16px;
       border-radius: 99px;
@@ -173,7 +199,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    color: rgba($white, 0.6);
+    color: rgba($white-rgb, 0.6);
     display: flex;
     justify-content: center;
     animation: scrollBounce 2s ease-in-out infinite;
@@ -223,7 +249,7 @@ $font-cormorant: "Cormorant Garamond", serif;
 .odStats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background: #f7faf8;
+  background: transparent;
   border-bottom: 1px solid $green-light;
 
   @include tablet { grid-template-columns: repeat(2, 1fr); }
@@ -247,7 +273,7 @@ $font-cormorant: "Cormorant Garamond", serif;
 
   &Label {
     font-size: 11px;
-    color: $muted;
+    color: var(--green-white);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -255,7 +281,7 @@ $font-cormorant: "Cormorant Garamond", serif;
   &Val {
     font-size: 22px;
     font-weight: 600;
-    color: $green-dark;
+      color: var(--green-white);
     line-height: 1.2;
     @include mobile { font-size: 18px; }
   }
@@ -291,7 +317,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-family: $font-cormorant;
     font-size: clamp(32px, 4.5vw, 48px);
     font-weight: 400;
-    color: $green-dark;
+      color: var(--green-white);
     line-height: 1.15;
     margin-bottom: 24px;
     em { color: $green; }
@@ -300,7 +326,7 @@ $font-cormorant: "Cormorant Garamond", serif;
   &Desc {
     font-size: 15px;
     line-height: 1.75;
-    color: mix($text, $muted, 70%);
+      color: var(--green-white);
   }
 
   &Gallery {
@@ -346,7 +372,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     &Count {
       position: absolute;
       inset: 0;
-      background: rgba($green-dark, 0.65);
+      background: rgba($green-dark-rgb, 0.65);
       backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
@@ -361,10 +387,10 @@ $font-cormorant: "Cormorant Garamond", serif;
 }
 
 // ─── ПЛАНИРОВКИ ───────────────────────────────────────────────────────────────
-.odPlans {
+.odPlans {  
   padding: 80px 60px;
   border-bottom: 1px solid $green-light;
-  background: $white;
+  background: var(--surface);
 
   @include tablet { padding: 48px 24px; }
 
@@ -372,7 +398,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: $muted;
+    color: var(--green-white);
     margin-bottom: 12px;
   }
 
@@ -380,16 +406,16 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-family: $font-cormorant;
     font-size: clamp(28px, 4vw, 40px);
     font-weight: 400;
-    color: $green-dark;
+    color: var(--green-white);
     margin-bottom: 32px;
   }
 
   &Container {
-    background: $white;
-    border: 1px solid rgba($green-light, 0.8);
+    background: var(--surface);
+    border: 1px solid rgba($green-light-rgb, 0.8);
     border-radius: 16px;
     padding: 8px 32px;
-    box-shadow: 0 4px 30px rgba($green-dark, 0.02);
+    box-shadow: 0 4px 30px rgba($green-dark-rgb, 0.02);
 
     @include mobile { padding: 4px 16px; }
   }
@@ -420,7 +446,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-size: 16px;
     font-weight: 600;
     color: $green;
-    background: rgba($green, 0.06);
+    background: rgba($green-rgb, 0.06);
     padding: 6px 14px;
     border-radius: 8px;
   }
@@ -430,7 +456,7 @@ $font-cormorant: "Cormorant Garamond", serif;
 .odFeatures {
   padding: 80px 60px;
   border-bottom: 1px solid $green-light;
-  background: #fafcfb;
+background: var(--surface-soft);
 
   @include tablet { padding: 48px 24px; }
 
@@ -462,12 +488,12 @@ $font-cormorant: "Cormorant Garamond", serif;
     align-items: center;
     font-size: 14px;
     font-weight: 500;
-    color: mix($text, $green-dark, 80%);
+    color: var(--text);
     background: $white;
     padding: 20px 24px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba($green-dark, 0.02);
-    border: 1px solid rgba($green-light, 0.5);
+    box-shadow: 0 4px 20px rgba($green-dark-rgb, 0.02);
+    border: 1px solid rgba($green-light-rgb, 0.5);
     position: relative;
 
     a {
@@ -500,13 +526,13 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: $muted;
+      color: var(--green-white);
     margin-bottom: 12px;
   }
   &Title {
     font-family: $font-cormorant;
     font-size: clamp(28px, 4vw, 40px);
-    color: $green-dark;
+     color: var(--green-white);
     margin-bottom: 40px;
     line-height: 1.15;
   }
@@ -524,10 +550,10 @@ $font-cormorant: "Cormorant Garamond", serif;
     display: flex;
     align-items: flex-start;
     gap: 16px;
-    background: #f7faf8;
+    background: var(--surface-soft);
     padding: 20px;
     border-radius: 12px;
-    border: 1px solid rgba($green-light, 0.6);
+    border: 1px solid rgba($green-light-rgb, 0.6);
   }
 
   &Icon {
@@ -560,7 +586,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     width: 100%;
     height: 400px;
     border-radius: 16px;
-    background: #eef3f0;
+    background: var(--surface-strong);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -568,7 +594,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     color: $muted;
     font-size: 14px;
     border: 1px solid $border;
-    box-shadow: inset 0 0 20px rgba($green-dark, 0.05);
+    box-shadow: inset 0 0 20px rgba($green-dark-rgb, 0.05);
 
     @include mobile { height: 280px; }
   }
@@ -596,7 +622,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: rgba($white, 0.45);
+    color: rgba($white-rgb, 0.45);
     margin-bottom: 20px;
     position: relative;
   }
@@ -613,7 +639,7 @@ $font-cormorant: "Cormorant Garamond", serif;
 
   &Sub {
     font-size: 15px;
-    color: rgba($white, 0.65);
+    color: rgba($white-rgb, 0.65);
     margin-bottom: 40px;
     position: relative;
     max-width: 500px;
@@ -655,13 +681,13 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: $muted;
+      color: var(--green-white);
     margin-bottom: 12px;
   }
   &Title {
     font-family: $font-cormorant;
     font-size: clamp(28px, 4vw, 40px);
-    color: $green-dark;
+     color: var(--green-white);
   }
 
   &Grid {
@@ -679,7 +705,7 @@ $font-cormorant: "Cormorant Garamond", serif;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid $green-light;
-  background: $white;
+  background: var(--surface);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
 
   &:hover {
@@ -700,7 +726,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     font-family: $font-cormorant;
     font-size: 22px;
     font-weight: 400;
-    color: $green-dark;
+     color: var(--green-white);
     margin-bottom: 8px;
   }
 
@@ -743,7 +769,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     right: 24px;
     width: 48px;
     height: 48px;
-    background: rgba($white, 0.08);
+    background: rgba($white-rgb, 0.08);
     border: none;
     border-radius: 50%;
     color: $white;
@@ -753,7 +779,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     align-items: center;
     justify-content: center;
     transition: background 0.2s;
-    &:hover { background: rgba($white, 0.15); }
+    &:hover { background: rgba($white-rgb, 0.15); }
   }
 
   &Nav {
@@ -762,7 +788,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     transform: translateY(-50%);
     width: 56px;
     height: 56px;
-    background: rgba($white, 0.08);
+    background: rgba($white-rgb, 0.08);
     border: none;
     border-radius: 50%;
     color: $white;
@@ -772,7 +798,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     align-items: center;
     justify-content: center;
     transition: background 0.2s, transform 0.2s;
-    &:hover { background: rgba($white, 0.15); }
+    &:hover { background: rgba($white-rgb, 0.15); }
 
     &Prev {
       left: 24px;
@@ -791,7 +817,7 @@ $font-cormorant: "Cormorant Garamond", serif;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    color: rgba($white, 0.6);
+    color: rgba($white-rgb, 0.6);
     font-size: 14px;
     letter-spacing: 0.05em;
   }

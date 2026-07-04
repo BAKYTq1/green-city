@@ -32,7 +32,7 @@ export default function NewsDetail() {
 
   return (
     <div className={styles.page}>
-      <button className={styles.backBtn} onClick={() => navigate('/news')}>
+      {/* <button className={styles.backBtn} onClick={() => navigate('/news')}>
          <svg
           width="14"
           height="14"
@@ -44,7 +44,7 @@ export default function NewsDetail() {
           <path d="M19 12H5M5 12l7-7M5 12l7 7" />
         </svg>
          {t.back_to_news}
-      </button>
+      </button> */}
         {selectedItem.img && (
           <div className={styles.imgWrap}>
             <img src={selectedItem.img} alt={selectedItem.name} />

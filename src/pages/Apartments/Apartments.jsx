@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./Apartments.module.scss";
 import { translations } from "../../locales/i18n";
 import { useLang } from "../../locales/LangContext";
 import { useProjectStore } from "../../store";
 import { mapProjectList } from "../../utils/projectAdapter";
 import Obratnyi from "../../widgets/ui/ibratka/Obratnyi";
+import { useTransition } from "../../app/transition/TransitionContext";
 
 const PER_PAGE = 6;
+const DEFAULT_MAX_FLOOR = 27;
 
 // ─── INTERSECTION OBSERVER HOOK ───────────────────────────────────────────────
 
@@ -108,7 +109,7 @@ function ApartCard({ item, delay, onNavigate }) {
 // ─── MAIN APARTMENTS LIST ─────────────────────────────────────────────────────
 
 export function Apartments() {
-  const navigate = useNavigate();
+  const { goTo } = useTransition()
   const { lang } = useLang();
   const t = translations[lang].apartments;
 
@@ -120,17 +121,41 @@ export function Apartments() {
 
   const OBJECTS = useMemo(() => mapProjectList(rawProjects), [rawProjects]);
 
-  const TYPE_FILTERS = [t.filter_all, ...Array.from(new Set(OBJECTS.map((o) => o.type).filter(Boolean)))];
-  const TIME_FILTERS = [t.filter_all, ...Array.from(new Set(OBJECTS.map((o) => o.statusText).filter(Boolean)))];
+  // Максимальный этаж считаем от реальных данных, а не хардкодим.
+  const maxFloorAvailable = useMemo(() => {
+    const floors = OBJECTS.map((o) => o.floors).filter(
+      (f) => typeof f === "number" && !Number.isNaN(f),
+    );
+    return floors.length ? Math.max(...floors) : DEFAULT_MAX_FLOOR;
+  }, [OBJECTS]);
+
+  const TYPE_FILTERS = useMemo(
+    () => [t.filter_all, ...Array.from(new Set(OBJECTS.map((o) => o.type).filter(Boolean)))],
+    [OBJECTS, t],
+  );
+  const TIME_FILTERS = useMemo(
+    () => [t.filter_all, ...Array.from(new Set(OBJECTS.map((o) => o.statusText).filter(Boolean)))],
+    [OBJECTS, t],
+  );
+  const COMPLEXES = useMemo(
+    () => [t.all_objects, ...OBJECTS.map((o) => o.name)],
+    [OBJECTS, t],
+  );
 
   const [tab, setTab] = useState("objects");
   const [timeFilter, setTimeFilter] = useState(t.filter_all);
   const [typeFilter, setTypeFilter] = useState(t.filter_all);
   const [complex, setComplex] = useState(t.all_objects);
   const [dropOpen, setDropOpen] = useState(false);
-  const [floorMax, setFloorMax] = useState(27);
+  const [floorMax, setFloorMax] = useState(DEFAULT_MAX_FLOOR);
   const [page, setPage] = useState(1);
   const [animKey, setAnimKey] = useState(0);
+
+  // Держим значение слайдера синхронизированным с реальными данными,
+  // если максимум изменился (например, после загрузки проектов).
+  useEffect(() => {
+    setFloorMax((prev) => (prev === DEFAULT_MAX_FLOOR ? maxFloorAvailable : prev));
+  }, [maxFloorAvailable]);
 
   // Сбрасываем фильтры при смене языка
   useEffect(() => {
@@ -140,17 +165,30 @@ export function Apartments() {
     setPage(1);
   }, [lang]); // eslint-disable-line
 
-  const COMPLEXES = [t.all_objects, ...OBJECTS.map((o) => o.name)];
+  const filtered = useMemo(() => {
+    return OBJECTS.filter((o) => {
+      const tim = timeFilter === t.filter_all || o.statusText === timeFilter;
+      const tm = typeFilter === t.filter_all || o.type === typeFilter;
+      const cm = complex === t.all_objects || o.name === complex;
+      // Раньше объекты без этажности (o.floors === undefined) молча
+      // выпадали из списка, т.к. undefined <= floorMax === false.
+      // Теперь такие объекты не отфильтровываются по этажности.
+      const fm = typeof o.floors !== "number" || o.floors <= floorMax;
+      return tim && tm && cm && fm;
+    });
+  }, [OBJECTS, timeFilter, typeFilter, complex, floorMax, t]);
 
-  const filtered = OBJECTS.filter((o) => {
-    const tim = timeFilter === t.filter_all || o.statusText === timeFilter;
-    const tm = typeFilter === t.filter_all || o.type === typeFilter;
-    const cm = complex === t.all_objects || o.name === complex;
-    const fm = o.floors <= floorMax;
-    return tim && tm && cm && fm;
-  });
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
 
-  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  // Если после изменения данных/фильтров текущая страница стала
+  // недоступной (например, было 2 страницы, стала 1), возвращаемся
+  // на последнюю существующую страницу вместо пустого экрана.
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
   const pageItems = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   function changePage(p) {
@@ -166,7 +204,7 @@ export function Apartments() {
   }
 
   function handleNavigate(slug) {
-    navigate(`/objects/${slug}`);
+    goTo(`/objects/${slug}`);
   }
 
   const totalApartments = OBJECTS.reduce((sum, o) => sum + (o.apartments?.length || 0), 0);
@@ -265,7 +303,7 @@ export function Apartments() {
             <input
               type="range"
               min={0}
-              max={27}
+              max={maxFloorAvailable}
               value={floorMax}
               onChange={(e) =>
                 handleFilter(setFloorMax, Number(e.target.value))
@@ -287,15 +325,15 @@ export function Apartments() {
       {/* CARDS */}
       <div className={styles["ap-section"]}>
         {loading && (
-          <div className={styles["ap-results-count"]}>Загружаем объекты…</div>
+          <div className={styles["ap-results-count"]}>{t.loading}</div>
         )}
 
         {error && (
           <div className={styles["ap-empty"]}>
-            <div className={styles["ap-empty__title"]}>Ошибка загрузки</div>
+            <div className={styles["ap-empty__title"]}>{t.error_title}</div>
             <div className={styles["ap-empty__text"]}>{error}</div>
             <button onClick={fetchList} style={{ marginTop: 16, cursor: "pointer" }}>
-              Попробовать снова
+              {t.retry}
             </button>
           </div>
         )}

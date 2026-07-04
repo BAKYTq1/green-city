@@ -4,15 +4,16 @@ import gsap from 'gsap'
 import './Header.css'
 import { translations, langs, langLabels } from '../../locales/i18n'
 import { useLang } from '../../locales/LangContext'
+import { useTheme } from '../../theme/ThemeContext'
 import TransitionLink from '../../app/transition/TransitionLink'
 
 export default function HeaderDefault() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [dark, setDark] = useState(false)
   const [langOpen, setLangOpen] = useState(false)
   const logoRef = useRef()
   const navRef = useRef()
   const { lang, changeLang } = useLang()
+  const { isDark, toggleTheme } = useTheme()
   const t = translations[lang]
 
   useEffect(() => {
@@ -20,26 +21,18 @@ export default function HeaderDefault() {
     gsap.fromTo(navRef.current, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.5 })
   }, [])
 
-  useEffect(() => {
-    document.body.classList.toggle('dark-theme', dark)
-  }, [dark])
-
   return (
     <>
-      <nav className={`gc-nav gc-nav--fixed gc-nav--white ${dark ? 'dark' : ''}`} ref={navRef}>
+      <nav className={`gc-nav gc-nav--fixed gc-nav--white ${isDark ? 'dark' : ''}`} ref={navRef}>
         <div className="gc-nav-left">
-          <button className="gc-theme-btn" onClick={() => setDark(!dark)} aria-label="Тема">
-            {dark ? (
+          <button className="gc-theme-btn" onClick={toggleTheme} aria-label="Тема">
+            {isDark ? (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
               </svg>
             ) : (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -64,7 +57,6 @@ export default function HeaderDefault() {
 
         <div className="gc-nav-right">
           <a href="tel:+996556111444" className="gc-phone">{t.header.phone}</a>
-
           <div className="gc-lang" onClick={() => setLangOpen(!langOpen)}>
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
               <circle cx="10" cy="10" r="9.375"/>
@@ -78,18 +70,14 @@ export default function HeaderDefault() {
             {langOpen && (
               <div className="gc-lang-dropdown">
                 {langs.map((l) => (
-                  <div
-                    key={l}
-                    className={`gc-lang-item ${lang === l ? 'active' : ''}`}
-                   onClick={(e) => { e.stopPropagation(); changeLang(l); setLangOpen(false) }}
-                  >
+                  <div key={l} className={`gc-lang-item ${lang === l ? 'active' : ''}`}
+                    onClick={(e) => { e.stopPropagation(); changeLang(l); setLangOpen(false) }}>
                     {langLabels[l]}
                   </div>
                 ))}
               </div>
             )}
           </div>
-
           <button className={`gc-burger ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Меню">
             <span></span><span></span><span></span>
           </button>
@@ -99,27 +87,39 @@ export default function HeaderDefault() {
       <div className="gc-nav-spacer"></div>
 
       <div className={`gc-menu ${menuOpen ? 'open' : ''}`}>
-        <button
-          className={`gc-burger gc-menu-burger ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(false)}
-          aria-label="Закрыть"
-        >
+        <button className={`gc-burger gc-menu-burger ${menuOpen ? 'open' : ''}`}
+          onClick={() => setMenuOpen(false)} aria-label="Закрыть">
           <span></span><span></span><span></span>
         </button>
+
         <nav className="gc-menu-links">
-         {[
-  { to: '/', label: t.header.home },
-  { to: '/about', label: t.header.about },
-  { to: '/objects', label: t.header.objects },
-  { to: '/news', label: t.header.news },
-  { to: '/reviews', label: t.header.reviews },
-  { to: '/contacts', label: t.header.contacts },
-].map((link) => (
-  <TransitionLink key={link.to} to={link.to} className="gc-menu-link" onClick={() => setMenuOpen(false)}>
-    {link.label}
-  </TransitionLink>
-))}
+          {[
+            { to: '/', label: t.header.home },
+            { to: '/about', label: t.header.about },
+            { to: '/objects', label: t.header.objects },
+            { to: '/news', label: t.header.news },
+            { to: '/reviews', label: t.header.reviews },
+            { to: '/contacts', label: t.header.contacts },
+          ].map((link) => (
+            <TransitionLink key={link.to} to={link.to} className="gc-menu-link" onClick={() => setMenuOpen(false)}>
+              {link.label}
+            </TransitionLink>
+          ))}
         </nav>
+
+        {/* Переключатель языка в меню */}
+        <div className="gc-menu-lang">
+          {langs.map((l) => (
+            <button
+              key={l}
+              className={`gc-menu-lang-btn ${lang === l ? 'active' : ''}`}
+              onClick={() => { changeLang(l); setMenuOpen(false) }}
+            >
+              {langLabels[l]}
+            </button>
+          ))}
+        </div>
+
         <div className="gc-menu-bg-text">Green City</div>
       </div>
     </>

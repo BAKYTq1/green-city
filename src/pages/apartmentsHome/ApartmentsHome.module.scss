@@ -3,20 +3,20 @@
 // Локальные переменные для модуля
 :global {
   :root {
-    --green: #1e5128;
-    --green-dark: #14331f;
-    --green-mid: #2e6b3b;
-    --green-light: #e4efe7;
-    --green-active: #d8ebd9;
-    --border: #b7c9bc;
-    --border-open: #9cbda3;
-    --text: #111e16;
-    --muted: #637a6b;
+    --green: var(--accent);
+    --green-dark: var(--accent-strong);
+    --green-mid: var(--accent);
+    --green-light: var(--accent-soft);
+    --green-active: rgba(var(--accent-rgb), 0.12);
+    --border: var(--border);
+    --border-open: var(--border);
+    --text: var(--text);
+    --muted: var(--text-muted);
   }
 }
 
 .ap-page {
-  background: #fff;
+  background: var(--surface);
   font-family: "Inter", sans-serif;
   color: var(--text);
   min-height: 100vh;
@@ -25,14 +25,14 @@
 /* ── HERO ── */
 .ap-hero {
   text-align: center;
-  padding: 64px 24px 40px;
-  border-bottom: 1px solid #f0f4f1;
+  padding: 64px 20px 40px;
+  border-bottom: 1px solid var(--surface-strong);
 
   &__eyebrow {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--muted);
+    color: var(--green-white);
     margin-bottom: 16px;
   }
 
@@ -40,7 +40,7 @@
     font-family: "Cormorant Garamond", serif;
     font-size: clamp(40px, 7vw, 80px);
     font-weight: 400;
-    color: var(--green-dark);
+    color: var(--green-white);
     line-height: 1.05;
     margin-bottom: 36px;
     letter-spacing: -0.01em;
@@ -64,17 +64,17 @@
     transition: all 0.25s;
 
     &--active {
-      background: #fff;
-      color: var(--green);
+      background: var(--surface);
+      color: var(--green-white);
       font-weight: 500;
     }
 
     &--inactive {
       background: transparent;
-      color: #e4efe7;
+         color: var(--green-white);
 
       &:hover {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(var(--surface-rgb), 0.15);
       }
     }
   }
@@ -82,9 +82,9 @@
 
 /* ── FILTERS ── */
 .ap-filters {
-  max-width: 1340px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 28px 32px 0;
+  padding: 28px 22px 0;
 }
 
 .ap-filter-row {
@@ -100,19 +100,12 @@
   padding: 8px 20px;
   border-radius: 99px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--green-light);
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
   font-family: "Inter", sans-serif;
-  color: #2e4436;
-  white-space: nowrap;
-
-  &:hover {
-    border-color: var(--green);
-    color: var(--green);
-    background: var(--green-light);
-  }
+  color: var(--green-mid);
 
   &--active {
     background: var(--green-active);
@@ -134,11 +127,11 @@
   padding: 9px 20px;
   border-radius: 99px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface);
   font-size: 13px;
   cursor: pointer;
   font-family: "Inter", sans-serif;
-  color: #2e4436;
+  color: var(--accent-dark);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -148,6 +141,7 @@
 
   &:hover {
     border-color: var(--green);
+    color: var(--green);
     background: var(--green-light);
   }
 
@@ -161,7 +155,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border-open);
   border-top: none;
   border-radius: 0 0 16px 16px;
@@ -178,15 +172,9 @@
   cursor: pointer;
   transition: background 0.15s;
   color: var(--text);
-  border-bottom: 1px solid #eaf2eb;
-  font-family: "Inter", sans-serif;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
+  border-bottom: 1px solid var(--accent-soft);
   &:hover {
-    background: #eaf2eb;
+    background: var(--accent-soft);
   }
 
   &--active {
@@ -215,7 +203,7 @@
   appearance: none;
   width: 100%;
   height: 3px;
-  background: #c3d4c7;
+  background: var(--surface-soft);
   border-radius: 2px;
   outline: none;
   cursor: pointer;
@@ -227,16 +215,16 @@
     height: 16px;
     background: var(--green);
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 2px solid var(--surface);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
   }
 }
 
 /* ── SECTION & GRID ── */
 .ap-section {
-  max-width: 1340px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 32px 32px 80px;
+  padding: 32px 20px 80px;
 }
 
 .ap-results-count {
@@ -284,7 +272,7 @@
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    background: #e4efe7;
+    background: var(--accent-soft);
     margin-bottom: 18px;
     transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
@@ -311,7 +299,7 @@
     position: absolute;
     top: 16px;
     left: 16px;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(var(--surface-rgb), 0.92);
     color: var(--green);
     font-size: 11px;
     font-weight: 600;
@@ -327,20 +315,20 @@
     right: 18px;
     width: 44px;
     height: 44px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(var(--surface-rgb), 0.15);
     backdrop-filter: blur(10px);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--green-white);
     z-index: 2;
     opacity: 0;
     transform: scale(0.85);
     transition:
       opacity 0.3s,
       transform 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(var(--surface-rgb), 0.25);
   }
 
   &__name {
@@ -348,7 +336,7 @@
     font-size: clamp(26px, 3vw, 40px);
     font-weight: 400;
     letter-spacing: 0.04em;
-    color: var(--green-dark);
+    color: var(--green-white);
     line-height: 1;
     margin-bottom: 12px;
   }
@@ -417,20 +405,7 @@
   cursor: pointer;
   transition: all 0.2s;
   font-family: "Inter", sans-serif;
-  color: #2e4436;
-
-  &:hover:not(:disabled) {
-    border-color: var(--green);
-    color: var(--green);
-    background: var(--green-light);
-  }
-
-  &--active {
-    background: var(--green);
-    border-color: var(--green);
-    color: #fff;
-  }
-
+  color: var(--accent-dark);
   &:disabled {
     opacity: 0.3;
     cursor: not-allowed;
@@ -462,7 +437,7 @@
 
 /* ── DETAILED PAGE ── */
 .det-page {
-  background: #fff;
+  background: var(--surface);
   font-family: "Inter", sans-serif;
   color: var(--text);
   min-height: 100vh;
@@ -524,7 +499,7 @@
 .det-desc {
   font-size: 16px;
   line-height: 1.6;
-  color: #34483c;
+  color: var(--accent-dark);
   margin-bottom: 32px;
 }
 
@@ -608,7 +583,7 @@
 }
 
 .det-plans-container {
-  background: #fbfdfc;
+  background: var(--surface-strong);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 24px;
@@ -619,8 +594,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 18px 0;
-  border-bottom: 1px solid #eaf2eb;
-
+  border-bottom: 1px solid var(--accent-soft);
   &:last-child {
     border-bottom: none;
   }
@@ -657,14 +631,8 @@
   justify-content: center;
   font-size: 14px;
   font-weight: 500;
-  color: #2e4436;
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  text-align: center;
-  min-height: 54px;
+  color: var(--accent-dark);
+  background: var(--surface);
 }
 
 /* ── RESPONSIVE MEDIA QUERIES ── */
@@ -695,12 +663,12 @@
     gap: 36px;
   }
   .ap-hero {
-    padding: 48px 20px 32px;
+    padding: 48px 13px 32px;
   }
   .ap-filters {
     padding: 20px 20px 0;
   }
   .ap-section {
-    padding: 24px 20px 60px;
+    padding: 24px 13px 60px;
   }
 }

@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { useNavigate, Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { mapProjectList } from "../../utils/projectAdapter";
 import Button from "../../widgets/ui/buttton/Button";
 import styles from "./ApartmentsHome.module.scss";
 import { translations } from "../../locales/i18n";
 import { useLang } from "../../locales/LangContext";
 import { useProjectStore } from "../../store";
+import { useTransition } from "../../app/transition/TransitionContext";
+import TransitionLink from "../../app/transition/TransitionLink";
 
 const MAX_HOME_ITEMS = 6;
 
@@ -33,8 +35,9 @@ function ApartCard({ item, delay }) {
   const ref = useRef(null);
   const visible = useInView(ref);
 
+
   return (
-    <Link
+    <TransitionLink
       to={`/objects/${item.slug}`}
       ref={ref}
       className={`${styles["ap-card"]}${visible ? ` ${styles.visible}` : ""}`}
@@ -68,12 +71,12 @@ function ApartCard({ item, delay }) {
           {item.type}
         </span>
       </div>
-    </Link>
+    </TransitionLink>
   );
 }
 
 export function ApartmentsHome() {
-  const navigate = useNavigate();
+  const { goTo } = useTransition();
   const { lang } = useLang();
   const t = translations[lang].apartments;
 
@@ -126,7 +129,7 @@ export function ApartmentsHome() {
     } else {
       window.scrollTo(0, 0);
     }
-    navigate("/objects");
+    goTo("/objects");
   }
 
   return (

@@ -40,7 +40,7 @@ export default function ReviewDetail() {
 
   return (
     <div className={styles.page}>
-      <button className={styles.backBtn} onClick={() => navigate('/reviews')}>
+      {/* <button className={styles.backBtn} onClick={() => navigate('/reviews')}>
         <svg
           width="14"
           height="14"
@@ -52,7 +52,7 @@ export default function ReviewDetail() {
           <path d="M19 12H5M5 12l7-7M5 12l7 7" />
         </svg>
         {t.back_to_reviews}
-      </button>
+      </button> */}
 
       {img && (
         <div className={styles.imgWrap}>

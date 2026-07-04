@@ -18,18 +18,21 @@
 .gc-transition-text {
   position: absolute;
   top: 50%;
-  left: 45%;
+  left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: baseline;
   gap: 10px;
-  opacity: 0;
   z-index: 1;
   white-space: nowrap;
   pointer-events: none;
-  @media (max-width: 768px) {
-    left: 40%;
-  }
+}
+
+.gc-transition-text-main,
+.gc-transition-text-accent {
+  display: inline-block;
+  position: relative;
+  clip-path: inset(0 100% 0 0); /* скрыт по умолчанию, до первой анимации */
 }
 
 .gc-transition-text-main {
@@ -44,7 +47,6 @@
   font-size: 34px;
   font-weight: 400;
   color: #5db87a;
-  position: relative;
 }
 
 .gc-transition-text-accent::after {

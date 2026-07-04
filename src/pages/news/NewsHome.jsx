@@ -6,6 +6,9 @@ import { useLang } from "../../locales/LangContext";
 import { useNewsStore } from "../../store";
 import { parseError } from "../../utils/parseError";
 import Button from "../../widgets/ui/buttton/Button";
+import { useTransition } from "../../app/transition/TransitionContext";
+import { BsArrowUpRight } from "react-icons/bs";
+import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -70,7 +73,8 @@ function NewsCard({ item, big, delay, onClick }) {
         {item.descriptions}
       </p>
       <div className={styles["news-card__arrow"]}>
-        <span>↗</span>
+        <span><BsArrowUpRight />
+</span>
       </div>
     </div>
   );
@@ -79,7 +83,7 @@ function NewsCard({ item, big, delay, onClick }) {
 export default function NewsHome() {
   const { lang } = useLang();
   const t = translations[lang].news;
-  const navigate = useNavigate();
+  const {goTo} = useTransition();
 
   const { items, loading, error, fetchList } = useNewsStore();
 
@@ -158,7 +162,7 @@ export default function NewsHome() {
                   item={item}
                   big
                   delay={i * 80}
-                  onClick={() => navigate(`/news/${item.id}`)}
+                  onClick={() => goTo(`/news/${item.id}`)}
                 />
               ))}
               {smallCards.length > 0 && (
@@ -169,7 +173,7 @@ export default function NewsHome() {
                       item={item}
                       big={false}
                       delay={160 + i * 70}
-                      onClick={() => navigate(`/news/${item.id}`)}
+                      onClick={() => goTo(`/news/${item.id}`)}
                     />
                   ))}
                 </div>
@@ -183,7 +187,7 @@ export default function NewsHome() {
                   disabled={page === 1}
                   onClick={() => goToPage(page - 1)}
                 >
-                  ←
+                  <HiArrowSmallLeft />
                 </button>
 
                 <div className={styles["news-pagination__pages"]}>
@@ -203,7 +207,7 @@ export default function NewsHome() {
                   disabled={page === TOTAL_PAGES}
                   onClick={() => goToPage(page + 1)}
                 >
-                  →
+                  <HiArrowSmallRight />
                 </button>
               </div>
             )}

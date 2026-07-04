@@ -7,11 +7,13 @@ import HeaderHome from "../../widgets/header/HeaderHome";
 import HeaderDefault from "../../widgets/header/HeaderDefault";
 import ScrollToTop from "./ScrollToTop";
 import { TransitionProvider } from "../transition/TransitionContext";
+import Intro from "../../widgets/ui/intro/Intro";
 
 // Пути, на которых нужен "домашний" (прозрачный) хедер
 const HOME_HEADER_ROUTES = ["/", "/about"];
 
 export default function Layout() {
+   const [introDone, setIntroDone] = useState(false);
   useLenis();
   const { pathname } = useLocation();
   const isHomeHeader = HOME_HEADER_ROUTES.includes(pathname);
@@ -19,6 +21,7 @@ export default function Layout() {
   return (
    <TransitionProvider>
       <ScrollToTop />
+        {!introDone && <Intro onDone={() => setIntroDone(true)} />}
       <PageTransition />
       {isHomeHeader ? <HeaderHome /> : <HeaderDefault />}
       <main>
@@ -28,3 +31,5 @@ export default function Layout() {
     </TransitionProvider>
   );
 }
+
+

@@ -10,9 +10,11 @@ import 'swiper/css/effect-creative'
 import './Header.css'
 import { translations, langs, langLabels } from '../../locales/i18n'
 import { useLang } from '../../locales/LangContext'
+import { useTheme } from '../../theme/ThemeContext'
 import TransitionLink from '../../app/transition/TransitionLink'
+import { HiArrowSmallLeft } from "react-icons/hi2";
+import { HiArrowSmallRight } from "react-icons/hi2";
 
-// ─── Слайды для страницы "О нас" (без title/subtitle — над ними будет статичный заголовок) ───
 const aboutSlides = [
   { id: 'a1', bg: 'https://i.pinimg.com/736x/c5/69/6f/c5696f825f78dd4be31349d1ef6d209b.jpg' },
   { id: 'a2', bg: 'https://i.pinimg.com/1200x/6d/1f/e4/6d1fe4be349834baffa4064c89c5f24d.jpg' },
@@ -23,13 +25,13 @@ const aboutSlides = [
 
 export default function HeaderHome() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [dark, setDark] = useState(false)
   const [langOpen, setLangOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const logoRef = useRef()
   const navRef = useRef()
 
   const { lang, changeLang } = useLang()
+  const { isDark, toggleTheme } = useTheme()
   const t = translations[lang]
 
   const { pathname } = useLocation()
@@ -37,21 +39,10 @@ export default function HeaderHome() {
   const isAbout = pathname === '/about'
 
   const homeSlides = [
-    {
-      id: 1,
-      title: t.headerHome.slide1_title,
-      subtitle: t.headerHome.slide1_sub,
-      bg: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80',
-    },
-    {
-      id: 2,
-      title: t.headerHome.slide2_title,
-      subtitle: t.headerHome.slide2_sub,
-      bg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80',
-    },
+    { id: 1, title: t.headerHome.slide1_title, subtitle: t.headerHome.slide1_sub, bg: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80' },
+    { id: 2, title: t.headerHome.slide2_title, subtitle: t.headerHome.slide2_sub, bg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80' },
   ]
 
-  // какой набор слайдов показывать для текущего маршрута
   const currentSlides = isAbout ? aboutSlides : homeSlides
   const showHero = isHome || isAbout
 
@@ -61,10 +52,6 @@ export default function HeaderHome() {
   }, [])
 
   useEffect(() => {
-    document.body.classList.toggle('dark-theme', dark)
-  }, [dark])
-
-  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
@@ -72,20 +59,16 @@ export default function HeaderHome() {
 
   return (
     <>
-      <nav className={`gc-nav gc-nav--fixed ${scrolled ? 'scrolled' : ''} ${dark ? 'dark' : ''}`} ref={navRef}>
+      <nav className={`gc-nav gc-nav--fixed ${scrolled ? 'scrolled' : ''} ${isDark ? 'dark' : ''}`} ref={navRef}>
         <div className="gc-nav-left">
-          <button className="gc-theme-btn" onClick={() => setDark(!dark)} aria-label="Тема">
-            {dark ? (
+          <button className="gc-theme-btn" onClick={toggleTheme} aria-label="Тема">
+            {isDark ? (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
               </svg>
             ) : (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -96,7 +79,7 @@ export default function HeaderHome() {
           <Link to="/objects" className="gc-objects-link">{t.headerHome.objects}</Link>
         </div>
 
-        <TransitionLink  to="/" className="gc-logo" ref={logoRef}>
+        <TransitionLink to="/" className="gc-logo" ref={logoRef}>
           <div className="gc-logo-icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1.5"/>
@@ -110,7 +93,6 @@ export default function HeaderHome() {
 
         <div className="gc-nav-right">
           <a href="tel:+996556111444" className="gc-phone">{t.headerHome.phone}</a>
-
           <div className="gc-lang" onClick={() => setLangOpen(!langOpen)}>
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
               <circle cx="10" cy="10" r="9.375"/>
@@ -124,18 +106,14 @@ export default function HeaderHome() {
             {langOpen && (
               <div className="gc-lang-dropdown">
                 {langs.map((l) => (
-                  <div
-                    key={l}
-                    className={`gc-lang-item ${lang === l ? 'active' : ''}`}
-                    onClick={(e) => { e.stopPropagation(); changeLang(l); setLangOpen(false) }}
-                  >
+                  <div key={l} className={`gc-lang-item ${lang === l ? 'active' : ''}`}
+                    onClick={(e) => { e.stopPropagation(); changeLang(l); setLangOpen(false) }}>
                     {langLabels[l]}
                   </div>
                 ))}
               </div>
             )}
           </div>
-
           <button className={`gc-burger ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Меню">
             <span></span><span></span><span></span>
           </button>
@@ -143,9 +121,9 @@ export default function HeaderHome() {
       </nav>
 
       {showHero && (
-        <header className={`gc-header ${dark ? 'dark' : ''}`}>
+        <header className={`gc-header ${isDark ? 'dark' : ''}`}>
           <Swiper
-            key={pathname /* пересоздаём Swiper при смене маршрута, чтобы не путались слайды/автоплей */}
+            key={pathname}
             modules={[Navigation, Pagination, Autoplay, EffectCreative]}
             navigation={{ nextEl: '.gc-next', prevEl: '.gc-prev' }}
             pagination={{ el: '.gc-pagination', type: 'fraction' }}
@@ -159,10 +137,7 @@ export default function HeaderHome() {
             className="gc-swiper"
           >
             {currentSlides.map((slide) => (
-              <SwiperSlide
-                key={slide.id}
-                data-swiper-autoplay={isAbout ? Math.round(5000 + Math.random() * 5000) : undefined}
-              >
+              <SwiperSlide key={slide.id} data-swiper-autoplay={isAbout ? Math.round(5000 + Math.random() * 5000) : undefined}>
                 <div className="gc-slide" style={{ backgroundImage: `url(${slide.bg})` }}>
                   <div className="gc-slide-overlay"></div>
                   {slide.title && (
@@ -177,13 +152,12 @@ export default function HeaderHome() {
             <div className="gc-controls">
               <div className="gc-pagination"></div>
               <div className={`gc-nav-btns ${isAbout ? 'gc-nav-btns--ghost' : ''}`}>
-                <button className="gc-prev">←</button>
-                <button className="gc-next">→</button>
+                <button className="gc-prev"><HiArrowSmallLeft /></button>
+                <button className="gc-next"><HiArrowSmallRight /></button>
               </div>
             </div>
           </Swiper>
 
-          {/* Статичный заголовок поверх слайдов — только на "О нас" */}
           {isAbout && (
             <div className="gc-header-about-overlay">
               <h2 className="gc-header-about-title">
@@ -196,13 +170,11 @@ export default function HeaderHome() {
       )}
 
       <div className={`gc-menu ${menuOpen ? 'open' : ''}`}>
-        <button
-          className={`gc-burger gc-menu-burger ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(false)}
-          aria-label="Закрыть"
-        >
+        <button className={`gc-burger gc-menu-burger ${menuOpen ? 'open' : ''}`}
+          onClick={() => setMenuOpen(false)} aria-label="Закрыть">
           <span></span><span></span><span></span>
         </button>
+
         <nav className="gc-menu-links">
           {[
             { to: '/', label: t.headerHome.home },
@@ -217,6 +189,20 @@ export default function HeaderHome() {
             </TransitionLink>
           ))}
         </nav>
+
+        {/* Переключатель языка в меню */}
+        <div className="gc-menu-lang">
+          {langs.map((l) => (
+            <button
+              key={l}
+              className={`gc-menu-lang-btn ${lang === l ? 'active' : ''}`}
+              onClick={() => { changeLang(l); setMenuOpen(false) }}
+            >
+              {langLabels[l]}
+            </button>
+          ))}
+        </div>
+
         <div className="gc-menu-bg-text">Green City</div>
       </div>
     </>

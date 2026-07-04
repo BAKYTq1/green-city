@@ -1,11 +1,15 @@
-$green: #1e5128;
-$green-dark: #112e17;
-$green-light: #e8f0ea;
-$green-active: #d2e3d5;
-$border: #cbdad0;
-$text: #121c15;
-$muted: #5b7062;
-$white: #ffffff;
+$green: var(--accent);
+$green-rgb: var(--accent-rgb);
+$green-dark: var(--accent-strong);
+$green-dark-rgb: var(--accent-strong-rgb);
+$green-light: var(--accent-soft);
+$border: var(--border);
+$border-rgb: var(--border-rgb);
+$text: var(--text);
+$muted: var(--text-muted);
+$white: var(--surface);
+$white-rgb: var(--surface-rgb);
+
 @mixin mobile {
   @media (max-width: 600px) {
     @content;
@@ -13,7 +17,8 @@ $white: #ffffff;
 }
 .page {
   padding: 0 0 80px;
-  background: #fff;
+  background: var(--surface);
+  color: $text;
   min-height: 60vh;
   position: relative;
 }
@@ -27,19 +32,19 @@ $white: #ffffff;
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: rgba($white, 0.85);
+  background: rgba($white-rgb, 0.85);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba($border, 0.6);
+  border: 1px solid rgba($border-rgb, 0.6);
   border-radius: 99px;
   font-size: 13px;
   color: $green-dark;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba($green-dark, 0.04);
+  box-shadow: 0 4px 12px rgba($green-dark-rgb, 0.04);
 
   &:hover {
-    background: $white;
+    background: var(--surface);
     border-color: $green;
     color: $green;
     transform: translateX(-2px);
@@ -64,7 +69,7 @@ $white: #ffffff;
   text-align: center;
   padding: 120px 0;
   font-size: 16px;
-  color: #888;
+  color: $muted;
 }
 
 .imgWrap {
@@ -90,7 +95,7 @@ $white: #ffffff;
 .title {
   font-size: clamp(24px, 3vw, 36px);
   font-weight: 400;
-  color: #2d7a3a;
+  color: $green;
   margin: 0;
    @media (max-width: 768px) {
     font-size: clamp(16px, 2vw, 25px);
@@ -100,7 +105,7 @@ $white: #ffffff;
 .text {
   font-size: 16px;
   line-height: 1.7;
-  color: #444;
+  color: $text;
   margin: 0;
    @media (max-width: 768px) {
       font-size: 12px;
@@ -109,7 +114,7 @@ $white: #ffffff;
 
 .date {
   font-size: 13px;
-  color: #aaa;
+  color: $muted;
 }
 
 .actions {
@@ -123,8 +128,8 @@ $white: #ffffff;
 .watchBtn {
   display: inline-block;
   padding: 12px 32px;
-  background: #2d7a3a;
-  color: #fff;
+  background: $green;
+  color: $white;
   font-size: 13px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -132,10 +137,10 @@ $white: #ffffff;
   border-radius: 100px;
   transition: background 0.2s;
 
-  &:hover { background: #1a3a1f; }
+  &:hover { background: $green-dark; }
 }
 
 @media (max-width: 768px) {
   .container { padding: 0 13px; }
-  .backBtn { left: 5px;   top: 70px;  font-size: 9px;   padding: 6px 12px; }
+  .backBtn { left: 2px;   top: 70px;  font-size: 13px;   padding: 8px 14px; }
 }

@@ -2,3 +2,76 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg: #fdfdfc;
+  --surface: #ffffff;
+  --surface-rgb: 255, 255, 255;
+  --surface-strong: #f8faf4;
+  --surface-soft: #f1f5ee;
+  --text: #111e16;
+  --text-muted: #637a6b;
+  --text-soft: #555;
+  --border: #e8e8e6;
+  --accent: #1e5128;
+  --accent-rgb: 30, 81, 40;
+  --accent-strong: #14331f;
+  --accent-strong-rgb: 20, 51, 31;
+  --accent-soft: #e4efe7;
+  --accent-soft-rgb: 228, 239, 231;
+  --border-rgb: 232, 232, 230;
+  --success: #2563eb;
+  --success-soft: rgba(37, 99, 235, 0.12);
+  --warning: #f97316;
+  --warning-soft: rgba(249, 115, 22, 0.12);
+  --header-bg: rgba(255, 255, 255, 0.97);
+  --header-text: #1a3a1f;
+  --header-text-soft: #555;
+  --theme-btn-bg: #ffffff;
+  --theme-btn-border: #e0e0e0;
+  --theme-btn-color: #333;
+  --menu-bg: #0d2210;
+  --footer-bg: linear-gradient(135deg, #0a1a0f 0%, #0f2a18 60%, #0a1a0f 100%);
+  --danger: #b91c1c;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body.dark-theme {
+  --bg: #0d1f10;
+  --surface: #102214;
+  --surface-strong: #122b19;
+  --surface-soft: #162b1c;
+  --text: #e0e0e0;
+  --text-muted: #96a48d;
+  --text-soft: #cccccc;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #4ade80;
+  --accent-strong: #7ee787;
+  --accent-soft: rgba(74, 222, 128, 0.12);
+  --accent-rgb: 74, 222, 128;
+  --success: #60a5fa;
+  --success-soft: rgba(96, 165, 250, 0.12);
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.12);
+  --surface-rgb: 16, 34, 20;
+  --accent-strong-rgb: 126, 231, 135;
+  --accent-soft-rgb: 74, 222, 128;
+  --border-rgb: 255, 255, 255;
+  --header-bg: rgba(10, 26, 15, 0.97);
+  --header-text: #ffffff;
+  --header-text-soft: #ccc;
+  --theme-btn-bg: #1a3a1f;
+  --theme-btn-border: #2d7a3a;
+  --theme-btn-color: #ffffff;
+  --menu-bg: #0d2210;
+  --footer-bg: linear-gradient(135deg, #07120d 0%, #0b1f11 60%, #07120d 100%);
+}
+

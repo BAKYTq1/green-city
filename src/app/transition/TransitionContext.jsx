@@ -13,11 +13,12 @@ export function TransitionProvider({ children }) {
 
   const goTo = (path) => {
     if (isAnimating) return
-
-    // Клик на ту же страницу, где уже находимся — ничего не делаем
     if (path === location.pathname) return
 
     setIsAnimating(true)
+
+    const words = textRef.current.querySelectorAll('.gc-transition-text-main, .gc-transition-text-accent')
+    gsap.set(words, { clipPath: 'inset(0 100% 0 0)', opacity: 1 })
 
     const tl = gsap.timeline()
 
@@ -27,10 +28,14 @@ export function TransitionProvider({ children }) {
       ease: 'power4.inOut',
       stagger: 0.06,
     })
-      .fromTo(
-        textRef.current,
-        { opacity: 0, y: 16, letterSpacing: '0.5em' },
-        { opacity: 1, y: 0, letterSpacing: '0.2em', duration: 0.6, ease: 'power3.out' },
+      .to(
+        words,
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.5,
+          ease: 'power2.out',
+          stagger: 0.25,
+        },
         '-=0.15'
       )
       .eventCallback('onComplete', () => {
@@ -39,13 +44,14 @@ export function TransitionProvider({ children }) {
   }
 
   const finishTransition = () => {
+    const words = textRef.current.querySelectorAll('.gc-transition-text-main, .gc-transition-text-accent')
+
     const tl = gsap.timeline({
       onComplete: () => setIsAnimating(false),
     })
 
-    tl.to(textRef.current, {
-      opacity: 0,
-      y: -12,
+    tl.to(words, {
+      clipPath: 'inset(0 0 0 100%)',
       duration: 0.35,
       ease: 'power2.in',
     })

@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Reviews.module.scss'
 import { translations } from '../../locales/i18n'
 import { useLang } from '../../locales/LangContext'
 import { useReviewsStore } from '../../store'
-import Button from '../../widgets/ui/buttton/Button'
+import Obratnyi from '../../widgets/ui/ibratka/Obratnyi'
+import { useTransition } from '../../app/transition/TransitionContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,7 +19,7 @@ function getYoutubeThumbnail(url) {
 export default function Reviews() {
   const { lang } = useLang()
   const t = translations[lang].reviews
-  const navigate = useNavigate()
+  const { goTo } = useTransition()
 
   const { items, loading, error, fetchList } = useReviewsStore()
 
@@ -92,7 +92,7 @@ export default function Reviews() {
                 key={review.id}
                 className={`${styles.item} ${styles[review.align]} ${styles.clickable}`}
                 ref={el => itemsRef.current[i] = el}
-                onClick={() => navigate(`/reviews/${review.id}`)}
+                onClick={() => goTo(`/reviews/${review.id}`)}
               >
                 <div className={styles.itemInfo}>
                   <h3 className={styles.itemTitle}>{review.title}</h3>
@@ -113,11 +113,8 @@ export default function Reviews() {
           </div>
         )}
 
-        <div className={styles.buttonWrapper}>
-          <Button text={t.see_all} link='/reviews' />
-        </div>
-
       </div>
+      <Obratnyi/>
     </section>
   )
 }

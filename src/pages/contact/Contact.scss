@@ -1,5 +1,5 @@
 .royal-contacts-page {
-  background-color: #ffffff;
+  background-color: var(--surface);
   padding: 80px 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -15,180 +15,175 @@
 
   // Шапка жана негизги маалыматтар (Мурунку калыбында)
   .royal-header-section { text-align: center; margin-bottom: 80px; }
-  .royal-main-title { font-size: 38px; font-weight: 300; color: #111111; margin: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .royal-main-title { font-size: 38px; font-weight: 300; color: var(--text); margin: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
   .royal-brand-logo { display: inline-flex; align-items: baseline; i { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: 54px; font-weight: 400; } span { font-size: 24px; font-weight: 300; } }
-  .royal-sub-title { font-size: 28px; color: #006056; font-weight: 300; margin: 15px 0 0 0; }
+  .royal-sub-title { font-size: 28px; color: var(--accent); font-weight: 300; margin: 15px 0 0 0; }
   .royal-info-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.2fr; gap: 30px; margin-bottom: 35px; @media (max-width: 992px) { grid-template-columns: 1fr 1fr; } @media (max-width: 576px) { grid-template-columns: 1fr; } }
-  .royal-col-label { font-size: 11px; text-transform: uppercase; color: #9c9c9c; font-weight: 400; letter-spacing: 0.8px; margin: 0 0 18px 0; }
-  .royal-col-content { font-size: 13.5px; line-height: 1.55; color: #222222; }
-  .royal-link { color: inherit; text-decoration: none; &:hover { border-bottom: 1px solid #006056; } }
+  .royal-col-label { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 400; letter-spacing: 0.8px; margin: 0 0 18px 0; }
+  .royal-col-content { font-size: 13.5px; line-height: 1.55; color: var(--text); }
+  .royal-link { color: inherit; text-decoration: none; &:hover { border-bottom: 1px solid var(--accent); } }
   .royal-schedule .royal-schedule-row { display: flex; margin-bottom: 6px; .royal-days { width: 60px; } }
   .royal-col-contacts { position: relative; }
-  .royal-social-links { display: flex; gap: 12px; font-size: 12px; text-transform: lowercase; @media (min-width: 993px) { position: absolute; bottom: 0; right: 0; } a { color: #333333; text-decoration: none; &:hover { color: #006056; } } }
+  .royal-social-links { display: flex; gap: 12px; font-size: 12px; text-transform: lowercase; @media (min-width: 993px) { position: absolute; bottom: 0; right: 0; } a { color: var(--text); text-decoration: none; &:hover { color: var(--accent); } } }
   .royal-map-section { width: 100%; margin-bottom: 80px; }
   .royal-map-wrapper { position: relative; width: 100%; height: 420px; }
   .royal-map-iframe { width: 100%; height: 100%; filter: grayscale(1) contrast(0.88) brightness(1.02); }
   .royal-circle-map-button { position: absolute; bottom: 25px; right: 25px; text-decoration: none; z-index: 10; }
-  .royal-circle-outer { width: 124px; height: 124px; border: 1px solid rgba(0, 96, 86, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; &:hover { transform: scale(1.04); .royal-circle-inner { background-color: #004d45; } } }
-  .royal-circle-inner { width: 96px; height: 96px; background-color: #006056; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; span { color: #ffffff; font-size: 10px; font-weight: 500; line-height: 1.35; } }
+  .royal-circle-outer { width: 124px; height: 124px; border: 1px solid rgba(var(--accent-rgb), 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; &:hover { transform: scale(1.04); .royal-circle-inner { background-color: var(--accent-strong); } } }
+  .royal-circle-inner { width: 96px; height: 96px; background-color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; span { color: var(--surface); font-size: 10px; font-weight: 500; line-height: 1.35; } }
 
   // СҮРӨТТӨГҮ БИТРИКС24 ФОРМАСЫНЫН СТИЛДЕРИ (1ге 1)
   .royal-bitrix-form-section {
     max-width: 720px;
     margin: 0 auto 60px auto;
     text-align: center;
-  }
 
-   .royal-bitrix-title {
-    font-size: 44px;
-    font-weight: 400;
-    color: #212529;
-    margin: 0 0 10px 0;
-    letter-spacing: -0.5px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    @media (max-width:768px) {
+    .royal-bitrix-title {
+      font-size: 44px;
+      font-weight: 400;
+      color: var(--text);
+      margin: 0 0 10px 0;
+      letter-spacing: -0.5px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+      @media (max-width:768px) {
         font-size: 34px;
+      }
     }
-  }
-.news-header__script {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-style: italic;
-  font-size: clamp(36px, 5.5vw, 54px);
-  font-weight: 300;
-  color: #1a1a1a;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  display: inline-block;
-}
 
-  .royal-bitrix-subtitle {
-    font-size: 34px;
-    font-weight: 300;
-    color: #212529;
-    margin: 0 0 40px 0;
-    letter-spacing: -0.5px;
-     @media (max-width:768px) {
+    .news-header__script {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-size: clamp(36px, 5.5vw, 54px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      display: inline-block;
+    }
+
+    .royal-bitrix-subtitle {
+      font-size: 34px;
+      font-weight: 300;
+      color: var(--text);
+      margin: 0 0 40px 0;
+      letter-spacing: -0.5px;
+
+      @media (max-width:768px) {
         font-size: 24px;
-    }
-  }
-
-  // Сүрөттөгү көлөкөлүү ак карточка
-  .royal-bitrix-card {
-    background-color: #ffffff;
-    padding: 40px 50px 20px 50px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
-    border-radius: 2px;
-    text-align: left;
-    border-bottom: 3px solid #005f56; // Астындагы жука жашыл сызык
-    box-sizing: border-box;
-
-    @media (max-width: 576px) {
-      padding: 30px 20px 15px 20px;
-    }
-  }
-
-  // Текст киргизүүчү талаалар (Inputs)
-  .royal-bitrix-field {
-    position: relative;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #dcdcdc; // Ичке боз сызык
-    padding-bottom: 4px;
-
-    label {
-      position: absolute;
-      left: 0;
-      top: 10px;
-      font-size: 13px;
-      color: #999999;
-      pointer-events: none;
-      transition: all 0.2s ease;
-      opacity: 0; // Жазуу жок кезде placeholder көрүнөт
-
-      &.active {
-        top: -14px;
-        font-size: 11px;
-        opacity: 1;
-        color: #999999;
-      }
-
-      span {
-        color: #ff5252; // Кызыл жылдызча *
       }
     }
 
-    input {
-      width: 100%;
-      border: none;
-      background: transparent;
-      padding: 8px 0;
-      font-size: 14px;
-      color: #333333;
-      outline: none;
+    // Сүрөттөгү көлөкөлүү ак карточка
+    .royal-bitrix-card {
+      background-color: var(--surface);
+      padding: 40px 50px 20px 50px;
+      box-shadow: 0 10px 30px rgba(var(--surface-rgb), 0.08), 0 1px 3px rgba(var(--surface-rgb), 0.02);
+      border-radius: 2px;
+      text-align: left;
+      border-bottom: 3px solid var(--accent);
       box-sizing: border-box;
 
-      &::placeholder {
-        color: #a9a9a9;
-        font-size: 13.5px;
+      @media (max-width: 576px) {
+        padding: 30px 20px 15px 20px;
       }
     }
-  }
 
-  // Сүрөттөгү Битрикс стилиндеги жалпак чоң жашыл баскыч
-  .royal-bitrix-submit-btn {
-    width: 100%;
-    background-color: #006056; // Сүрөттөгү кочкул жашыл түс
-    color: #ffffff;
-    border: none;
-    padding: 16px 0;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    transition: background-color 0.2s ease;
+    // Текст киргизүүчү талаалар (Inputs)
+    .royal-bitrix-field {
+      position: relative;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
 
-    &:hover {
-      background-color: #004d45;
+      label {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        font-size: 13px;
+        color: var(--text-muted);
+        pointer-events: none;
+        transition: all 0.2s ease;
+        opacity: 0; // Жазуу жок кезде placeholder көрүнөт
+
+        &.active {
+          top: -14px;
+          font-size: 11px;
+          opacity: 1;
+          color: var(--text-muted);
+        }
+
+        span {
+          color: var(--danger); // Кызыл жылдызча *
+        }
+      }
+
+      input {
+        width: 100%;
+        border: none;
+        background: transparent;
+        padding: 8px 0;
+        font-size: 14px;
+        color: var(--text);
+        outline: none;
+        box-sizing: border-box;
+
+        &::placeholder {
+          color: var(--text-muted);
+          font-size: 13.5px;
+        }
+      }
     }
-  }
 
-  // Баскычтын астындагы Битрикс24 жазуулары
-  .royal-bitrix-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11px;
-    color: #999999;
-    border-top: 1px solid #f2f2f2;
-    padding-top: 12px;
-
-    .royal-report {
-      text-decoration: underline;
+    // Сүрөттөгү Битрикс стилиндеги жалпак чоң жашыл баскыч
+    .royal-bitrix-submit-btn {
+      width: 100%;
+      background-color: var(--accent);
+      color: var(--surface);
+      border: none;
+      padding: 16px 0;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      border-radius: 4px;
       cursor: pointer;
-      display: inline-flex;
+      text-transform: uppercase;
+      margin-top: 15px;
+      margin-bottom: 25px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--accent-strong);
+      }
+    }
+
+    // Баскычтын астындагы Битрикс24 жазуулары
+    .royal-bitrix-footer {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
       gap: 4px;
 
       .royal-help-icon {
         display: inline-flex;
         width: 13px;
         height: 13px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--border);
         border-radius: 50%;
         align-items: center;
         justify-content: center;
         font-size: 9px;
         font-style: normal;
       }
-    }
 
-    .royal-powered {
-      span {
-        font-weight: 700;
-        color: #00aae4; // Битрикс сөзүнүн көк түсү
+      .royal-powered {
+        span {
+          font-weight: 700;
+          color: var(--accent);
+        }
       }
     }
   }

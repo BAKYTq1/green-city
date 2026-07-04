@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./News.module.scss";
 import { translations } from "../../locales/i18n";
 import { useLang } from "../../locales/LangContext";
 import { useNewsStore } from "../../store";
 import { parseError } from "../../utils/parseError";
 import Obratnyi from "../../widgets/ui/ibratka/Obratnyi";
+import { useTransition } from "../../app/transition/TransitionContext";
+import { HiArrowSmallLeft, HiArrowSmallRight } from "react-icons/hi2";
+import { BsArrowUpRight } from "react-icons/bs";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -70,7 +72,8 @@ function NewsCard({ item, big, delay, onClick }) {
         {item.descriptions}
       </p>
       <div className={styles["news-card__arrow"]}>
-        <span>↗</span>
+        <span><BsArrowUpRight />
+</span>
       </div>
     </div>
   );
@@ -79,7 +82,7 @@ function NewsCard({ item, big, delay, onClick }) {
 export default function News() {
   const { lang } = useLang();
   const t = translations[lang].news;
-  const navigate = useNavigate();
+  const { goTo } = useTransition();
 
   const { items, loading, error, fetchList } = useNewsStore();
 
@@ -158,7 +161,7 @@ export default function News() {
                   item={item}
                   big
                   delay={i * 80}
-                  onClick={() => navigate(`/news/${item.id}`)}
+                  onClick={() => goTo(`/news/${item.id}`)}
                 />
               ))}
               {smallCards.length > 0 && (
@@ -169,7 +172,7 @@ export default function News() {
                       item={item}
                       big={false}
                       delay={160 + i * 70}
-                      onClick={() => navigate(`/news/${item.id}`)}
+                      onClick={() => goTo(`/news/${item.id}`)}
                     />
                   ))}
                 </div>
@@ -183,7 +186,7 @@ export default function News() {
                   disabled={page === 1}
                   onClick={() => goToPage(page - 1)}
                 >
-                  ←
+                  <HiArrowSmallLeft />
                 </button>
 
                 <div className={styles["news-pagination__pages"]}>
@@ -203,7 +206,7 @@ export default function News() {
                   disabled={page === TOTAL_PAGES}
                   onClick={() => goToPage(page + 1)}
                 >
-                  →
+                  <HiArrowSmallRight />
                 </button>
               </div>
             )}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigationType } from 'react-router-dom'
 import { useTransition } from '../../../app/transition/TransitionContext'
+import gsap from 'gsap'
 import './PageTransition.css'
 
 function waitForImages(container, timeout = 2500) {
@@ -21,10 +22,21 @@ function waitForImages(container, timeout = 2500) {
 
 export default function PageTransition() {
   const location = useLocation()
+  const navigationType = useNavigationType() // 'PUSH' | 'POP' | 'REPLACE'
   const { linesRef, textRef, finishTransition } = useTransition()
 
   useEffect(() => {
     const run = async () => {
+      // Переход через кнопки браузера/телефона (назад/вперёд) —
+      // goTo() не успел закрыть шторку заранее, ставим мгновенно закрытое состояние
+      if (navigationType === 'POP') {
+        gsap.set(linesRef.current, { scaleY: 1 })
+        const words = textRef.current.querySelectorAll(
+          '.gc-transition-text-main, .gc-transition-text-accent'
+        )
+        gsap.set(words, { clipPath: 'inset(0 0% 0 0)', opacity: 1 })
+      }
+
       const main = document.querySelector('main')
       await waitForImages(main)
       finishTransition()
@@ -43,4 +55,4 @@ export default function PageTransition() {
       </div>
     </div>
   )
-} 
+}

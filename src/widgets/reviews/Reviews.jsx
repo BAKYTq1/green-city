@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Reviews.module.scss'
@@ -7,6 +6,7 @@ import Button from '../ui/buttton/Button'
 import { translations } from '../../locales/i18n'
 import { useLang } from '../../locales/LangContext'
 import { useReviewsStore } from '../../store'
+import { useTransition } from '../../app/transition/TransitionContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,7 +19,7 @@ function getYoutubeThumbnail(url) {
 export default function Reviews() {
   const { lang } = useLang()
   const t = translations[lang].reviews
-  const navigate = useNavigate()
+  const { goTo } = useTransition()
 
   const { items, loading, error, fetchList } = useReviewsStore()
 
@@ -27,12 +27,11 @@ export default function Reviews() {
     fetchList()
   }, [fetchList])
 
-  // Показываем максимум 4 отзыва на главной, чередуя выравнивание left/right
   const reviews = items.slice(0, 4).map((item, i) => ({
     id: item.id,
     title: item.name,
     meta: item.descriptions,
-    img: getYoutubeThumbnail(item.url),
+    img: item.image || getYoutubeThumbnail(item.url),
     align: i % 2 === 0 ? 'left' : 'right',
   }))
 
@@ -47,25 +46,17 @@ export default function Reviews() {
     const ctx = gsap.context(() => {
       gsap.fromTo(titleRef.current,
         { opacity: 0, x: -60 },
-        {
-          opacity: 1, x: 0, duration: 1, ease: 'power3.out',
-          scrollTrigger: { trigger: titleRef.current, start: 'top 85%' }
-        }
+        { opacity: 1, x: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: titleRef.current, start: 'top 85%' } }
       )
       gsap.fromTo(subtitleRef.current,
         { opacity: 0, x: 60 },
-        {
-          opacity: 1, x: 0, duration: 1, ease: 'power3.out',
-          scrollTrigger: { trigger: subtitleRef.current, start: 'top 85%' }
-        }
+        { opacity: 1, x: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: subtitleRef.current, start: 'top 85%' } }
       )
       itemsRef.current.forEach((item, i) => {
+        if (!item) return
         gsap.fromTo(item,
           { opacity: 0, y: 60 },
-          {
-            opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: i * 0.1,
-            scrollTrigger: { trigger: item, start: 'top 85%' }
-          }
+          { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: i * 0.1, scrollTrigger: { trigger: item, start: 'top 85%' } }
         )
       })
     }, sectionRef)
@@ -92,7 +83,7 @@ export default function Reviews() {
                 key={review.id}
                 className={`${styles.item} ${styles[review.align]} ${styles.clickable}`}
                 ref={el => itemsRef.current[i] = el}
-                onClick={() => navigate(`/reviews/${review.id}`)}
+                onClick={() => goTo(`/reviews/${review.id}`)}
               >
                 <div className={styles.itemInfo}>
                   <h3 className={styles.itemTitle}>{review.title}</h3>
@@ -103,7 +94,7 @@ export default function Reviews() {
                     <img src={review.img} alt={review.title} loading="lazy" />
                     <div className={styles.itemImgOverlay}>
                       <span className={styles.itemImgOverlayText}>
-                        Подробнее
+                        {t.read_more || 'Подробнее'}
                       </span>
                     </div>
                   </div>
