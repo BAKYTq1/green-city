@@ -38,7 +38,7 @@
 }
 
 .gc-nav--fixed.scrolled {
-  background: #ffffff0c;
+  background: #ffffff49;
   backdrop-filter: blur(8px);
   border-bottom: 0.5px solid var(--border);
 }
@@ -132,7 +132,7 @@
   height: 40px;
   border-radius: 8px;
   border: 1px solid var(--theme-btn-border);
-  background: var(--theme-btn-bg);
+  background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
