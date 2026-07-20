@@ -8,6 +8,8 @@ import {
   useInView,
 } from "framer-motion";
 import { ZoomParallax } from "./Zoomparallax/ZoomParallax";
+import { translations } from "../../locales/i18n";
+import { useLang } from "../../locales/LangContext";
 import "./About.scss";
 
 function ChevronLeftIcon() {
@@ -44,76 +46,64 @@ function ChevronRightIcon() {
   );
 }
 
-// ─── ДАННЫЕ ───
+// ─── ДАННЫЕ (не текстовые, языконезависимые) ───
 const parallaxImages = [
   {
     src: "https://i.pinimg.com/736x/c5/69/6f/c5696f825f78dd4be31349d1ef6d209b.jpg",
-    alt: "Green City — жилой комплекс",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/736x/98/04/cc/9804cc584897f606c08a563d12ab8176.jpg ",
-    alt: "Green City — фасад",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/1200x/7a/50/a1/7a50a1c4ad6a073f71fe1f42c61fb354.jpg",
-    alt: "Green City — interior",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/736x/f4/14/4a/f4144af3bfe3c47b36aeef238fd66b35.jpg",
-    alt: "Green City — двор",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/736x/35/0b/24/350b2426dcce60ca73887ae2a48df34b.jpg",
-    alt: "Green City — пентхаус",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/1200x/6d/1f/e4/6d1fe4be349834baffa4064c89c5f24d.jpg",
-    alt: "Green City — бизнес-центр",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/1200x/f8/69/51/f86951719b406d8c9495664156497693.jpg",
-    alt: "Green City — Иссык-Куль",
+    alt: "Green City",
   },
 ];
 
-const values = [
-  {
-    title: "Качество и надёжность",
-    text: "Мы используем современные технологии, инженерные решения и сертифицированные материалы, чтобы строить объекты, которые сохраняют прочность и эстетику на протяжении десятилетий.",
-    image: "/images/Green City/value-1.jpg",
-  },
-  {
-    title: "Стиль и эстетика",
-    text: "Каждый проект — это синтез архитектурного видения и функциональности. Мы создаём пространства, в которых хочется жить и работать.",
-    image: "/images/Green City/value-2.jpg",
-  },
-  {
-    title: "Доверие и прозрачность",
-    text: "Юридическая чистота каждой сделки, полная прозрачность на всех этапах строительства и своевременная сдача объектов — наши ключевые обязательства.",
-    image: "/images/Green City/value-3.jpg",
-  },
+const valueImages = [
+  "https://i.pinimg.com/1200x/6d/1f/e4/6d1fe4be349834baffa4064c89c5f24d.jpg", // Качество и надёжность
+  "https://i.pinimg.com/736x/35/0b/24/350b2426dcce60ca73887ae2a48df34b.jpg", // Стиль и эстетика
+  "https://i.pinimg.com/1200x/f8/69/51/f86951719b406d8c9495664156497693.jpg", // Доверие и прозрачность
 ];
 
 const bannerImages = [
   {
     src: "https://i.pinimg.com/736x/c5/69/6f/c5696f825f78dd4be31349d1ef6d209b.jpg",
-    alt: "Green City — жилой комплекс",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/1200x/6d/1f/e4/6d1fe4be349834baffa4064c89c5f24d.jpg",
-    alt: "Green City — бизнес-центр",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/736x/35/0b/24/350b2426dcce60ca73887ae2a48df34b.jpg",
-    alt: "Green City — пентхаус",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/1200x/f8/69/51/f86951719b406d8c9495664156497693.jpg",
-    alt: "Green City — Иссык-Куль",
+    alt: "Green City",
   },
   {
     src: "https://i.pinimg.com/1200x/7a/50/a1/7a50a1c4ad6a073f71fe1f42c61fb354.jpg",
-    alt: "Green City — интерьер",
+    alt: "Green City",
   },
 ];
 
@@ -127,11 +117,6 @@ const partners = [
   { name: "Grohe" },
   { name: "REHAU" },
   { name: "Schneider Electric" },
-];
-
-const directorSlides = [
-  "Мирлан Акжигитов — один из самых успешных молодых предпринимателей Кыргызстана. По образованию он менеджер по управлению бизнесом. Образование он получил в городе Брадфорд, Великобритания. Именно там он приобрёл ценные навыки: упорство, системность, трудолюбие, умение ставить цели и добиваться их. Там же зародилась его любовь к архитектуре и искусству, к красивым зданиям, подобно которым он мечтал построить в Кыргызстане.",
-  "Вернувшись на родину, Мирлан решил начать своё дело в строительной сфере, чтобы создавать не просто качественные, но и эстетически выразительные, уникальные здания. Не имея опыта, пришлось столкнуться с множеством трудностей: от сложностей с поставками до резких изменений в экономической или законодательной среде. Чтобы развиваться в этих условиях, нужно было быть гибким, быстро принимать решения, сохранять качество и оставаться конкурентоспособными.",
 ];
 
 // ─── ХЕЛПЕР: анимация при появлении ───
@@ -195,8 +180,6 @@ function RevealImage({
 }
 
 // ─── ХЕЛПЕР: лого партнёра с fallback на текст ───
-// Если logo не передан ИЛИ картинка не загрузилась (404, битая ссылка) —
-// вместо пустого места / сломанной иконки показываем стилизованное название.
 function PartnerLogo({ name, logo }) {
   const [failed, setFailed] = useState(false);
 
@@ -219,7 +202,7 @@ function PartnerLogo({ name, logo }) {
 }
 
 // ─── БАННЕР: карусель из 5 картинок ───
-function HeroBanner() {
+function HeroBanner({ t }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const timeoutRef = useRef(null);
@@ -263,8 +246,7 @@ function HeroBanner() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24 w-full">
           <FadeUp>
             <h2 className="text-3xl md:text-[2.8rem] font-bold text-white uppercase leading-tight max-w-3xl [text-shadow:0_2px_16px_rgba(0,0,0,0.45)]">
-              За 13 лет упорной работы мы зарекомендовали себя как один из
-              лидеров строительного рынка Кыргызстана
+              {t.bannerTitle}
             </h2>
           </FadeUp>
         </div>
@@ -306,7 +288,7 @@ function HeroBanner() {
 }
 
 // ─── СЕКЦИЯ: О компании ───
-function AboutSection() {
+function AboutSection({ t }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -328,7 +310,7 @@ function AboutSection() {
             <RevealImage
               className="aspect-[3/4] rounded-lg"
               src="https://i.pinimg.com/736x/04/b1/1e/04b11e6ba93477fdca9205d98900fe67.jpg"
-              alt="Green City — проект"
+              alt="Green City"
             />
           </motion.div>
 
@@ -338,10 +320,7 @@ function AboutSection() {
             className="col-span-1 md:col-span-5 flex flex-col justify-center order-2 text-center md:text-left my-6 md:my-0"
           >
             <p className="text-[var(--text-muted)] text-base md:text-lg leading-relaxed">
-              Реализовав более 30 масштабных проектов, охватывающих жилые
-              комплексы, Бизнес-центры, клубные дома и объекты для отдыха. Наш
-              подход — это синтез инноваций, безупречного качества и высокого
-              профессионализма на каждом этапе реализации.
+              {t.aboutText}
             </p>
           </FadeUp>
 
@@ -353,7 +332,7 @@ function AboutSection() {
             <RevealImage
               className="aspect-[3/4] rounded-lg"
               src="https://i.pinimg.com/736x/77/58/96/7758968a5f4e18fcba1ee9641f788577.jpg"
-              alt="Green City — здание"
+              alt="Green City"
               delay={0.1}
               grayscale
             />
@@ -365,7 +344,7 @@ function AboutSection() {
 }
 
 // ─── СЕКЦИЯ: Мы развиваем ───
-function WeGrowSection() {
+function WeGrowSection({ t }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -389,7 +368,7 @@ function WeGrowSection() {
           <RevealImage
             className="aspect-[3/5] rounded-lg"
             src="https://i.pinimg.com/736x/60/2c/9a/602c9a34e5baa28b76b9f4ab4d8e667f.jpg"
-            alt="Green City — комплекс"
+            alt="Green City"
           />
         </motion.div>
 
@@ -397,8 +376,7 @@ function WeGrowSection() {
         <div className="w-full md:max-w-2xl mx-auto px-4 md:px-8 order-1 md:order-2 text-center py-6 md:py-24 z-10">
           <FadeUp>
             <p className="text-xl md:text-4xl font-bold uppercase text-[var(--text)] leading-snug tracking-wide">
-              Мы развиваем жилые комплексы в Бишкеке и центры отдыха на
-              Иссык-Куле, задавая тренды и повышая качество жизни в Кыргызстане.
+              {t.weGrowText}
             </p>
           </FadeUp>
         </div>
@@ -411,7 +389,7 @@ function WeGrowSection() {
           <RevealImage
             className="aspect-[3/5] rounded-lg"
             src="https://i.pinimg.com/736x/e4/e4/23/e4e42362f3604a83ec95aa23c7fe7d5a.jpg"
-            alt="Green City — фасад"
+            alt="Green City"
             delay={0.15}
           />
         </motion.div>
@@ -420,8 +398,8 @@ function WeGrowSection() {
   );
 }
 
-// ─── СЕКЦИЯ: Royal это — ───
-function RoyalIsSection() {
+// ─── СЕКЦИЯ: Green City это — ───
+function RoyalIsSection({ t }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -429,6 +407,8 @@ function RoyalIsSection() {
   });
   const leftY = useTransform(scrollYProgress, [0, 1], [-40, 60]);
   const rightY = useTransform(scrollYProgress, [0, 1], [40, -60]);
+
+  const points = t.royalPoints || [];
 
   return (
     <section ref={ref} className="bg-[var(--surface)] py-24 overflow-hidden">
@@ -439,7 +419,7 @@ function RoyalIsSection() {
             <RevealImage
               className="aspect-[3/4]"
               src="https://i.pinimg.com/1200x/cf/7b/19/cf7b19b373101899db16f6ed6b82afd5.jpg"
-              alt="Green City — башня"
+              alt="Green City"
             />
           </motion.div>
 
@@ -447,30 +427,18 @@ function RoyalIsSection() {
           <div className="md:col-span-4 flex flex-col gap-10 pt-8">
             <FadeUp>
               <div className="text-[2.5rem] font-serif text-[var(--text)] leading-none mb-6">
-                <span className="font-bold italic text-[3rem]">G</span>reen City
-                это—
+                <span className="font-bold italic text-[3rem]">G</span>
+                {t.royalHeading?.replace(/^G/, "")}
               </div>
             </FadeUp>
 
-            {[
-              {
-                n: "01",
-                text: "Более 6000 довольных клиентов, доверивших нам мечту о собственном жилье",
-              },
-              {
-                n: "02",
-                text: "Гарантия безопасности — все объекты сопровождаются полным пакетом разрешительной документации",
-              },
-              { n: "03", text: "Точные сроки сдачи объектов" },
-              {
-                n: "04",
-                text: "Юридическая чистота каждой сделки и полная прозрачность",
-              },
-            ].map((item, i) => (
-              <FadeUp key={item.n} delay={i * 0.1}>
-                <p className="text-xs text-[var(--text)] mb-1">({item.n})</p>
+            {points.map((text, i) => (
+              <FadeUp key={i} delay={i * 0.1}>
+                <p className="text-xs text-[var(--text)] mb-1">
+                  ({String(i + 1).padStart(2, "0")})
+                </p>
                 <p className="text-[var(--accent)] text-sm leading-relaxed font-medium">
-                  {item.text}
+                  {text}
                 </p>
               </FadeUp>
             ))}
@@ -481,7 +449,7 @@ function RoyalIsSection() {
             <RevealImage
               className="aspect-[3/4]"
               src="https://i.pinimg.com/736x/73/bc/d5/73bcd567c5ed3a9b0e0c3273e0888865.jpg"
-              alt="Green City — объект"
+              alt="Green City"
               delay={0.2}
             />
           </motion.div>
@@ -492,8 +460,14 @@ function RoyalIsSection() {
 }
 
 // ─── СЕКЦИЯ: Ценности ───
-function ValuesSlider() {
+function ValuesSlider({ t }) {
   const [active, setActive] = useState(0);
+  const values = (t.values || []).map((v, i) => ({
+    ...v,
+    image: valueImages[i],
+  }));
+
+  if (values.length === 0) return null;
 
   return (
     <section className="relative h-screen overflow-hidden">
@@ -525,7 +499,7 @@ function ValuesSlider() {
           transition={{ delay: 0.2 }}
           className="text-xs font-semibold uppercase tracking-widest text-[#60f709d3] mb-4"
         >
-          Ценности компании Green City
+          {t.directorValuesLabel}
         </motion.p>
 
         <AnimatePresence mode="wait">
@@ -581,10 +555,11 @@ function ValuesSlider() {
 }
 
 // ─── СЕКЦИЯ: Директор ───
-function DirectorSection() {
+function DirectorSection({ t }) {
   const [slide, setSlide] = useState(0);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const slides = t.directorSlides || [];
 
   return (
     <section
@@ -606,7 +581,7 @@ function DirectorSection() {
           <div className="aspect-[3/4] overflow-hidden grayscale">
             <motion.img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdX-sI_mtA4U1fgyaV5SHpxpN4AFKlH6HOr4HtyS4w6Q&s=10"
-              alt="Алибек Шералиев — генеральный директор строительной компании Green City"
+              alt={t.directorName}
               whileHover={{ scale: 1.06 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="w-full h-full object-cover object-top"
@@ -622,12 +597,10 @@ function DirectorSection() {
           transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
           <h2 className="text-3xl md:text-4xl font-bold uppercase mb-2 tracking-wide">
-            Алибек Шералиев
-            <br />
-            ......
+            {t.directorName}
           </h2>
-          <p className="text-[var(--accent-strong)] text-sm font-medium mb-8 uppercase tracking-widest">
-            Генеральный директор строительной компании GREEN CITY
+          <p className=" text-sm font-medium mb-8 uppercase tracking-widest">
+            {t.directorRole}
           </p>
 
           <AnimatePresence mode="wait">
@@ -639,7 +612,7 @@ function DirectorSection() {
               transition={{ duration: 0.45 }}
               className="text-white/70 text-sm md:text-base leading-relaxed max-w-2xl"
             >
-              {directorSlides[slide]}
+              {slides[slide]}
             </motion.p>
           </AnimatePresence>
 
@@ -648,10 +621,7 @@ function DirectorSection() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.92 }}
               onClick={() =>
-                setSlide(
-                  (p) =>
-                    (p - 1 + directorSlides.length) % directorSlides.length,
-                )
+                setSlide((p) => (p - 1 + slides.length) % slides.length)
               }
               className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
             >
@@ -660,13 +630,13 @@ function DirectorSection() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.92 }}
-              onClick={() => setSlide((p) => (p + 1) % directorSlides.length)}
+              onClick={() => setSlide((p) => (p + 1) % slides.length)}
               className="w-10 h-10 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 transition-colors"
             >
               <ChevronRightIcon />
             </motion.button>
             <span className="text-white/30 text-sm ml-2">
-              {slide + 1} / {directorSlides.length}
+              {slide + 1} / {slides.length}
             </span>
           </div>
         </motion.div>
@@ -676,19 +646,19 @@ function DirectorSection() {
 }
 
 // ─── СЕКЦИЯ: Партнёры ───
-function PartnersSection() {
+function PartnersSection({ t }) {
   return (
     <section className="bg-[var(--surface)] py-24 border-t border-[var(--border)]">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <FadeUp className="max-w-lg">
             <h2 className="text-3xl md:text-4xl font-bold uppercase text-[var(--text)] leading-tight">
-              Надёжные партнёры, с которыми мы строим будущее Кыргызстана
+              {t.partnersHeading}
             </h2>
           </FadeUp>
           <FadeIn delay={0.2}>
             <p className="text-xs text-[var(--text-muted)] uppercase tracking-widest">
-              Партнёры
+              {t.partnersLabel}
             </p>
           </FadeIn>
         </div>
@@ -713,6 +683,9 @@ function PartnersSection() {
 
 // ─── ГЛАВНЫЙ КОМПОНЕНТ ───
 export default function AboutCompany() {
+  const { lang } = useLang();
+  const t = translations[lang].aboutPage;
+
   useEffect(() => {
     let lenis;
     let rafId;
@@ -733,9 +706,14 @@ export default function AboutCompany() {
 
   return (
     <main className="w-full">
-      <AboutSection />
-      <WeGrowSection />
-      <RoyalIsSection />
+      <FadeUp className="max-w-7xl mx-auto px-6 md:px-12 pt-16 md:pt-24">
+        <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-wide text-[var(--text)]">
+          {t.pageTitle}
+        </h1>
+      </FadeUp>
+      <AboutSection t={t} />
+      <WeGrowSection t={t} />
+      <RoyalIsSection t={t} />
       <ZoomParallax
         images={parallaxImages}
         title={
@@ -746,13 +724,13 @@ export default function AboutCompany() {
             }}
             className="text-3xl md:text-[2.8rem] font-bold uppercase leading-tight max-w-3xl"
           >
-            
+            {/* {t.parallaxTitle} */}
           </p>
         }
       />
-      <ValuesSlider />
-      <DirectorSection />
-      <PartnersSection />
+      <ValuesSlider t={t} />
+      <DirectorSection t={t} />
+      <PartnersSection t={t} />
     </main>
   );
 }

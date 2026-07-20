@@ -10,6 +10,7 @@ import AboutCompany from "./pages/about/About";
 import Reviews from "./pages/reviews/Reviews";
 import ReviewDetail from "./pages/reviewsdetail/ReviewsDetail";
 import NewsDetail from "./widgets/newsdetail/NewsDetail";
+import NotFoundPage from "./widgets/NotFound/NotFound";
 
 export const myrouter = createBrowserRouter([
   {
@@ -56,6 +57,6 @@ export const myrouter = createBrowserRouter([
   },
   {
     path: "*",
-    element: <div style={{minHeight:'100vh'}}>404</div>,
+    element: <NotFoundPage/>,
   },
 ]);

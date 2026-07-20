@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+J:ital,wght@0,100..400;1,100..400&display=swap');
+
 .royal-contacts-page {
   background-color: var(--surface);
   padding: 80px 0;
@@ -16,7 +18,7 @@
   // Шапка жана негизги маалыматтар (Мурунку калыбында)
   .royal-header-section { text-align: center; margin-bottom: 80px; }
   .royal-main-title { font-size: 38px; font-weight: 300; color: var(--text); margin: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-  .royal-brand-logo { display: inline-flex; align-items: baseline; i { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: 54px; font-weight: 400; } span { font-size: 24px; font-weight: 300; } }
+  .royal-brand-logo { display: inline-flex; font-family: "Playwrite GB J"; align-items: baseline; i { font-style: italic; font-size: 54px; font-weight: 400; } span { font-size: 24px; font-weight: 300; } }
   .royal-sub-title { font-size: 28px; color: var(--accent); font-weight: 300; margin: 15px 0 0 0; }
   .royal-info-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.2fr; gap: 30px; margin-bottom: 35px; @media (max-width: 992px) { grid-template-columns: 1fr 1fr; } @media (max-width: 576px) { grid-template-columns: 1fr; } }
   .royal-col-label { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 400; letter-spacing: 0.8px; margin: 0 0 18px 0; }

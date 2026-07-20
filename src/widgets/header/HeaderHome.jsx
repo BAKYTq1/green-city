@@ -256,10 +256,10 @@ export default function HeaderHome() {
 
           {isAbout && (
             <div className="gc-header-about-overlay">
-              <h2 className="gc-header-about-title">
+              {/* <h2 className="gc-header-about-title">
                 За 13 лет упорной работы мы зарекомендовали себя как один из
                 лидеров строительного рынка Кыргызстана
-              </h2>
+              </h2> */}
             </div>
           )}
         </header>

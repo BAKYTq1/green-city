@@ -185,5 +185,47 @@
 "see_all": "See all",
 "back_to_reviews": "Back to reviews",
 "back_to_news": "Back to news",
-"youtube": "Watch on YouTube"
+"youtube": "Watch on YouTube",
+"notFound": {
+  "title": "Page not found",
+  "text": "The page you're looking for hasn't been built — or has already been demolished. Check the address or return to the list of objects.",
+  "button": "Back to home"
+},
+  "aboutPage": {
+    "pageTitle": "About Us",
+    "parallaxTitle": "Every detail matters",
+    "bannerTitle": "Over 13 years of hard work, we have established ourselves as one of the leaders of Kyrgyzstan's construction market",
+    "aboutText": "Having completed more than 30 large-scale projects, including residential complexes, business centers, townhouses, and resort properties. Our approach is a synthesis of innovation, impeccable quality, and high professionalism at every stage of implementation.",
+    "weGrowText": "We develop residential complexes in Bishkek and resort centers on Issyk-Kul, setting trends and improving the quality of life in Kyrgyzstan.",
+    "royalHeading": "Green City is—",
+    "royalPoints": [
+      "Over 6,000 satisfied clients who entrusted us with their dream of owning a home",
+      "Safety guarantee — all properties come with a full set of permitting documentation",
+      "Precise delivery deadlines",
+      "Legal transparency of every transaction"
+    ],
+    "values": [
+      {
+        "title": "Quality and reliability",
+        "text": "We use modern technologies, engineering solutions, and certified materials to build properties that retain their strength and aesthetics for decades."
+      },
+      {
+        "title": "Style and aesthetics",
+        "text": "Every project is a synthesis of architectural vision and functionality. We create spaces where people want to live and work."
+      },
+      {
+        "title": "Trust and transparency",
+        "text": "Legal transparency of every transaction, full openness at every stage of construction, and on-time delivery are our key commitments."
+      }
+    ],
+    "directorValuesLabel": "Green City's Company Values",
+    "directorName": "Alibek Sheraliev",
+    "directorRole": "General Director of the GREEN CITY construction company",
+    "directorSlides": [
+      "Mirlan Akzhigitov is one of the most successful young entrepreneurs in Kyrgyzstan. He holds a degree in business management, earned in Bradford, United Kingdom. It was there that he gained valuable skills: persistence, discipline, hard work, and the ability to set and achieve goals. That's also where his love for architecture and art, and for beautiful buildings like the ones he dreamed of building in Kyrgyzstan, began.",
+      "Upon returning home, Mirlan decided to start his own business in construction to create buildings that were not just high-quality, but also aesthetically striking and unique. With no prior experience, he faced numerous challenges — from supply difficulties to sudden shifts in the economic or legal environment. Thriving under these conditions required flexibility, fast decision-making, consistent quality, and staying competitive."
+    ],
+    "partnersHeading": "Reliable partners with whom we build the future of Kyrgyzstan",
+    "partnersLabel": "Partners"
+  }
 }

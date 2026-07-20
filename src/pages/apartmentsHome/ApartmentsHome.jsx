@@ -31,6 +31,39 @@ function useInView(ref, threshold = 0.1) {
   return visible;
 }
 
+// ─── SPINNER ───────────────────────────────────────────────────────────────
+
+function Spinner() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 12,
+        padding: "60px 0",
+      }}
+    >
+      <div
+        style={{
+          width: 40,
+          height: 40,
+          border: "3px solid rgba(0,0,0,0.1)",
+          borderTopColor: "currentColor",
+          borderRadius: "50%",
+          animation: "ap-spin 0.8s linear infinite",
+        }}
+      />
+      <style>{`
+        @keyframes ap-spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 function ApartCard({ item, delay }) {
   const ref = useRef(null);
   const visible = useInView(ref);
@@ -211,9 +244,7 @@ export function ApartmentsHome() {
       </div>
 
       <div className={styles["ap-section"]}>
-        {loading && (
-          <div className={styles["ap-results-count"]}>Загружаем объекты…</div>
-        )}
+        {loading && <Spinner />}
 
         {error && (
           <div className={styles["ap-empty"]}>
@@ -255,4 +286,4 @@ export function ApartmentsHome() {
   );
 }
 
-export default ApartmentsHome;
+export default ApartmentsHome;  

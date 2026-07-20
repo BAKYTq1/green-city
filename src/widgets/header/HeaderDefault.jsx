@@ -183,8 +183,9 @@ export default function HeaderDefault() {
             </button>
           ))}
         </div>
-
-        <div className="gc-menu-bg-text">Green City</div>
+  <div className="gc-menu-bg-logo">
+          <img src={Logo} alt="Green City" />
+        </div>{" "}
       </div>
     </>
   );

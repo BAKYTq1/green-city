@@ -1,14 +1,49 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import styles from "./Apartments.module.scss";
 import { translations } from "../../locales/i18n";
 import { useLang } from "../../locales/LangContext";
-import { useProjectStore } from "../../store";
 import { mapProjectList } from "../../utils/projectAdapter";
 import Obratnyi from "../../widgets/ui/ibratka/Obratnyi";
 import { useTransition } from "../../app/transition/TransitionContext";
 
 const PER_PAGE = 6;
 const DEFAULT_MAX_FLOOR = 27;
+
+// Относительный путь — Vite сам проксирует /api на бэкенд (см. api.js)
+const API_URL = "/api/project";
+
+// ─── SPINNER ───────────────────────────────────────────────────────────────
+
+function Spinner() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 12,
+        padding: "60px 0",
+      }}
+    >
+      <div
+        style={{
+          width: 40,
+          height: 40,
+          border: "3px solid rgba(0,0,0,0.1)",
+          borderTopColor: "currentColor",
+          borderRadius: "50%",
+          animation: "ap-spin 0.8s linear infinite",
+        }}
+      />
+      <style>{`
+        @keyframes ap-spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 // ─── INTERSECTION OBSERVER HOOK ───────────────────────────────────────────────
 
@@ -109,15 +144,46 @@ function ApartCard({ item, delay, onNavigate }) {
 // ─── MAIN APARTMENTS LIST ─────────────────────────────────────────────────────
 
 export function Apartments() {
-  const { goTo } = useTransition()
+  const { goTo } = useTransition();
   const { lang } = useLang();
   const t = translations[lang].apartments;
 
-  const { items: rawProjects, loading, error, fetchList } = useProjectStore();
+  // ─── ПРЯМАЯ ЗАГРУЗКА ДАННЫХ ЧЕРЕЗ FETCH (вместо useProjectStore) ───────────
+  const [rawProjects, setRawProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchList = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(API_URL, {
+        headers: { Accept: "application/json" },
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`API Error ${res.status}: ${errText}`);
+      }
+
+      const data = await res.json();
+
+      // На всякий случай поддерживаем и чистый массив, и { results: [...] }
+      const list = Array.isArray(data) ? data : data?.results ?? [];
+      setRawProjects(list);
+    } catch (err) {
+      console.error("Ошибка загрузки списка объектов:", err);
+      setError(err.message || t.error_title);
+      setRawProjects([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [t.error_title]);
 
   useEffect(() => {
     fetchList();
   }, [fetchList]);
+  // ────────────────────────────────────────────────────────────────────────
 
   const OBJECTS = useMemo(() => mapProjectList(rawProjects), [rawProjects]);
 
@@ -324,11 +390,9 @@ export function Apartments() {
 
       {/* CARDS */}
       <div className={styles["ap-section"]}>
-        {loading && (
-          <div className={styles["ap-results-count"]}>{t.loading}</div>
-        )}
+        {loading && <Spinner />}
 
-        {error && (
+        {!loading && error && (
           <div className={styles["ap-empty"]}>
             <div className={styles["ap-empty__title"]}>{t.error_title}</div>
             <div className={styles["ap-empty__text"]}>{error}</div>

@@ -68,7 +68,7 @@ export default function Contact() {
         {/* Башкы заголовок жана Логотип */}
         <div className="royal-header-section">
           <h1 className="royal-main-title">
-            {t.title_prefix} <span className="royal-brand-logo"><i>R</i><span>oyal</span></span>
+            {t.title_prefix} <span className="royal-brand-logo">Green City</span>
           </h1>
           <p className="royal-sub-title">{t.subtitle}</p>
         </div>
