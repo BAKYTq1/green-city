@@ -127,9 +127,6 @@
   .gc-intro-subtitle {
     letter-spacing: 3px;
   }
-  .gc-intro-icon {
-    width: clamp(120px, 45vw, 220px);
-  }
   .gc-intro-hint {
     bottom: 20px;
     font-size: 10px;
@@ -264,8 +261,13 @@
     letter-spacing: 3px;
   }
   .gc-intro-icon {
-    width: clamp(120px, 45vw, 220px);
+  width: clamp(220px, 50vw, 500px);
+  max-width: 100%;
   }
+  .gc-intro-icon img {
+  width: 100%;
+  height: auto;
+}
   .gc-intro-hint {
     bottom: 20px;
     font-size: 10px;

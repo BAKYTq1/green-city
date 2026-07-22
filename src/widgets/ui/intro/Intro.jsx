@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react'
 import gsap from 'gsap'
-import img from '../../../assets/IMG_0370.png'
+import img from '../../../assets/IMG_0371.png'
 import './Intro.css'
 
 export default function Intro({ onDone }) {

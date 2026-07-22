@@ -5,6 +5,7 @@ import { mapProjectToObject, mapProjectList } from "../../../utils/projectAdapte
 import { translations } from "../../../locales/i18n";
 import { useLang } from "../../../locales/LangContext";
 import styles from "./ObjectDetail.module.scss";
+import Obratnyi from "../../../widgets/ui/ibratka/Obratnyi";
 
 // ─── INTERSECTION HOOK ────────────────────────────────────────────────────────
 function useInView(ref, threshold = 0.1) {
@@ -315,7 +316,7 @@ export function ObjectDetail() {
       </div>
 
       {/* CTA */}
-      <RevealEl>
+      {/* <RevealEl>
         <div className={styles.odCta}>
           <div className={styles.odCtaEyebrow}>{t.cta_eyebrow}</div>
           <div className={styles.odCtaTitle}>
@@ -329,8 +330,8 @@ export function ObjectDetail() {
             </svg>
           </button>
         </div>
-      </RevealEl>
-
+      </RevealEl> */}
+ <Obratnyi/>
       {/* ПОХОЖИЕ ОБЪЕКТЫ */}
       {similarItems.length > 0 && (
         <div className={styles.odSimilar}>
